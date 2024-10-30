@@ -18,7 +18,7 @@ const menuItemReviewFixtures = {
     },
     {
       id: 2,
-      itemId: 12,
+      itemId: 15,
       reviewerEmail: "string2@gmail.com",
       stars: 3,
       dateReviewed: "2021-01-02T12:00:00",
