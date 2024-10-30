@@ -101,7 +101,9 @@ function RecommendationRequestForm({
       <Row>
         <Col>
           <Form.Group className="mb-3">
-            <Form.Label htmlFor="dateRequested">Request Date (iso format)</Form.Label>
+            <Form.Label htmlFor="dateRequested">
+              Request Date (iso format)
+            </Form.Label>
             <Form.Control
               data-testid="RecommendationRequestForm-dateRequested"
               id="dateRequested"
@@ -113,13 +115,15 @@ function RecommendationRequestForm({
               })}
             />
             <Form.Control.Feedback type="invalid">
-              {errors.dateRequested && "Request Date is required"}        
+              {errors.dateRequested && "Request Date is required"}
             </Form.Control.Feedback>
           </Form.Group>
         </Col>
         <Col>
           <Form.Group className="mb-3">
-            <Form.Label htmlFor="dateNeeded">Date Needed (iso format)</Form.Label>
+            <Form.Label htmlFor="dateNeeded">
+              Date Needed (iso format)
+            </Form.Label>
             <Form.Control
               data-testid="RecommendationRequestForm-dateNeeded"
               id="dateNeeded"
@@ -145,7 +149,9 @@ function RecommendationRequestForm({
               id="done"
               type="checkbox"
               isInvalid={Boolean(errors.done)}
-              style={{width: "20px", height: "20px"}}
+              // Stryker disable all
+              style={{ width: "20px", height: "20px" }}
+              // Stryker restore all
               {...register("done", {
                 required: "Done status is required",
               })}
