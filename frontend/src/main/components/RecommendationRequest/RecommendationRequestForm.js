@@ -145,6 +145,7 @@ function RecommendationRequestForm({
               id="done"
               type="checkbox"
               isInvalid={Boolean(errors.done)}
+              style={{width: "20px", height: "20px"}}
               {...register("done", {
                 required: "Done status is required",
               })}
