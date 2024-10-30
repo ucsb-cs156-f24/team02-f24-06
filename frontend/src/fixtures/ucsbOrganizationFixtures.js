@@ -7,7 +7,7 @@ const organizationFixtures = {
       inactive: false,
     },
   ],
-  
+
   threeOrgs: [
     {
       orgCode: "TASA",
@@ -15,14 +15,14 @@ const organizationFixtures = {
       orgTranslation: "Taiwanese American Student Association",
       inactive: false,
     },
-  
+
     {
       orgCode: "IEEE",
       orgTranslationShort: "IEEE",
       orgTranslation: "Institute of Electrical and Electronics Engineers",
       inactive: false,
     },
-  
+
     {
       orgCode: "DSClub",
       orgTranslationShort: "DSClub",
@@ -32,4 +32,4 @@ const organizationFixtures = {
   ],
 };
 
-export { organizationFixtures};
+export { organizationFixtures };
