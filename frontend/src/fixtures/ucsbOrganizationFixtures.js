@@ -32,4 +32,4 @@ const organizationFixtures = {
     ],
 };
 
-export { organizationFixtures };
+export { organizationFixtures};
