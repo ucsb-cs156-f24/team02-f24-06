@@ -15,7 +15,7 @@ describe("RecommendationRequestForm tests", () => {
     render(
       <Router>
         <RecommendationRequestForm />
-      </Router>
+      </Router>,
     );
     await screen.findByText(/Requester's Email/);
     await screen.findByText(/Create/);
@@ -27,7 +27,7 @@ describe("RecommendationRequestForm tests", () => {
         <RecommendationRequestForm
           initialContents={recommendationRequestFixtures.oneRequest}
         />
-      </Router>
+      </Router>,
     );
     await screen.findByTestId(/RecommendationRequestForm-id/);
     expect(screen.getByText(/Id/)).toBeInTheDocument();
@@ -38,14 +38,14 @@ describe("RecommendationRequestForm tests", () => {
     render(
       <Router>
         <RecommendationRequestForm />
-      </Router>
+      </Router>,
     );
     await screen.findByTestId("RecommendationRequestForm-dateRequested");
     const dateRequestedField = screen.getByTestId(
-      "RecommendationRequestForm-dateRequested"
+      "RecommendationRequestForm-dateRequested",
     );
     const dateNeededField = screen.getByTestId(
-      "RecommendationRequestForm-dateNeeded"
+      "RecommendationRequestForm-dateNeeded",
     );
     const submitButton = screen.getByTestId("RecommendationRequestForm-submit");
 
@@ -61,7 +61,7 @@ describe("RecommendationRequestForm tests", () => {
     render(
       <Router>
         <RecommendationRequestForm />
-      </Router>
+      </Router>,
     );
     await screen.findByTestId("RecommendationRequestForm-submit");
     const submitButton = screen.getByTestId("RecommendationRequestForm-submit");
@@ -70,7 +70,7 @@ describe("RecommendationRequestForm tests", () => {
 
     await screen.findByText(/Requester's Email is required/);
     expect(
-      screen.getByText(/Professor's Email is required/)
+      screen.getByText(/Professor's Email is required/),
     ).toBeInTheDocument();
     expect(screen.getByText(/Explanation is required/)).toBeInTheDocument();
     expect(screen.getByText(/Request Date is required/)).toBeInTheDocument();
@@ -84,24 +84,24 @@ describe("RecommendationRequestForm tests", () => {
     render(
       <Router>
         <RecommendationRequestForm submitAction={mockSubmitAction} />
-      </Router>
+      </Router>,
     );
     await screen.findByTestId("RecommendationRequestForm-requesterEmail");
 
     const requesterEmailField = screen.getByTestId(
-      "RecommendationRequestForm-requesterEmail"
+      "RecommendationRequestForm-requesterEmail",
     );
     const professorEmailField = screen.getByTestId(
-      "RecommendationRequestForm-professorEmail"
+      "RecommendationRequestForm-professorEmail",
     );
     const explanationField = screen.getByTestId(
-      "RecommendationRequestForm-explanation"
+      "RecommendationRequestForm-explanation",
     );
     const dateRequestedField = screen.getByTestId(
-      "RecommendationRequestForm-dateRequested"
+      "RecommendationRequestForm-dateRequested",
     );
     const dateNeededField = screen.getByTestId(
-      "RecommendationRequestForm-dateNeeded"
+      "RecommendationRequestForm-dateNeeded",
     );
     const doneField = screen.getByTestId("RecommendationRequestForm-done");
     const submitButton = screen.getByTestId("RecommendationRequestForm-submit");
@@ -127,10 +127,10 @@ describe("RecommendationRequestForm tests", () => {
     await waitFor(() => expect(mockSubmitAction).toHaveBeenCalled());
 
     expect(
-      screen.queryByText(/Date Needed is required/)
+      screen.queryByText(/Date Needed is required/),
     ).not.toBeInTheDocument();
     expect(
-      screen.queryByText(/Request Date is required/)
+      screen.queryByText(/Request Date is required/),
     ).not.toBeInTheDocument();
   });
 
@@ -138,7 +138,7 @@ describe("RecommendationRequestForm tests", () => {
     render(
       <Router>
         <RecommendationRequestForm />
-      </Router>
+      </Router>,
     );
     await screen.findByTestId("RecommendationRequestForm-cancel");
     const cancelButton = screen.getByTestId("RecommendationRequestForm-cancel");
