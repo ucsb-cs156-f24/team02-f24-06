@@ -60,6 +60,7 @@ export default function RecommendationRequestTable({
     {
       Header: "Done",
       accessor: "done",
+      Cell: ({ value }) => (value ? "True" : "False"),
     },
   ];
 
