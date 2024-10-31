@@ -16,26 +16,26 @@ const Template = (args) => {
 export const Empty = Template.bind({});
 
 Empty.args = {
-  requests: [],
+  recommendationRequests: [],
 };
 
 export const ThreeItemsOrdinaryUser = Template.bind({});
 
 ThreeItemsOrdinaryUser.args = {
-  requests: recommendationRequestFixtures.threeRequests,
+  recommendationRequests: recommendationRequestFixtures.threeRequests,
   currentUser: currentUserFixtures.userOnly,
 };
 
 export const ThreeItemsAdminUser = Template.bind({});
 
 ThreeItemsAdminUser.args = {
-  requests: recommendationRequestFixtures.threeRequests,
+  recommendationRequests: recommendationRequestFixtures.threeRequests,
   currentUser: currentUserFixtures.adminUser,
 };
 
 ThreeItemsAdminUser.parameters = {
   msw: [
-    http.delete("/api/recommendationrequests", () => {
+    http.delete("/api/recommendationrequest", () => {
       return HttpResponse.json({}, { status: 200 });
     }),
   ],

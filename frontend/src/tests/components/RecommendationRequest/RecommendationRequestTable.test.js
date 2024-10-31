@@ -28,7 +28,7 @@ describe("RecommendationRequestTable tests", () => {
             currentUser={currentUser}
           />
         </MemoryRouter>
-      </QueryClientProvider>
+      </QueryClientProvider>,
     );
 
     const expectedHeaders = [
@@ -45,7 +45,7 @@ describe("RecommendationRequestTable tests", () => {
       "requesterEmail",
       "professorEmail",
       "explanation",
-      "requestDate",
+      "dateRequested",
       "dateNeeded",
       "done",
     ];
@@ -62,19 +62,19 @@ describe("RecommendationRequestTable tests", () => {
     });
 
     expect(screen.getByTestId(`${testId}-cell-row-0-col-id`)).toHaveTextContent(
-      "1"
+      "1",
     );
     expect(screen.getByTestId(`${testId}-cell-row-1-col-id`)).toHaveTextContent(
-      "2"
+      "2",
     );
 
     const editButton = screen.queryByTestId(
-      `${testId}-cell-row-0-col-Edit-button`
+      `${testId}-cell-row-0-col-Edit-button`,
     );
     expect(editButton).not.toBeInTheDocument();
 
     const deleteButton = screen.queryByTestId(
-      `${testId}-cell-row-0-col-Delete-button`
+      `${testId}-cell-row-0-col-Delete-button`,
     );
     expect(deleteButton).not.toBeInTheDocument();
   });
@@ -90,7 +90,7 @@ describe("RecommendationRequestTable tests", () => {
             currentUser={currentUser}
           />
         </MemoryRouter>
-      </QueryClientProvider>
+      </QueryClientProvider>,
     );
 
     const expectedHeaders = [
@@ -107,7 +107,7 @@ describe("RecommendationRequestTable tests", () => {
       "requesterEmail",
       "professorEmail",
       "explanation",
-      "requestDate",
+      "dateRequested",
       "dateNeeded",
       "done",
     ];
@@ -124,20 +124,20 @@ describe("RecommendationRequestTable tests", () => {
     });
 
     expect(screen.getByTestId(`${testId}-cell-row-0-col-id`)).toHaveTextContent(
-      "1"
+      "1",
     );
     expect(screen.getByTestId(`${testId}-cell-row-1-col-id`)).toHaveTextContent(
-      "2"
+      "2",
     );
 
     const editButton = screen.queryByTestId(
-      `${testId}-cell-row-0-col-Edit-button`
+      `${testId}-cell-row-0-col-Edit-button`,
     );
     expect(editButton).toBeInTheDocument();
     expect(editButton).toHaveClass("btn-primary");
 
     const deleteButton = screen.queryByTestId(
-      `${testId}-cell-row-0-col-Delete-button`
+      `${testId}-cell-row-0-col-Delete-button`,
     );
     expect(deleteButton).toBeInTheDocument();
     expect(deleteButton).toHaveClass("btn-danger");
@@ -154,17 +154,17 @@ describe("RecommendationRequestTable tests", () => {
             currentUser={currentUser}
           />
         </MemoryRouter>
-      </QueryClientProvider>
+      </QueryClientProvider>,
     );
 
     await waitFor(() => {
       expect(
-        screen.getByTestId("RecommendationRequestTable-cell-row-0-col-id")
+        screen.getByTestId("RecommendationRequestTable-cell-row-0-col-id"),
       ).toHaveTextContent("1");
     });
 
     const editButton = screen.getByTestId(
-      "RecommendationRequestTable-cell-row-0-col-Edit-button"
+      "RecommendationRequestTable-cell-row-0-col-Edit-button",
     );
     expect(editButton).toBeInTheDocument();
 
@@ -172,8 +172,8 @@ describe("RecommendationRequestTable tests", () => {
 
     await waitFor(() =>
       expect(mockedNavigate).toHaveBeenCalledWith(
-        "/recommendationrequests/edit/1"
-      )
+        "/recommendationrequest/edit/1",
+      ),
     );
   });
 
@@ -183,7 +183,7 @@ describe("RecommendationRequestTable tests", () => {
 
     const axiosMock = new AxiosMockAdapter(axios);
     axiosMock
-      .onDelete("/api/recommendationrequests")
+      .onDelete("/api/recommendationrequest")
       .reply(200, { message: "Recommendation Request deleted" });
 
     // act - render the component
@@ -195,17 +195,17 @@ describe("RecommendationRequestTable tests", () => {
             currentUser={currentUser}
           />
         </MemoryRouter>
-      </QueryClientProvider>
+      </QueryClientProvider>,
     );
 
     await waitFor(() => {
       expect(
-        screen.getByTestId("RecommendationRequestTable-cell-row-0-col-id")
+        screen.getByTestId("RecommendationRequestTable-cell-row-0-col-id"),
       ).toHaveTextContent("1");
     });
 
     const deleteButton = screen.getByTestId(
-      "RecommendationRequestTable-cell-row-0-col-Delete-button"
+      "RecommendationRequestTable-cell-row-0-col-Delete-button",
     );
     expect(deleteButton).toBeInTheDocument();
 

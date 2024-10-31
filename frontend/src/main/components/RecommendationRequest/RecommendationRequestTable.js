@@ -17,14 +17,14 @@ export default function RecommendationRequestTable({
   const navigate = useNavigate();
 
   const editCallback = (cell) => {
-    navigate(`/recommendationrequests/edit/${cell.row.values.id}`);
+    navigate(`/recommendationrequest/edit/${cell.row.values.id}`);
   };
 
   // Stryker disable all
   const deleteMutation = useBackendMutation(
     cellToAxiosParamsDelete,
     { onSuccess: onDeleteSuccess },
-    ["/api/recommendationrequests/all"]
+    ["/api/recommendationrequest/all"],
   );
   // Stryker restore all
 
@@ -51,7 +51,7 @@ export default function RecommendationRequestTable({
     },
     {
       Header: "Request Date",
-      accessor: "requestDate",
+      accessor: "dateRequested",
     },
     {
       Header: "Date Needed",
@@ -69,16 +69,16 @@ export default function RecommendationRequestTable({
         "Edit",
         "primary",
         editCallback,
-        "RecommendationRequestTable"
-      )
+        "RecommendationRequestTable",
+      ),
     );
     columns.push(
       ButtonColumn(
         "Delete",
         "danger",
         deleteCallback,
-        "RecommendationRequestTable"
-      )
+        "RecommendationRequestTable",
+      ),
     );
   }
 
