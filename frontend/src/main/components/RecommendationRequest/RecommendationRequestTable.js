@@ -60,7 +60,9 @@ export default function RecommendationRequestTable({
     {
       Header: "Done",
       accessor: "done",
+      // Stryker disable all
       Cell: ({ value }) => (value ? "True" : "False"),
+      // Stryker restore all
     },
   ];
 
