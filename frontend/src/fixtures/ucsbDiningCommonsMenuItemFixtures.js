@@ -1,9 +1,9 @@
 const ucsbDiningCommonsMenuItemFixtures = {
   oneItem: {
-     id: 1,
-     diningCommonsCode: "DLG",
-     name: "Taco",
-     station: "Blue plate",
+    id: 1,
+    diningCommonsCode: "DLG",
+    name: "Taco",
+    station: "Blue plate",
   },
   threeItems: [
     {
