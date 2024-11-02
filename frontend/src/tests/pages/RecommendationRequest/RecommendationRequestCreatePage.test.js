@@ -148,7 +148,6 @@ describe("RecommendationRequestCreatePage tests", () => {
       "New Recommendation Request Created - id: 17",
     );
     expect(mockNavigate).toHaveBeenCalledWith({ to: "/recommendationrequest" });
-
   });
 
   test("when you fill in the form and hit submit, it makes a request to the backend, done = true", async () => {
@@ -237,6 +236,5 @@ describe("RecommendationRequestCreatePage tests", () => {
       "New Recommendation Request Created - id: 17",
     );
     expect(mockNavigate).toHaveBeenCalledWith({ to: "/recommendationrequest" });
-    
   });
 });
