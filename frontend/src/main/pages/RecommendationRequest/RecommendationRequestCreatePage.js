@@ -34,6 +34,7 @@ export default function RecommendationRequestCreatePage({ storybook = false }) {
   const { isSuccess } = mutation;
 
   const onSubmit = async (data) => {
+    data.done = data.done === "true";
     mutation.mutate(data);
   };
 

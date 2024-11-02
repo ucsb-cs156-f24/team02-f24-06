@@ -75,7 +75,6 @@ describe("RecommendationRequestForm tests", () => {
     expect(screen.getByText(/Explanation is required/)).toBeInTheDocument();
     expect(screen.getByText(/Request Date is required/)).toBeInTheDocument();
     expect(screen.getByText(/Date Needed is required/)).toBeInTheDocument();
-    expect(screen.getByText(/Done status is required/)).toBeInTheDocument();
   });
 
   test("No Error messages on good input", async () => {
@@ -121,7 +120,9 @@ describe("RecommendationRequestForm tests", () => {
     fireEvent.change(dateNeededField, {
       target: { value: "2022-01-02T12:00" },
     });
-    fireEvent.click(doneField);
+    fireEvent.change(doneField, {
+      target: { value: "true" },
+    });
     fireEvent.click(submitButton);
 
     await waitFor(() => expect(mockSubmitAction).toHaveBeenCalled());

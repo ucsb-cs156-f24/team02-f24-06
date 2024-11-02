@@ -147,15 +147,15 @@ function RecommendationRequestForm({
             <Form.Control
               data-testid="RecommendationRequestForm-done"
               id="done"
-              type="checkbox"
+              as="select"
               isInvalid={Boolean(errors.done)}
-              // Stryker disable all
-              style={{ width: "20px", height: "20px" }}
-              // Stryker restore all
               {...register("done", {
                 required: "Done status is required",
               })}
-            />
+            >
+              <option value="false">False</option>
+              <option value="true">True</option>
+            </Form.Control>
             <Form.Control.Feedback type="invalid">
               {errors.done?.message}
             </Form.Control.Feedback>
