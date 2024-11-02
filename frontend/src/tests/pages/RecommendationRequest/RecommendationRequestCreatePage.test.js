@@ -62,7 +62,96 @@ describe("RecommendationRequestCreatePage tests", () => {
     });
   });
 
-  test("when you fill in the form and hit submit, it makes a request to the backend", async () => {
+  test("when you fill in the form and hit submit, it makes a request to the backend, done = false", async () => {
+    const queryClient = new QueryClient();
+    const recommendationRequest = {
+      id: 17,
+      requesterEmail: "some@email.com",
+      professorEmail: "some@email.com",
+      explanation: "some explanation",
+      dateRequeted: "2022-02-02T00:00",
+      dateNeeded: "2022-02-02T00:00",
+      done: false,
+    };
+
+    axiosMock
+      .onPost("/api/recommendationrequest/post")
+      .reply(202, recommendationRequest);
+
+    render(
+      <QueryClientProvider client={queryClient}>
+        <MemoryRouter>
+          <RecommendationRequestCreatePage />
+        </MemoryRouter>
+      </QueryClientProvider>,
+    );
+
+    await waitFor(() => {
+      expect(
+        screen.getByTestId("RecommendationRequestForm-requesterEmail"),
+      ).toBeInTheDocument();
+    });
+
+    const requesterEmailField = screen.getByTestId(
+      "RecommendationRequestForm-requesterEmail",
+    );
+    const professorEmailField = screen.getByTestId(
+      "RecommendationRequestForm-professorEmail",
+    );
+    const explanationField = screen.getByTestId(
+      "RecommendationRequestForm-explanation",
+    );
+    const dateRequestedField = screen.getByTestId(
+      "RecommendationRequestForm-dateRequested",
+    );
+    const dateNeededField = screen.getByTestId(
+      "RecommendationRequestForm-dateNeeded",
+    );
+    const doneField = screen.getByTestId("RecommendationRequestForm-done");
+    const submitButton = screen.getByTestId("RecommendationRequestForm-submit");
+
+    fireEvent.change(requesterEmailField, {
+      target: { value: "some@email.com" },
+    });
+    fireEvent.change(professorEmailField, {
+      target: { value: "some@email.com" },
+    });
+    fireEvent.change(explanationField, {
+      target: { value: "some explanation" },
+    });
+    fireEvent.change(dateRequestedField, {
+      target: { value: "2022-02-02T00:00" },
+    });
+    fireEvent.change(dateNeededField, {
+      target: { value: "2022-02-02T00:00" },
+    });
+    fireEvent.change(doneField, {
+      target: { value: "false" },
+    });
+
+    expect(submitButton).toBeInTheDocument();
+
+    fireEvent.click(submitButton);
+
+    await waitFor(() => expect(axiosMock.history.post.length).toBe(1));
+
+    expect(axiosMock.history.post[0].params).toEqual({
+      requesterEmail: "some@email.com",
+      professorEmail: "some@email.com",
+      explanation: "some explanation",
+      dateRequested: "2022-02-02T00:00",
+      dateNeeded: "2022-02-02T00:00",
+      done: false,
+    });
+
+    expect(mockToast).toHaveBeenCalledWith(
+      "New Recommendation Request Created - id: 17",
+    );
+    expect(mockNavigate).toHaveBeenCalledWith({ to: "/recommendationrequest" });
+
+  });
+
+  test("when you fill in the form and hit submit, it makes a request to the backend, done = true", async () => {
     const queryClient = new QueryClient();
     const recommendationRequest = {
       id: 17,
@@ -148,5 +237,6 @@ describe("RecommendationRequestCreatePage tests", () => {
       "New Recommendation Request Created - id: 17",
     );
     expect(mockNavigate).toHaveBeenCalledWith({ to: "/recommendationrequest" });
+    
   });
 });
