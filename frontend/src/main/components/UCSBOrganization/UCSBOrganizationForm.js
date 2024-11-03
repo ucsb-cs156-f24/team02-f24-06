@@ -75,13 +75,19 @@ function UCSBOrganizationForm({
 
       <Form.Group className="mb-3">
         <Form.Label htmlFor="inactive">Inactive</Form.Label>
-        <Form.Check
-          data-testid={testIdPrefix + "inactive"}
+        <Form.Select
+          data-testid={testIdPrefix + "-inactive"}
           id="inactive"
-          type="checkbox"
           isInvalid={Boolean(errors.inactive)}
-          {...register("inactive")}
-        />
+          {...register("inactive", { required: "This field is required." })}
+        >
+          <option value="">Select...</option>
+          <option value="true">True</option>
+          <option value="false">False</option>
+        </Form.Select>
+        <Form.Control.Feedback type="invalid">
+          {errors.inactive?.message}
+        </Form.Control.Feedback>
       </Form.Group>
 
       <Button type="submit" data-testid={testIdPrefix + "-submit"}>

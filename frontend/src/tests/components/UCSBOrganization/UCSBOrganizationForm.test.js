@@ -39,8 +39,8 @@ describe("UCSBOrganizationForm tests", () => {
       expect(header).toBeInTheDocument();
     });
 
-    // Check the inactive checkbox and other form fields using correct data-testid values
-    expect(screen.getByTestId(`${testId}inactive`)).toBeInTheDocument();
+    // Check the inactive dropdown and other form fields using correct data-testid values
+    expect(screen.getByTestId(`${testId}-inactive`)).toBeInTheDocument();
     expect(screen.getByTestId(`${testId}-orgCode`)).toBeInTheDocument();
     expect(
       screen.getByTestId(`${testId}-orgTranslationShort`),
@@ -73,6 +73,7 @@ describe("UCSBOrganizationForm tests", () => {
       screen.getByTestId(`${testId}-orgTranslationShort`),
     ).toBeInTheDocument();
     expect(screen.getByTestId(`${testId}-orgTranslation`)).toBeInTheDocument();
+    expect(screen.getByTestId(`${testId}-inactive`)).toBeInTheDocument();
   });
 
   test("that navigate(-1) is called when Cancel is clicked", async () => {
@@ -102,7 +103,9 @@ describe("UCSBOrganizationForm tests", () => {
     expect(await screen.findByText(/Create/)).toBeInTheDocument();
     const submitButton = screen.getByTestId(`${testId}-submit`);
     fireEvent.click(submitButton);
+    await screen.findByText(/This field is required./); // Ensures error message is shown
 
+    // Check for validation errors on required fields
     await screen.findByText(/Organization Code is required./);
     expect(
       screen.getByText(/Organization Translation Short is required./),
@@ -110,5 +113,31 @@ describe("UCSBOrganizationForm tests", () => {
     expect(
       screen.getByText(/Organization Translation is required./),
     ).toBeInTheDocument();
+
+    // Check for validation error on inactive field if it’s required
+    if (screen.queryByText(/This field is required./)) {
+      expect(screen.getByText(/This field is required./)).toBeInTheDocument();
+    }
+  });
+
+  test("selects the correct option in the inactive dropdown", async () => {
+    render(
+      <QueryClientProvider client={queryClient}>
+        <Router>
+          <UCSBOrganizationForm />
+        </Router>
+      </QueryClientProvider>,
+    );
+
+    // Find the inactive dropdown
+    const inactiveDropdown = screen.getByTestId(`${testId}-inactive`);
+
+    // Select "true" option
+    fireEvent.change(inactiveDropdown, { target: { value: "true" } });
+    expect(inactiveDropdown.value).toBe("true");
+
+    // Select "false" option
+    fireEvent.change(inactiveDropdown, { target: { value: "false" } });
+    expect(inactiveDropdown.value).toBe("false");
   });
 });
