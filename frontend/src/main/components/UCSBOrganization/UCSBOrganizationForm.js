@@ -21,19 +21,21 @@ function UCSBOrganizationForm({
 
     return (
       <Form onSubmit={handleSubmit(submitAction)}>
-        {initialContents && (
-            <Form.Group className="mb-3">
+        <Form.Group className="mb-3">
               <Form.Label htmlFor="orgCode">Organization Code</Form.Label>
               <Form.Control
                 data-testid={testIdPrefix + "-orgCode"}
                 id="orgCode"
                 type="text"
-                {...register("orgCode")}
-                value={initialContents.orgCode}
-                disabled
+                isInvalid={Boolean(errors.orgCode)}
+                {...register("orgCode", {
+                  required: "Organization Code is required.",
+                })}
               />
-            </Form.Group>
-        )}
+              <Form.Control.Feedback type="invalid">
+                {errors.orgCode?.message}
+              </Form.Control.Feedback>
+        </Form.Group>
 
         <Form.Group className="mb-3">
           <Form.Label htmlFor="orgTranslationShort">Organization Translation Short</Form.Label>
@@ -68,19 +70,14 @@ function UCSBOrganizationForm({
         </Form.Group>
 
         <Form.Group className="mb-3">
-            <Form.Label htmlFor="inactive">Inactive</Form.Label>
-                <Form.Control
-                data-testid={testIdPrefix + "-inactive"}
-                id="inactive"
-                type="boolean"
-                isInvalid={Boolean(errors.inactive)}
-                {...register("inactive", {
-                    required: "Inactive is required.",
-                    })}
+                <Form.Label htmlFor="inactive">Inactive</Form.Label>
+                <Form.Check
+                    data-testid={testIdPrefix + "inactive"}
+                    id="inactive"
+                    type="checkbox"
+                    isInvalid={Boolean(errors.inactive)}
+                    {...register("inactive")}
                 />
-                <Form.Control.Feedback type="invalid">
-                {errors.inactive?.message}
-                </Form.Control.Feedback>
         </Form.Group>
 
         <Button type="submit" data-testid={testIdPrefix + "-submit"}>
