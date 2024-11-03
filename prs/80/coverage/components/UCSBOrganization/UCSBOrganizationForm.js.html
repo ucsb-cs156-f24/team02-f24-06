@@ -23,30 +23,30 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">0% </span>
+                <span class="strong">100% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>0/5</span>
+                <span class='fraction'>5/5</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">0% </span>
+                <span class="strong">100% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>0/5</span>
+                <span class='fraction'>3/3</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">0% </span>
+                <span class="strong">100% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>0/2</span>
+                <span class='fraction'>2/2</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">0% </span>
+                <span class="strong">100% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>0/5</span>
+                <span class='fraction'>5/5</span>
             </div>
         
             
@@ -61,7 +61,7 @@
             </div>
         </template>
     </div>
-    <div class='status-line low'></div>
+    <div class='status-line high'></div>
     <pre><table class="coverage">
 <tr><td class="line-count quiet"><a name='L1'></a><a href='#L1'>1</a>
 <a name='L2'></a><a href='#L2'>2</a>
@@ -162,7 +162,9 @@
 <a name='L97'></a><a href='#L97'>97</a>
 <a name='L98'></a><a href='#L98'>98</a>
 <a name='L99'></a><a href='#L99'>99</a>
-<a name='L100'></a><a href='#L100'>100</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<a name='L100'></a><a href='#L100'>100</a>
+<a name='L101'></a><a href='#L101'>101</a>
+<a name='L102'></a><a href='#L102'>102</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -176,14 +178,14 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">5x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">5x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">5x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">5x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -252,7 +254,9 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -265,109 +269,111 @@
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 &nbsp;
-function <span class="fstat-no" title="function not covered" >UCSBOrganizationForm(</span>{
-    initialContents,
-    submitAction,
-    buttonLabel = <span class="branch-0 cbranch-no" title="branch not covered" >"Create",</span>
+function UCSBOrganizationForm({
+  initialContents,
+  submitAction,
+  buttonLabel = "Create",
 }) {
-    // Stryker disable all
-    const {
-        register,
-        formState: { errors },
-        handleSubmit,
-    } = <span class="cstat-no" title="statement not covered" >useForm({ defaultValues: initialContents || {} });</span>
-    // Stryker restore all
+  // Stryker disable all
+  const {
+    register,
+    formState: { errors },
+    handleSubmit,
+  } = useForm({ defaultValues: initialContents || {} });
+  // Stryker restore all
 &nbsp;
-    const navigate = <span class="cstat-no" title="statement not covered" >useNavigate();</span>
+  const navigate = useNavigate();
 &nbsp;
-    const testIdPrefix = <span class="cstat-no" title="statement not covered" >"UCSBOrganizationForm";</span>
+  const testIdPrefix = "UCSBOrganizationForm";
 &nbsp;
-<span class="cstat-no" title="statement not covered" >    return (</span>
-      &lt;Form onSubmit={handleSubmit(submitAction)}&gt;
-        {initialContents &amp;&amp; (
-            &lt;Form.Group className="mb-3"&gt;
-              &lt;Form.Label htmlFor="orgCode"&gt;Organization Code&lt;/Form.Label&gt;
-              &lt;Form.Control
-                data-testid={testIdPrefix + "-orgCode"}
-                id="orgCode"
-                type="text"
-                {...register("orgCode")}
-                value={initialContents.orgCode}
-                disabled
-              /&gt;
-            &lt;/Form.Group&gt;
-        )}
+  return (
+    &lt;Form onSubmit={handleSubmit(submitAction)}&gt;
+      &lt;Form.Group className="mb-3"&gt;
+        &lt;Form.Label htmlFor="orgCode"&gt;Organization Code&lt;/Form.Label&gt;
+        &lt;Form.Control
+          data-testid={testIdPrefix + "-orgCode"}
+          id="orgCode"
+          type="text"
+          isInvalid={Boolean(errors.orgCode)}
+          {...register("orgCode", {
+            required: "Organization Code is required.",
+          })}
+        /&gt;
+        &lt;Form.Control.Feedback type="invalid"&gt;
+          {errors.orgCode?.message}
+        &lt;/Form.Control.Feedback&gt;
+      &lt;/Form.Group&gt;
 &nbsp;
-        &lt;Form.Group className="mb-3"&gt;
-          &lt;Form.Label htmlFor="orgTranslationShort"&gt;Organization Translation Short&lt;/Form.Label&gt;
-            &lt;Form.Control
-              data-testid={testIdPrefix + "-orgTranslationShort"}
-              id="orgTranslationShort"
-              type="text"
-              isInvalid={Boolean(errors.orgTranslationShort)}
-              {...register("orgTranslationShort", {
-                required: "Organization Translation Short is required.",
-                })}
-            /&gt;
-            &lt;Form.Control.Feedback type="invalid"&gt;
-              {errors.orgTranslationShort?.message}
-            &lt;/Form.Control.Feedback&gt;
-        &lt;/Form.Group&gt;
+      &lt;Form.Group className="mb-3"&gt;
+        &lt;Form.Label htmlFor="orgTranslationShort"&gt;
+          Organization Translation Short
+        &lt;/Form.Label&gt;
+        &lt;Form.Control
+          data-testid={testIdPrefix + "-orgTranslationShort"}
+          id="orgTranslationShort"
+          type="text"
+          isInvalid={Boolean(errors.orgTranslationShort)}
+          {...register("orgTranslationShort", {
+            required: "Organization Translation Short is required.",
+          })}
+        /&gt;
+        &lt;Form.Control.Feedback type="invalid"&gt;
+          {errors.orgTranslationShort?.message}
+        &lt;/Form.Control.Feedback&gt;
+      &lt;/Form.Group&gt;
 &nbsp;
-        &lt;Form.Group className="mb-3"&gt;
-            &lt;Form.Label htmlFor="orgTranslation"&gt;Organization Translation&lt;/Form.Label&gt;
-                &lt;Form.Control
-                data-testid={testIdPrefix + "-orgTranslation"}
-                id="orgTranslation"
-                type="text"
-                isInvalid={Boolean(errors.orgTranslation)}
-                {...register("orgTranslation", {
-                    required: "Organization Translation is required.",
-                    })}
-                /&gt;
-                &lt;Form.Control.Feedback type="invalid"&gt;
-                {errors.orgTranslation?.message}
-                &lt;/Form.Control.Feedback&gt;
-        &lt;/Form.Group&gt;
+      &lt;Form.Group className="mb-3"&gt;
+        &lt;Form.Label htmlFor="orgTranslation"&gt;
+          Organization Translation
+        &lt;/Form.Label&gt;
+        &lt;Form.Control
+          data-testid={testIdPrefix + "-orgTranslation"}
+          id="orgTranslation"
+          type="text"
+          isInvalid={Boolean(errors.orgTranslation)}
+          {...register("orgTranslation", {
+            required: "Organization Translation is required.",
+          })}
+        /&gt;
+        &lt;Form.Control.Feedback type="invalid"&gt;
+          {errors.orgTranslation?.message}
+        &lt;/Form.Control.Feedback&gt;
+      &lt;/Form.Group&gt;
 &nbsp;
-        &lt;Form.Group className="mb-3"&gt;
-            &lt;Form.Label htmlFor="inactive"&gt;Inactive&lt;/Form.Label&gt;
-                &lt;Form.Control
-                data-testid={testIdPrefix + "-inactive"}
-                id="inactive"
-                type="boolean"
-                isInvalid={Boolean(errors.inactive)}
-                {...register("inactive", {
-                    required: "Inactive is required.",
-                    })}
-                /&gt;
-                &lt;Form.Control.Feedback type="invalid"&gt;
-                {errors.inactive?.message}
-                &lt;/Form.Control.Feedback&gt;
-        &lt;/Form.Group&gt;
+      &lt;Form.Group className="mb-3"&gt;
+        &lt;Form.Label htmlFor="inactive"&gt;Inactive&lt;/Form.Label&gt;
+        &lt;Form.Check
+          data-testid={testIdPrefix + "inactive"}
+          id="inactive"
+          type="checkbox"
+          isInvalid={Boolean(errors.inactive)}
+          {...register("inactive")}
+        /&gt;
+      &lt;/Form.Group&gt;
 &nbsp;
-        &lt;Button type="submit" data-testid={testIdPrefix + "-submit"}&gt;
-            {buttonLabel}
-        &lt;/Button&gt;
-        &lt;Button
-            variant="Secondary"
-            onClick={<span class="fstat-no" title="function not covered" >()</span> =&gt; <span class="cstat-no" title="statement not covered" >navigate(-1)}</span>
-            data-testid={testIdPrefix + "-cancel"}
-        &gt;
-            Cancel
-        &lt;/Button&gt;
-      &lt;/Form&gt;
-    );
+      &lt;Button type="submit" data-testid={testIdPrefix + "-submit"}&gt;
+        {buttonLabel}
+      &lt;/Button&gt;
+      &lt;Button
+        variant="Secondary"
+        onClick={() =&gt; navigate(-1)}
+        data-testid={testIdPrefix + "-cancel"}
+      &gt;
+        Cancel
+      &lt;/Button&gt;
+    &lt;/Form&gt;
+  );
 }
 &nbsp;
-export default UCSBOrganizationForm;</pre></td></tr></table></pre>
+export default UCSBOrganizationForm;
+&nbsp;</pre></td></tr></table></pre>
 
                 <div class='push'></div><!-- for sticky footer -->
             </div><!-- /wrapper -->
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2024-11-03T01:01:50.520Z
+                at 2024-11-03T01:14:28.473Z
             </div>
         <script src="../../prettify.js"></script>
         <script>
