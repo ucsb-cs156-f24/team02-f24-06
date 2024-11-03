@@ -4,17 +4,17 @@ import { systemInfoFixtures } from "fixtures/systemInfoFixtures";
 import { recommendationRequestFixtures } from "fixtures/recommendationRequestFixtures";
 import { http, HttpResponse } from "msw";
 
-import RecommendationRequestEditPage from "main/pages/RecommendationRequest/RecommendationRequestEditPage";
+import RecommendationRequestIndexPage from "main/pages/RecommendationRequest/RecommendationRequestIndexPage";
 
 export default {
-  title: "pages/RecommendationRequest/RecommendationRequestEditPage",
-  component: RecommendationRequestEditPage,
+  title: "pages/RecommendationRequest/RecommendationRequestIndexPage",
+  component: RecommendationRequestIndexPage,
 };
 
-const Template = () => <RecommendationRequestEditPage storybook={true} />;
+const Template = () => <RecommendationRequestIndexPage storybook={true} />;
 
-export const Default = Template.bind({});
-Default.parameters = {
+export const Empty = Template.bind({});
+Empty.parameters = {
   msw: [
     http.get("/api/currentUser", () => {
       return HttpResponse.json(apiCurrentUserFixtures.userOnly, {
@@ -26,12 +26,42 @@ Default.parameters = {
         status: 200,
       });
     }),
-    http.get("/api/recommendationrequest", () => {
-      return HttpResponse.json(recommendationRequestFixtures.threeRequests[0], {
-        status: 200,
-      });
+    http.get("/api/recommendationrequest/all", () => {
+      return HttpResponse.json([], { status: 200 });
     }),
-    http.put("/api/recommendationrequest", () => {
+  ],
+};
+
+export const ThreeItemsOrdinaryUser = Template.bind({});
+
+ThreeItemsOrdinaryUser.parameters = {
+  msw: [
+    http.get("/api/currentUser", () => {
+      return HttpResponse.json(apiCurrentUserFixtures.userOnly);
+    }),
+    http.get("/api/systemInfo", () => {
+      return HttpResponse.json(systemInfoFixtures.showingNeither);
+    }),
+    http.get("/api/recommendationrequest/all", () => {
+      return HttpResponse.json(recommendationRequestFixtures.threeRequests);
+    }),
+  ],
+};
+
+export const ThreeItemsAdminUser = Template.bind({});
+
+ThreeItemsAdminUser.parameters = {
+  msw: [
+    http.get("/api/currentUser", () => {
+      return HttpResponse.json(apiCurrentUserFixtures.adminUser);
+    }),
+    http.get("/api/systemInfo", () => {
+      return HttpResponse.json(systemInfoFixtures.showingNeither);
+    }),
+    http.get("/api/recommendationrequest/all", () => {
+      return HttpResponse.json(recommendationRequestFixtures.threeRequests);
+    }),
+    http.delete("/api/recommendationrequest", () => {
       return HttpResponse.json({}, { status: 200 });
     }),
   ],
