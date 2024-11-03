@@ -113,11 +113,6 @@ describe("UCSBOrganizationForm tests", () => {
     expect(
       screen.getByText(/Organization Translation is required./),
     ).toBeInTheDocument();
-
-    // Check for validation error on inactive field if it’s required
-    if (screen.queryByText(/This field is required./)) {
-      expect(screen.getByText(/This field is required./)).toBeInTheDocument();
-    }
   });
 
   test("selects the correct option in the inactive dropdown", async () => {
