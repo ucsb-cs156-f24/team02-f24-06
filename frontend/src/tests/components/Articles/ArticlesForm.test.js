@@ -16,7 +16,13 @@ jest.mock("react-router-dom", () => ({
 describe("ArticlesForm tests", () => {
   const queryClient = new QueryClient();
 
-  const expectedHeaders = ["Title", "URL", "Explanation", "Email", "Date Added"];
+  const expectedHeaders = [
+    "Title",
+    "URL",
+    "Explanation",
+    "Email",
+    "Date Added",
+  ];
   const testId = "ArticlesForm";
 
   test("renders correctly with no initialContents", async () => {
@@ -25,7 +31,7 @@ describe("ArticlesForm tests", () => {
         <Router>
           <ArticlesForm />
         </Router>
-      </QueryClientProvider>
+      </QueryClientProvider>,
     );
 
     expect(await screen.findByText(/Create/)).toBeInTheDocument();
@@ -42,7 +48,7 @@ describe("ArticlesForm tests", () => {
         <Router>
           <ArticlesForm initialContents={articlesFixtures.oneArticle} />
         </Router>
-      </QueryClientProvider>
+      </QueryClientProvider>,
     );
 
     expect(await screen.findByText(/Create/)).toBeInTheDocument();
@@ -62,7 +68,7 @@ describe("ArticlesForm tests", () => {
         <Router>
           <ArticlesForm />
         </Router>
-      </QueryClientProvider>
+      </QueryClientProvider>,
     );
     expect(await screen.findByTestId(`${testId}-cancel`)).toBeInTheDocument();
     const cancelButton = screen.getByTestId(`${testId}-cancel`);
@@ -78,7 +84,7 @@ describe("ArticlesForm tests", () => {
         <Router>
           <ArticlesForm />
         </Router>
-      </QueryClientProvider>
+      </QueryClientProvider>,
     );
 
     expect(await screen.findByText(/Create/)).toBeInTheDocument();
@@ -108,7 +114,7 @@ describe("ArticlesForm tests", () => {
         <Router>
           <ArticlesForm submitAction={mockSubmitAction} />
         </Router>
-      </QueryClientProvider>
+      </QueryClientProvider>,
     );
 
     const titleField = screen.getByTestId(`${testId}-title`);
@@ -120,7 +126,9 @@ describe("ArticlesForm tests", () => {
 
     fireEvent.change(titleField, { target: { value: "Sample Article" } });
     fireEvent.change(urlField, { target: { value: "http://example.com" } });
-    fireEvent.change(explanationField, { target: { value: "Sample explanation" } });
+    fireEvent.change(explanationField, {
+      target: { value: "Sample explanation" },
+    });
     fireEvent.change(emailField, { target: { value: "test@example.com" } });
     fireEvent.change(dateAddedField, { target: { value: "2022-01-01T12:00" } });
 
@@ -130,9 +138,12 @@ describe("ArticlesForm tests", () => {
 
     expect(screen.queryByText(/Title is required/)).not.toBeInTheDocument();
     expect(screen.queryByText(/URL is required/)).not.toBeInTheDocument();
-    expect(screen.queryByText(/Explanation is required/)).not.toBeInTheDocument();
+    expect(
+      screen.queryByText(/Explanation is required/),
+    ).not.toBeInTheDocument();
     expect(screen.queryByText(/Email is required/)).not.toBeInTheDocument();
-    expect(screen.queryByText(/Date added is required/)).not.toBeInTheDocument();
+    expect(
+      screen.queryByText(/Date added is required/),
+    ).not.toBeInTheDocument();
   });
 });
-
