@@ -49,8 +49,8 @@ function ArticlesForm({
               {...register("title", {
                 required: "Title is required.",
                 maxLength: {
-                  value: 100,
-                  message: "Max length 100 characters",
+                  value: 255,
+                  message: "Max length 255 characters",
                 },
               })}
             />
@@ -72,6 +72,10 @@ function ArticlesForm({
               isInvalid={Boolean(errors.url)}
               {...register("url", {
                 required: "URL is required.",
+                maxLength: {
+                  value: 255,
+                  message: "Max length 255 characters",
+                },
                 pattern: {
                   value: url_regex,
                   message: "URL must be valid",
@@ -120,6 +124,10 @@ function ArticlesForm({
               isInvalid={Boolean(errors.email)}
               {...register("email", {
                 required: "Email is required.",
+                maxLength: {
+                  value: 255,
+                  message: "Max length 255 characters",
+                },
                 pattern: {
                   value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
                   message: "Email must be valid",
@@ -142,7 +150,7 @@ function ArticlesForm({
               id="dateAdded"
               type="datetime-local"
               isInvalid={Boolean(errors.dateAdded)}
-              {...register("dateAdded", {
+              {...register("date_added", {
                 required: "Date added is required.",
               })}
             />

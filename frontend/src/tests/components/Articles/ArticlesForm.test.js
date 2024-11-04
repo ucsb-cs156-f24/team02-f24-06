@@ -98,11 +98,11 @@ describe("ArticlesForm tests", () => {
     expect(screen.getByText(/Date added is required/)).toBeInTheDocument();
 
     const titleInput = screen.getByTestId(`${testId}-title`);
-    fireEvent.change(titleInput, { target: { value: "a".repeat(101) } });
+    fireEvent.change(titleInput, { target: { value: "a".repeat(256) } });
     fireEvent.click(submitButton);
 
     await waitFor(() => {
-      expect(screen.getByText(/Max length 100 characters/)).toBeInTheDocument();
+      expect(screen.getByText(/Max length 255 characters/)).toBeInTheDocument();
     });
   });
 
