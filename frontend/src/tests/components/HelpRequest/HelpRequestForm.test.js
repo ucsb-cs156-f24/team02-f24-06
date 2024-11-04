@@ -15,7 +15,7 @@ describe("HelpRequestForm tests", () => {
     render(
       <Router>
         <HelpRequestForm />
-      </Router>
+      </Router>,
     );
     await screen.findByText(/Requester's Email/);
     await screen.findByText(/Team ID/);
@@ -30,7 +30,7 @@ describe("HelpRequestForm tests", () => {
     render(
       <Router>
         <HelpRequestForm initialContents={helpRequestFixtures.oneHelpRequest} />
-      </Router>
+      </Router>,
     );
     await screen.findByTestId(/HelpRequestForm-id/);
     expect(screen.getByText(/Id/)).toBeInTheDocument();
@@ -41,7 +41,7 @@ describe("HelpRequestForm tests", () => {
     render(
       <Router>
         <HelpRequestForm />
-      </Router>
+      </Router>,
     );
     await screen.findByTestId("HelpRequestForm-requestTime");
     const requestTimeField = screen.getByTestId("HelpRequestForm-requestTime");
@@ -57,7 +57,7 @@ describe("HelpRequestForm tests", () => {
     render(
       <Router>
         <HelpRequestForm />
-      </Router>
+      </Router>,
     );
     await screen.findByTestId("HelpRequestForm-submit");
     const submitButton = screen.getByTestId("HelpRequestForm-submit");
@@ -67,7 +67,7 @@ describe("HelpRequestForm tests", () => {
     await screen.findByText(/Requester's Email is required./);
     expect(screen.getByText(/Team ID is required./)).toBeInTheDocument();
     expect(
-      screen.getByText(/Table or Breakout Room # is required./)
+      screen.getByText(/Table or Breakout Room # is required./),
     ).toBeInTheDocument();
     expect(screen.getByText(/Request Time is required./)).toBeInTheDocument();
     expect(screen.getByText(/Explanation is required./)).toBeInTheDocument();
@@ -80,16 +80,16 @@ describe("HelpRequestForm tests", () => {
     render(
       <Router>
         <HelpRequestForm submitAction={mockSubmitAction} />
-      </Router>
+      </Router>,
     );
     await screen.findByTestId("HelpRequestForm-requesterEmail");
 
     const requesterEmailField = screen.getByTestId(
-      "HelpRequestForm-requesterEmail"
+      "HelpRequestForm-requesterEmail",
     );
     const teamIdField = screen.getByTestId("HelpRequestForm-teamId");
     const tableOrBreakoutRoomField = screen.getByTestId(
-      "HelpRequestForm-tableOrBreakoutRoom"
+      "HelpRequestForm-tableOrBreakoutRoom",
     );
     const requestTimeField = screen.getByTestId("HelpRequestForm-requestTime");
     const explanationField = screen.getByTestId("HelpRequestForm-explanation");
@@ -112,7 +112,7 @@ describe("HelpRequestForm tests", () => {
     await waitFor(() => expect(mockSubmitAction).toHaveBeenCalled());
 
     expect(
-      screen.queryByText(/Request Time is required/)
+      screen.queryByText(/Request Time is required/),
     ).not.toBeInTheDocument();
   });
 
@@ -120,7 +120,7 @@ describe("HelpRequestForm tests", () => {
     render(
       <Router>
         <HelpRequestForm />
-      </Router>
+      </Router>,
     );
     await screen.findByTestId("HelpRequestForm-cancel");
     const cancelButton = screen.getByTestId("HelpRequestForm-cancel");
