@@ -15,7 +15,7 @@ describe("ArticlesForm tests", () => {
     render(
       <Router>
         <ArticlesForm />
-      </Router>,
+      </Router>
     );
     await screen.findByText(/Title/);
     await screen.findByText(/Create/);
@@ -25,7 +25,7 @@ describe("ArticlesForm tests", () => {
     render(
       <Router>
         <ArticlesForm initialContents={articlesFixtures.oneArticle} />
-      </Router>,
+      </Router>
     );
     await screen.findByTestId(/ArticlesForm-id/);
     expect(screen.getByText(/Id/)).toBeInTheDocument();
@@ -36,7 +36,7 @@ describe("ArticlesForm tests", () => {
     render(
       <Router>
         <ArticlesForm />
-      </Router>,
+      </Router>
     );
     await screen.findByTestId("ArticlesForm-url");
     const urlField = screen.getByTestId("ArticlesForm-url");
@@ -50,19 +50,15 @@ describe("ArticlesForm tests", () => {
     fireEvent.click(submitButton);
 
     await screen.findByText(/Url must be in the correct format/);
-    expect(
-      screen.getByText(/Url must be in the correct format/),
-    ).toBeInTheDocument();
-    expect(
-      screen.getByText(/Email must be in the correct format/),
-    ).toBeInTheDocument();
+    expect(screen.getByText(/Url must be in the correct format/)).toBeInTheDocument();
+    expect(screen.getByText(/Email must be in the format example@example.com/)).toBeInTheDocument();
   });
 
   test("Correct Error messages on missing input", async () => {
     render(
       <Router>
         <ArticlesForm />
-      </Router>,
+      </Router>
     );
     await screen.findByTestId("ArticlesForm-submit");
     const submitButton = screen.getByTestId("ArticlesForm-submit");
@@ -82,7 +78,7 @@ describe("ArticlesForm tests", () => {
     render(
       <Router>
         <ArticlesForm submitAction={mockSubmitAction} />
-      </Router>,
+      </Router>
     );
     await screen.findByTestId("ArticlesForm-title");
 
@@ -95,31 +91,23 @@ describe("ArticlesForm tests", () => {
 
     fireEvent.change(titleField, { target: { value: "A new title" } });
     fireEvent.change(urlField, { target: { value: "https://example.com" } });
-    fireEvent.change(explanationField, {
-      target: { value: "A new explanation" },
-    });
+    fireEvent.change(explanationField, { target: { value: "A new explanation" } });
     fireEvent.change(emailField, { target: { value: "test@example.com" } });
     fireEvent.change(dateField, { target: { value: "2022-03-21T12:00:00" } });
     fireEvent.click(submitButton);
 
     await waitFor(() => expect(mockSubmitAction).toHaveBeenCalled());
 
-    expect(
-      screen.queryByText(/Url must be in the correct format/),
-    ).not.toBeInTheDocument();
-    expect(
-      screen.queryByText(/Email must be in the correct format/),
-    ).not.toBeInTheDocument();
-    expect(
-      screen.queryByText(/DateAdded must be in the correct format/),
-    ).not.toBeInTheDocument();
+    expect(screen.queryByText(/Url must be in the correct format/)).not.toBeInTheDocument();
+    expect(screen.queryByText(/Email must be in the format example@example.com/)).not.toBeInTheDocument();
+    expect(screen.queryByText(/dateAdded must be in the correct format/)).not.toBeInTheDocument();
   });
 
   test("that navigate(-1) is called when Cancel is clicked", async () => {
     render(
       <Router>
         <ArticlesForm />
-      </Router>,
+      </Router>
     );
     await screen.findByTestId("ArticlesForm-cancel");
     const cancelButton = screen.getByTestId("ArticlesForm-cancel");

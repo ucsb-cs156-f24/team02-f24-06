@@ -68,10 +68,10 @@ function ArticlesForm({ initialContents, submitAction, buttonLabel = "Create" })
               type="text"
               isInvalid={Boolean(errors.url)}
               {...register("url", {
-                required: "URL is required.",
+                required: "Url is required.",
                 pattern: {
                   value: isUrl_regex,
-                  message: "URL must start with https://",
+                  message: "Url must be in the correct format",
                 },
                 maxLength: {
                   value: 255,
@@ -148,10 +148,10 @@ function ArticlesForm({ initialContents, submitAction, buttonLabel = "Create" })
               type="datetime-local"
               isInvalid={Boolean(errors.dateAdded)}
               {...register("dateAdded", {
-                required: "Date Added is required.",
+                required: "dateAdded is required.",
                 pattern: {
                   value: isodate_regex,
-                  message: "Date Added must be in ISO format.",
+                  message: "dateAdded must be in the correct format.",
                 },
               })}
             />
