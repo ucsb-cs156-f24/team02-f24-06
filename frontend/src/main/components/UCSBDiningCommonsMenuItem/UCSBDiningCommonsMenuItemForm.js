@@ -1,3 +1,4 @@
+//Xinghan Yang
 import { Button, Form } from "react-bootstrap";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
@@ -38,7 +39,7 @@ function UCSBDiningCommonsMenuItemForm({
       <Form.Group className="mb-3">
         <Form.Label htmlFor="diningCommonsCode">diningCommonsCode</Form.Label>
         <Form.Control
-          data-testid={testIdPrefix + "-name"}
+          data-testid={testIdPrefix + "-diningCommonsCode"}
           id="diningCommonsCode"
           type="text"
           isInvalid={Boolean(errors.diningCommonsCode)}
@@ -51,7 +52,7 @@ function UCSBDiningCommonsMenuItemForm({
           })}
         />
         <Form.Control.Feedback type="invalid">
-          {errors.name?.message}
+          {errors.diningCommonsCode?.message}
         </Form.Control.Feedback>
       </Form.Group>
 
@@ -76,14 +77,14 @@ function UCSBDiningCommonsMenuItemForm({
       </Form.Group>
   
       <Form.Group className="mb-3">
-        <Form.Label htmlFor="name">station</Form.Label>
+        <Form.Label htmlFor="station">station</Form.Label>
         <Form.Control
           data-testid={testIdPrefix + "-station"}
           id="station"
           type="text"
           isInvalid={Boolean(errors.station)}
           {...register("station", {
-            required: "station is required.",
+            required: "Station is required.",
             maxLength: {
               value: 30,
               message: "Max length 30 characters",
@@ -91,7 +92,7 @@ function UCSBDiningCommonsMenuItemForm({
           })}
         />
         <Form.Control.Feedback type="invalid">
-          {errors.name?.message}
+          {errors.station?.message}
         </Form.Control.Feedback>
       </Form.Group>
 
