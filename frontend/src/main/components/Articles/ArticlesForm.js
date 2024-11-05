@@ -120,9 +120,7 @@ function ArticlesForm({
 
         <Col>
           <Form.Group className="mb-3">
-            <Form.Label htmlFor="dateAdded">
-              Date Added (ISO format)
-            </Form.Label>
+            <Form.Label htmlFor="dateAdded">Date Added (ISO format)</Form.Label>
             <Form.Control
               data-testid="ArticlesForm-dateAdded"
               id="dateAdded"

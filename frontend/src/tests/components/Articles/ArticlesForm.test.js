@@ -15,7 +15,7 @@ describe("ArticlesForm tests", () => {
     render(
       <Router>
         <ArticlesForm />
-      </Router>
+      </Router>,
     );
     await screen.findByText(/Title/);
     await screen.findByText(/Create/);
@@ -25,7 +25,7 @@ describe("ArticlesForm tests", () => {
     render(
       <Router>
         <ArticlesForm initialContents={articlesFixtures.oneArticle} />
-      </Router>
+      </Router>,
     );
     await screen.findByTestId(/ArticlesForm-id/);
     expect(screen.getByText(/Id/)).toBeInTheDocument();
@@ -36,7 +36,7 @@ describe("ArticlesForm tests", () => {
     render(
       <Router>
         <ArticlesForm />
-      </Router>
+      </Router>,
     );
     await screen.findByTestId("ArticlesForm-dateAdded");
     const dateAddedField = screen.getByTestId("ArticlesForm-dateAdded");
@@ -56,7 +56,7 @@ describe("ArticlesForm tests", () => {
     render(
       <Router>
         <ArticlesForm />
-      </Router>
+      </Router>,
     );
     await screen.findByTestId("ArticlesForm-submit");
     const submitButton = screen.getByTestId("ArticlesForm-submit");
@@ -76,7 +76,7 @@ describe("ArticlesForm tests", () => {
     render(
       <Router>
         <ArticlesForm submitAction={mockSubmitAction} />
-      </Router>
+      </Router>,
     );
     await screen.findByTestId("ArticlesForm-title");
 
@@ -89,9 +89,13 @@ describe("ArticlesForm tests", () => {
 
     fireEvent.change(titleField, { target: { value: "Test Title" } });
     fireEvent.change(urlField, { target: { value: "https://example.com" } });
-    fireEvent.change(explanationField, { target: { value: "Explanation text" } });
+    fireEvent.change(explanationField, {
+      target: { value: "Explanation text" },
+    });
     fireEvent.change(emailField, { target: { value: "author@example.com" } });
-    fireEvent.change(dateAddedField, { target: { value: "2022-01-02T12:00:00" } });
+    fireEvent.change(dateAddedField, {
+      target: { value: "2022-01-02T12:00:00" },
+    });
     fireEvent.click(submitButton);
 
     await waitFor(() => expect(mockSubmitAction).toHaveBeenCalled());
@@ -105,7 +109,7 @@ describe("ArticlesForm tests", () => {
     render(
       <Router>
         <ArticlesForm />
-      </Router>
+      </Router>,
     );
     await screen.findByTestId("ArticlesForm-cancel");
     const cancelButton = screen.getByTestId("ArticlesForm-cancel");
