@@ -25,7 +25,7 @@
             <div class='fl pad1y space-right2'>
                 <span class="strong">100% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>7/7</span>
+                <span class='fraction'>5/5</span>
             </div>
         
             
@@ -46,7 +46,7 @@
             <div class='fl pad1y space-right2'>
                 <span class="strong">100% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>7/7</span>
+                <span class='fraction'>5/5</span>
             </div>
         
             
@@ -242,12 +242,12 @@
 <a name='L177'></a><a href='#L177'>177</a>
 <a name='L178'></a><a href='#L178'>178</a>
 <a name='L179'></a><a href='#L179'>179</a>
-<a name='L180'></a><a href='#L180'>180</a>
-<a name='L181'></a><a href='#L181'>181</a>
-<a name='L182'></a><a href='#L182'>182</a>
-<a name='L183'></a><a href='#L183'>183</a>
-<a name='L184'></a><a href='#L184'>184</a>
-<a name='L185'></a><a href='#L185'>185</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<a name='L180'></a><a href='#L180'>180</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -258,22 +258,12 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">9x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">9x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">9x</span>
-<span class="cline-any cline-yes">9x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">9x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">9x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">9x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -435,19 +425,22 @@
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 &nbsp;
-function ArticlesForm({ initialContents, submitAction, buttonLabel = "Create" }) {
+function ArticlesForm({
+  initialContents,
+  submitAction,
+  buttonLabel = "Create",
+}) {
+  // Stryker disable all
   const {
     register,
     formState: { errors },
     handleSubmit,
   } = useForm({ defaultValues: initialContents || {} });
+  // Stryker restore all
 &nbsp;
   const navigate = useNavigate();
 &nbsp;
-  const isUrl_regex = /^https:\/\/.+/;
-  const isEmail_regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-  const isodate_regex =
-    /(\d{4}-[01]\d-[0-3]\dT[0-2]\d:[0-5]\d:[0-5]\d\.\d+)|(\d{4}-[01]\d-[0-3]\dT[0-2]\d:[0-5]\d:[0-5]\d)|(\d{4}-[01]\d-[0-3]\dT[0-2]\d:[0-5]\d)/i;
+  const email_regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 &nbsp;
   return (
     &lt;Form onSubmit={handleSubmit(submitAction)}&gt;
@@ -470,14 +463,14 @@ function ArticlesForm({ initialContents, submitAction, buttonLabel = "Create" })
 &nbsp;
         &lt;Col&gt;
           &lt;Form.Group className="mb-3"&gt;
-            &lt;Form.Label htmlFor="title"&gt;Title&lt;/Form.Label&gt;
+            &lt;Form.Label htmlFor="title"&gt;Article Title&lt;/Form.Label&gt;
             &lt;Form.Control
               data-testid="ArticlesForm-title"
               id="title"
               type="text"
               isInvalid={Boolean(errors.title)}
               {...register("title", {
-                required: "Title is required.",
+                required: "An article title is required.",
                 maxLength: {
                   value: 255,
                   message: "Max length 255 characters.",
@@ -494,18 +487,14 @@ function ArticlesForm({ initialContents, submitAction, buttonLabel = "Create" })
       &lt;Row&gt;
         &lt;Col&gt;
           &lt;Form.Group className="mb-3"&gt;
-            &lt;Form.Label htmlFor="url"&gt;URL&lt;/Form.Label&gt;
+            &lt;Form.Label htmlFor="url"&gt;Article URL&lt;/Form.Label&gt;
             &lt;Form.Control
               data-testid="ArticlesForm-url"
               id="url"
               type="text"
               isInvalid={Boolean(errors.url)}
               {...register("url", {
-                required: "Url is required.",
-                pattern: {
-                  value: isUrl_regex,
-                  message: "Url must be in the correct format",
-                },
+                required: "A URL is required.",
                 maxLength: {
                   value: 255,
                   message: "Max length 255 characters.",
@@ -522,14 +511,14 @@ function ArticlesForm({ initialContents, submitAction, buttonLabel = "Create" })
       &lt;Row&gt;
         &lt;Col&gt;
           &lt;Form.Group className="mb-3"&gt;
-            &lt;Form.Label htmlFor="explanation"&gt;Explanation&lt;/Form.Label&gt;
+            &lt;Form.Label htmlFor="explanation"&gt;Article Explanation&lt;/Form.Label&gt;
             &lt;Form.Control
               data-testid="ArticlesForm-explanation"
               id="explanation"
               type="text"
               isInvalid={Boolean(errors.explanation)}
               {...register("explanation", {
-                required: "Explanation is required.",
+                required: "An explanation is required.",
                 maxLength: {
                   value: 255,
                   message: "Max length 255 characters.",
@@ -546,17 +535,17 @@ function ArticlesForm({ initialContents, submitAction, buttonLabel = "Create" })
       &lt;Row&gt;
         &lt;Col&gt;
           &lt;Form.Group className="mb-3"&gt;
-            &lt;Form.Label htmlFor="email"&gt;Email&lt;/Form.Label&gt;
+            &lt;Form.Label htmlFor="email"&gt;Author Email&lt;/Form.Label&gt;
             &lt;Form.Control
               data-testid="ArticlesForm-email"
               id="email"
               type="text"
               isInvalid={Boolean(errors.email)}
               {...register("email", {
-                required: "Email is required.",
+                required: "An email is required.",
                 pattern: {
-                  value: isEmail_regex,
-                  message: "Email must be in the format example@example.com",
+                  value: email_regex,
+                  message: "A valid email is required.",
                 },
                 maxLength: {
                   value: 255,
@@ -581,11 +570,7 @@ function ArticlesForm({ initialContents, submitAction, buttonLabel = "Create" })
               type="datetime-local"
               isInvalid={Boolean(errors.dateAdded)}
               {...register("dateAdded", {
-                required: "dateAdded is required.",
-                pattern: {
-                  value: isodate_regex,
-                  message: "dateAdded must be in the correct format.",
-                },
+                required: "A valid date is required.",
               })}
             /&gt;
             &lt;Form.Control.Feedback type="invalid"&gt;
@@ -622,7 +607,7 @@ export default ArticlesForm;
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2024-11-05T07:01:31.530Z
+                at 2024-11-05T07:28:05.240Z
             </div>
         <script src="../../prettify.js"></script>
         <script>
