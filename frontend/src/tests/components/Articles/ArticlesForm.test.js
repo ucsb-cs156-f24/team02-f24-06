@@ -15,7 +15,7 @@ describe("ArticlesForm tests", () => {
     render(
       <Router>
         <ArticlesForm />
-      </Router>,
+      </Router>
     );
     await screen.findByText(/Article Title/);
     await screen.findByText(/Create/);
@@ -25,7 +25,7 @@ describe("ArticlesForm tests", () => {
     render(
       <Router>
         <ArticlesForm initialContents={articlesFixtures.oneArticle} />
-      </Router>,
+      </Router>
     );
     await screen.findByTestId(/ArticlesForm-id/);
     expect(screen.getByText(/Id/)).toBeInTheDocument();
@@ -36,9 +36,10 @@ describe("ArticlesForm tests", () => {
     render(
       <Router>
         <ArticlesForm />
-      </Router>,
+      </Router>
     );
-    await screen.findByTestId("ArticlesForm-url");
+    await screen.findByTestId("ArticlesForm-title");
+
     const titleField = screen.getByTestId("ArticlesForm-title");
     const urlField = screen.getByTestId("ArticlesForm-url");
     const explanationField = screen.getByTestId("ArticlesForm-explanation");
@@ -51,10 +52,8 @@ describe("ArticlesForm tests", () => {
     fireEvent.change(dateField, { target: { value: "" } });
     fireEvent.click(submitButton);
 
-    const maxLengthErrors = await screen.findAllByText(
-      /Max length 255 characters./,
-    );
-    expect(maxLengthErrors).toHaveLength(2); // One for title, one for explanation
+    const maxLengthErrors = await screen.findAllByText(/Max length 255 characters./);
+    expect(maxLengthErrors).toHaveLength(2);
     expect(screen.getByText(/A URL is required./)).toBeInTheDocument();
     expect(screen.getByText(/A date is required./)).toBeInTheDocument();
   });
@@ -63,7 +62,7 @@ describe("ArticlesForm tests", () => {
     render(
       <Router>
         <ArticlesForm />
-      </Router>,
+      </Router>
     );
     await screen.findByTestId("ArticlesForm-submit");
     const submitButton = screen.getByTestId("ArticlesForm-submit");
@@ -82,7 +81,7 @@ describe("ArticlesForm tests", () => {
     render(
       <Router>
         <ArticlesForm submitAction={mockSubmitAction} />
-      </Router>,
+      </Router>
     );
     await screen.findByTestId("ArticlesForm-title");
 
@@ -94,27 +93,22 @@ describe("ArticlesForm tests", () => {
 
     fireEvent.change(titleField, { target: { value: "Test Title" } });
     fireEvent.change(urlField, { target: { value: "https://example.com" } });
-    fireEvent.change(explanationField, {
-      target: { value: "Explanation text" },
-    });
-    fireEvent.change(dateAddedField, {
-      target: { value: "2022-01-02T12:00:00" },
-    });
+    fireEvent.change(explanationField, { target: { value: "Explanation text" } });
+    fireEvent.change(dateAddedField, { target: { value: "2022-01-02T12:00:00" } });
     fireEvent.click(submitButton);
 
     await waitFor(() => expect(mockSubmitAction).toHaveBeenCalled());
 
+    expect(screen.queryByText(/Max length 255 characters./)).not.toBeInTheDocument();
+    expect(screen.queryByText(/A URL is required./)).not.toBeInTheDocument();
     expect(screen.queryByText(/A date is required./)).not.toBeInTheDocument();
-    expect(
-      screen.queryByText(/Max length 255 characters./),
-    ).not.toBeInTheDocument();
   });
 
   test("that navigate(-1) is called when Cancel is clicked", async () => {
     render(
       <Router>
         <ArticlesForm />
-      </Router>,
+      </Router>
     );
     await screen.findByTestId("ArticlesForm-cancel");
     const cancelButton = screen.getByTestId("ArticlesForm-cancel");
