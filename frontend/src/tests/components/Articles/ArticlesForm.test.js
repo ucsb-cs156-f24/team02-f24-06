@@ -48,13 +48,13 @@ describe("ArticlesForm tests", () => {
     fireEvent.change(titleField, { target: { value: "x".repeat(300) } });
     fireEvent.change(explanationField, { target: { value: "x".repeat(300) } });
     fireEvent.change(urlField, { target: { value: "" } });
-    fireEvent.change(dateField, { target: { value: "invalid-date" } });
+    fireEvent.change(dateField, { target: { value: "" } });
     fireEvent.click(submitButton);
 
     const maxLengthErrors = await screen.findAllByText(/Max length 255 characters./);
     expect(maxLengthErrors).toHaveLength(2); // One for title, one for explanation
     expect(screen.getByText(/A URL is required./)).toBeInTheDocument();
-    expect(screen.getByText(/A valid date is required./)).toBeInTheDocument(); // Updated error message
+    expect(screen.getByText(/A date is required./)).toBeInTheDocument(); // Updated message
   });
 
   test("Correct error messages on missing input", async () => {
@@ -71,7 +71,7 @@ describe("ArticlesForm tests", () => {
     await screen.findByText(/An article title is required./);
     expect(screen.getByText(/A URL is required./)).toBeInTheDocument();
     expect(screen.getByText(/An explanation is required./)).toBeInTheDocument();
-    expect(screen.getByText(/A valid date is required./)).toBeInTheDocument();
+    expect(screen.getByText(/A date is required./)).toBeInTheDocument();
   });
 
   test("No error messages on good input", async () => {
@@ -98,7 +98,7 @@ describe("ArticlesForm tests", () => {
 
     await waitFor(() => expect(mockSubmitAction).toHaveBeenCalled());
 
-    expect(screen.queryByText(/A valid date is required./)).not.toBeInTheDocument();
+    expect(screen.queryByText(/A date is required./)).not.toBeInTheDocument();
     expect(screen.queryByText(/Max length 255 characters./)).not.toBeInTheDocument();
   });
 

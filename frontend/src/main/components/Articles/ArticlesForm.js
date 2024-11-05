@@ -2,11 +2,7 @@ import { Button, Form, Row, Col } from "react-bootstrap";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 
-function ArticlesForm({
-  initialContents,
-  submitAction,
-  buttonLabel = "Create",
-}) {
+function ArticlesForm({ initialContents, submitAction, buttonLabel = "Create" }) {
   // Stryker disable all
   const {
     register,
@@ -16,9 +12,6 @@ function ArticlesForm({
   // Stryker restore all
 
   const navigate = useNavigate();
-
-  const isodate_regex =
-    /(\d{4}-[01]\d-[0-3]\dT[0-2]\d:[0-5]\d:[0-5]\d\.\d+)|(\d{4}-[01]\d-[0-3]\dT[0-2]\d:[0-5]\d:[0-5]\d)|(\d{4}-[01]\d-[0-3]\dT[0-2]\d:[0-5]\d)/i;
 
   return (
     <Form onSubmit={handleSubmit(submitAction)}>
@@ -60,78 +53,74 @@ function ArticlesForm({
             </Form.Control.Feedback>
           </Form.Group>
         </Col>
-      </Row>
 
-      <Row>
-        <Col>
-          <Form.Group className="mb-3">
-            <Form.Label htmlFor="url">Article URL</Form.Label>
-            <Form.Control
-              data-testid="ArticlesForm-url"
-              id="url"
-              type="text"
-              isInvalid={Boolean(errors.url)}
-              {...register("url", {
-                required: "A URL is required.",
-                maxLength: {
-                  value: 255,
-                  message: "Max length 255 characters.",
-                },
-              })}
-            />
-            <Form.Control.Feedback type="invalid">
-              {errors.url?.message}
-            </Form.Control.Feedback>
-          </Form.Group>
-        </Col>
-      </Row>
+        <Row>
+          <Col>
+            <Form.Group className="mb-3">
+              <Form.Label htmlFor="url">Article URL</Form.Label>
+              <Form.Control
+                data-testid="ArticlesForm-url"
+                id="url"
+                type="text"
+                isInvalid={Boolean(errors.url)}
+                {...register("url", {
+                  required: "A URL is required.",
+                  maxLength: {
+                    value: 255,
+                    message: "Max length 255 characters.",
+                  },
+                })}
+              />
+              <Form.Control.Feedback type="invalid">
+                {errors.url?.message}
+              </Form.Control.Feedback>
+            </Form.Group>
+          </Col>
+        </Row>
 
-      <Row>
-        <Col>
-          <Form.Group className="mb-3">
-            <Form.Label htmlFor="explanation">Article Explanation</Form.Label>
-            <Form.Control
-              data-testid="ArticlesForm-explanation"
-              id="explanation"
-              type="text"
-              isInvalid={Boolean(errors.explanation)}
-              {...register("explanation", {
-                required: "An explanation is required.",
-                maxLength: {
-                  value: 255,
-                  message: "Max length 255 characters.",
-                },
-              })}
-            />
-            <Form.Control.Feedback type="invalid">
-              {errors.explanation?.message}
-            </Form.Control.Feedback>
-          </Form.Group>
-        </Col>
-      </Row>
+        <Row>
+          <Col>
+            <Form.Group className="mb-3">
+              <Form.Label htmlFor="explanation">Article Explanation</Form.Label>
+              <Form.Control
+                data-testid="ArticlesForm-explanation"
+                id="explanation"
+                type="text"
+                isInvalid={Boolean(errors.explanation)}
+                {...register("explanation", {
+                  required: "An explanation is required.",
+                  maxLength: {
+                    value: 255,
+                    message: "Max length 255 characters.",
+                  },
+                })}
+              />
+              <Form.Control.Feedback type="invalid">
+                {errors.explanation?.message}
+              </Form.Control.Feedback>
+            </Form.Group>
+          </Col>
+        </Row>
 
-      <Row>
-        <Col>
-          <Form.Group className="mb-3">
-            <Form.Label htmlFor="dateAdded">Date Added (ISO format)</Form.Label>
-            <Form.Control
-              data-testid="ArticlesForm-dateAdded"
-              id="dateAdded"
-              type="datetime-local"
-              isInvalid={Boolean(errors.dateAdded)}
-              {...register("dateAdded", {
-                required: "A valid date is required.",
-                pattern: {
-                  value: isodate_regex,
-                  message: "Date must be in the correct ISO format.",
-                },
-              })}
-            />
-            <Form.Control.Feedback type="invalid">
-              {errors.dateAdded?.message}
-            </Form.Control.Feedback>
-          </Form.Group>
-        </Col>
+        <Row>
+          <Col>
+            <Form.Group className="mb-3">
+              <Form.Label htmlFor="dateAdded">Date Added (ISO format)</Form.Label>
+              <Form.Control
+                data-testid="ArticlesForm-dateAdded"
+                id="dateAdded"
+                type="datetime-local"
+                isInvalid={Boolean(errors.dateAdded)}
+                {...register("dateAdded", {
+                  required: "A date is required.",
+                })}
+              />
+              <Form.Control.Feedback type="invalid">
+                {errors.dateAdded?.message}
+              </Form.Control.Feedback>
+            </Form.Group>
+          </Col>
+        </Row>
       </Row>
 
       <Row>
