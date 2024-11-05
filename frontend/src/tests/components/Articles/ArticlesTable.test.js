@@ -62,57 +62,59 @@ describe("UserTable tests", () => {
     );
     expect(
       screen.getByTestId(`${testId}-cell-row-0-col-title`),
-    ).toHaveTextContent("Sample Article 1");
+    ).toHaveTextContent("Sample Article Title");
     expect(
       screen.getByTestId(`${testId}-cell-row-0-col-url`),
     ).toHaveTextContent("https://samplewebsite.com/article1");
     expect(
       screen.getByTestId(`${testId}-cell-row-0-col-explanation`),
-    ).toHaveTextContent("Explanation for sample article 1");
+    ).toHaveTextContent("This is a sample explanation for the first article.");
     expect(
       screen.getByTestId(`${testId}-cell-row-0-col-email`),
-    ).toHaveTextContent("sample1@ucsb.edu");
+    ).toHaveTextContent("sampleauthor1@example.com");
     expect(
       screen.getByTestId(`${testId}-cell-row-0-col-dateAdded`),
-    ).toHaveTextContent("2022-04-20T12:00:00");
+    ).toHaveTextContent("2022-06-15T10:00:00");
 
     expect(screen.getByTestId(`${testId}-cell-row-1-col-id`)).toHaveTextContent(
       "2",
     );
     expect(
       screen.getByTestId(`${testId}-cell-row-1-col-title`),
-    ).toHaveTextContent("Sample Article 2");
+    ).toHaveTextContent("Another Sample Article");
     expect(
       screen.getByTestId(`${testId}-cell-row-1-col-url`),
     ).toHaveTextContent("https://samplewebsite.com/article2");
     expect(
       screen.getByTestId(`${testId}-cell-row-1-col-explanation`),
-    ).toHaveTextContent("Explanation for sample article 2");
+    ).toHaveTextContent(
+      "This is another sample explanation for the second article.",
+    );
     expect(
       screen.getByTestId(`${testId}-cell-row-1-col-email`),
-    ).toHaveTextContent("sample2@ucsb.edu");
+    ).toHaveTextContent("sampleauthor2@example.com");
     expect(
       screen.getByTestId(`${testId}-cell-row-1-col-dateAdded`),
-    ).toHaveTextContent("2022-04-19T12:00:00");
+    ).toHaveTextContent("2023-01-20T14:30:00");
 
     expect(screen.getByTestId(`${testId}-cell-row-2-col-id`)).toHaveTextContent(
       "3",
     );
     expect(
       screen.getByTestId(`${testId}-cell-row-2-col-title`),
-    ).toHaveTextContent("Sample Article 3");
+    ).toHaveTextContent("Yet Another Sample Article");
     expect(
       screen.getByTestId(`${testId}-cell-row-2-col-url`),
     ).toHaveTextContent("https://samplewebsite.com/article3");
     expect(
       screen.getByTestId(`${testId}-cell-row-2-col-explanation`),
-    ).toHaveTextContent("Explanation for sample article 3");
+    ).toHaveTextContent("A sample explanation for the third article.");
     expect(
       screen.getByTestId(`${testId}-cell-row-2-col-email`),
-    ).toHaveTextContent("sample3@ucsb.edu");
+    ).toHaveTextContent("sampleauthor3@example.com");
     expect(
       screen.getByTestId(`${testId}-cell-row-2-col-dateAdded`),
-    ).toHaveTextContent("2022-04-20T12:00:00");
+    ).toHaveTextContent("2023-03-05T09:15:00");
 
     const editButton = screen.queryByTestId(
       `${testId}-cell-row-0-col-Edit-button`,
@@ -172,57 +174,59 @@ describe("UserTable tests", () => {
     );
     expect(
       screen.getByTestId(`${testId}-cell-row-0-col-title`),
-    ).toHaveTextContent("Sample Article 1");
+    ).toHaveTextContent("Sample Article Title");
     expect(
       screen.getByTestId(`${testId}-cell-row-0-col-url`),
     ).toHaveTextContent("https://samplewebsite.com/article1");
     expect(
       screen.getByTestId(`${testId}-cell-row-0-col-explanation`),
-    ).toHaveTextContent("Explanation for sample article 1");
+    ).toHaveTextContent("This is a sample explanation for the first article.");
     expect(
       screen.getByTestId(`${testId}-cell-row-0-col-email`),
-    ).toHaveTextContent("sample1@ucsb.edu");
+    ).toHaveTextContent("sampleauthor1@example.com");
     expect(
       screen.getByTestId(`${testId}-cell-row-0-col-dateAdded`),
-    ).toHaveTextContent("2022-04-20T12:00:00");
+    ).toHaveTextContent("2022-06-15T10:00:00");
 
     expect(screen.getByTestId(`${testId}-cell-row-1-col-id`)).toHaveTextContent(
       "2",
     );
     expect(
       screen.getByTestId(`${testId}-cell-row-1-col-title`),
-    ).toHaveTextContent("Sample Article 2");
+    ).toHaveTextContent("Another Sample Article");
     expect(
       screen.getByTestId(`${testId}-cell-row-1-col-url`),
     ).toHaveTextContent("https://samplewebsite.com/article2");
     expect(
       screen.getByTestId(`${testId}-cell-row-1-col-explanation`),
-    ).toHaveTextContent("Explanation for sample article 2");
+    ).toHaveTextContent(
+      "This is another sample explanation for the second article.",
+    );
     expect(
       screen.getByTestId(`${testId}-cell-row-1-col-email`),
-    ).toHaveTextContent("sample2@ucsb.edu");
+    ).toHaveTextContent("sampleauthor2@example.com");
     expect(
       screen.getByTestId(`${testId}-cell-row-1-col-dateAdded`),
-    ).toHaveTextContent("2022-04-19T12:00:00");
+    ).toHaveTextContent("2023-01-20T14:30:00");
 
     expect(screen.getByTestId(`${testId}-cell-row-2-col-id`)).toHaveTextContent(
       "3",
     );
     expect(
       screen.getByTestId(`${testId}-cell-row-2-col-title`),
-    ).toHaveTextContent("Sample Article 3");
+    ).toHaveTextContent("Yet Another Sample Article");
     expect(
       screen.getByTestId(`${testId}-cell-row-2-col-url`),
     ).toHaveTextContent("https://samplewebsite.com/article3");
     expect(
       screen.getByTestId(`${testId}-cell-row-2-col-explanation`),
-    ).toHaveTextContent("Explanation for sample article 3");
+    ).toHaveTextContent("A sample explanation for the third article.");
     expect(
       screen.getByTestId(`${testId}-cell-row-2-col-email`),
-    ).toHaveTextContent("sample3@ucsb.edu");
+    ).toHaveTextContent("sampleauthor3@example.com");
     expect(
       screen.getByTestId(`${testId}-cell-row-2-col-dateAdded`),
-    ).toHaveTextContent("2022-04-20T12:00:00");
+    ).toHaveTextContent("2023-03-05T09:15:00");
 
     const editButton = screen.getByTestId(
       `${testId}-cell-row-0-col-Edit-button`,
@@ -239,6 +243,7 @@ describe("UserTable tests", () => {
 
   test("Edit button navigates to the edit page", async () => {
     const currentUser = currentUserFixtures.adminUser;
+
     const testId = "ArticlesTable";
 
     render(
@@ -257,7 +262,7 @@ describe("UserTable tests", () => {
     );
     expect(
       screen.getByTestId(`${testId}-cell-row-0-col-title`),
-    ).toHaveTextContent("Sample Article 1");
+    ).toHaveTextContent("Sample Article Title");
 
     const editButton = screen.getByTestId(
       `${testId}-cell-row-0-col-Edit-button`,
@@ -273,6 +278,7 @@ describe("UserTable tests", () => {
 
   test("Delete button navigates to the delete page", async () => {
     const currentUser = currentUserFixtures.adminUser;
+
     const testId = "ArticlesTable";
 
     render(
@@ -286,12 +292,13 @@ describe("UserTable tests", () => {
       </QueryClientProvider>,
     );
 
+    // assert - check that the expected content is rendered
     expect(screen.getByTestId(`${testId}-cell-row-0-col-id`)).toHaveTextContent(
       "1",
     );
     expect(
       screen.getByTestId(`${testId}-cell-row-0-col-title`),
-    ).toHaveTextContent("Sample Article 1");
+    ).toHaveTextContent("Sample Article Title");
 
     const deleteButton = screen.getByTestId(
       `${testId}-cell-row-0-col-Delete-button`,
