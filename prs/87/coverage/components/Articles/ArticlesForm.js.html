@@ -25,7 +25,7 @@
             <div class='fl pad1y space-right2'>
                 <span class="strong">100% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>6/6</span>
+                <span class='fraction'>7/7</span>
             </div>
         
             
@@ -46,7 +46,7 @@
             <div class='fl pad1y space-right2'>
                 <span class="strong">100% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>6/6</span>
+                <span class='fraction'>7/7</span>
             </div>
         
             
@@ -247,7 +247,15 @@
 <a name='L182'></a><a href='#L182'>182</a>
 <a name='L183'></a><a href='#L183'>183</a>
 <a name='L184'></a><a href='#L184'>184</a>
-<a name='L185'></a><a href='#L185'>185</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<a name='L185'></a><a href='#L185'>185</a>
+<a name='L186'></a><a href='#L186'>186</a>
+<a name='L187'></a><a href='#L187'>187</a>
+<a name='L188'></a><a href='#L188'>188</a>
+<a name='L189'></a><a href='#L189'>189</a>
+<a name='L190'></a><a href='#L190'>190</a>
+<a name='L191'></a><a href='#L191'>191</a>
+<a name='L192'></a><a href='#L192'>192</a>
+<a name='L193'></a><a href='#L193'>193</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -261,15 +269,23 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">22x</span>
+<span class="cline-any cline-yes">21x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">22x</span>
+<span class="cline-any cline-yes">21x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">22x</span>
-<span class="cline-any cline-yes">22x</span>
+<span class="cline-any cline-yes">21x</span>
+<span class="cline-any cline-yes">21x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">22x</span>
+<span class="cline-any cline-yes">21x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">21x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -450,8 +466,10 @@ function ArticlesForm({
 &nbsp;
   const navigate = useNavigate();
 &nbsp;
-  const url_regex = /^(https?|ftp):\/\/[^\s/$.?#].[^\s]*$/i;
-  const email_regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  const isUrl_regex = /^https:\/\/.+/;
+  const isEmail_regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  const isodate_regex =
+    /(\d{4}-[01]\d-[0-3]\dT[0-2]\d:[0-5]\d:[0-5]\d\.\d+)|(\d{4}-[01]\d-[0-3]\dT[0-2]\d:[0-5]\d:[0-5]\d)|(\d{4}-[01]\d-[0-3]\dT[0-2]\d:[0-5]\d)/i;
 &nbsp;
   return (
     &lt;Form onSubmit={handleSubmit(submitAction)}&gt;
@@ -505,14 +523,15 @@ function ArticlesForm({
               type="text"
               isInvalid={Boolean(errors.url)}
               {...register("url", {
-                required: "URL is required.",
+                required: "Url is required.",
+                pattern: {
+                  value: isUrl_regex,
+                  message:
+                    "Url must be in the correct format, eg. https://fake.com",
+                },
                 maxLength: {
                   value: 255,
                   message: "Max length 255 characters.",
-                },
-                pattern: {
-                  value: url_regex,
-                  message: "URL must be valid.",
                 },
               })}
             /&gt;
@@ -554,17 +573,18 @@ function ArticlesForm({
             &lt;Form.Control
               data-testid="ArticlesForm-email"
               id="email"
-              type="email"
+              type="text"
               isInvalid={Boolean(errors.email)}
               {...register("email", {
                 required: "Email is required.",
+                pattern: {
+                  value: isEmail_regex,
+                  message:
+                    "Email must be in the correct format, eg. fake@gmail.com",
+                },
                 maxLength: {
                   value: 255,
                   message: "Max length 255 characters.",
-                },
-                pattern: {
-                  value: email_regex,
-                  message: "Email must be valid.",
                 },
               })}
             /&gt;
@@ -578,14 +598,18 @@ function ArticlesForm({
       &lt;Row&gt;
         &lt;Col&gt;
           &lt;Form.Group className="mb-3"&gt;
-            &lt;Form.Label htmlFor="dateAdded"&gt;Date Added (ISO format)&lt;/Form.Label&gt;
+            &lt;Form.Label htmlFor="dateAdded"&gt;dateAdded (iso format)&lt;/Form.Label&gt;
             &lt;Form.Control
               data-testid="ArticlesForm-dateAdded"
               id="dateAdded"
               type="datetime-local"
               isInvalid={Boolean(errors.dateAdded)}
               {...register("dateAdded", {
-                required: "Date added is required.",
+                required: "dateAdded is required.",
+                pattern: {
+                  value: isodate_regex,
+                  message: "dateAdded must be in the correct format.",
+                },
               })}
             /&gt;
             &lt;Form.Control.Feedback type="invalid"&gt;
@@ -622,7 +646,7 @@ export default ArticlesForm;
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2024-11-05T05:05:43.005Z
+                at 2024-11-05T05:50:18.257Z
             </div>
         <script src="../../prettify.js"></script>
         <script>
