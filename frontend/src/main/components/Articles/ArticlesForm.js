@@ -38,7 +38,7 @@ function ArticlesForm({
 
         <Col>
           <Form.Group className="mb-3">
-            <Form.Label htmlFor="title">Article Title</Form.Label>
+            <Form.Label htmlFor="title">Title</Form.Label>
             <Form.Control
               data-testid="ArticlesForm-title"
               id="title"
@@ -46,10 +46,7 @@ function ArticlesForm({
               isInvalid={Boolean(errors.title)}
               {...register("title", {
                 required: "An article title is required.",
-                maxLength: {
-                  value: 255,
-                  message: "Max length 255 characters.",
-                },
+                maxLength: 255,
               })}
             />
             <Form.Control.Feedback type="invalid">
@@ -61,7 +58,7 @@ function ArticlesForm({
         <Row>
           <Col>
             <Form.Group className="mb-3">
-              <Form.Label htmlFor="url">Article URL</Form.Label>
+              <Form.Label htmlFor="url">URL</Form.Label>
               <Form.Control
                 data-testid="ArticlesForm-url"
                 id="url"
@@ -69,10 +66,7 @@ function ArticlesForm({
                 isInvalid={Boolean(errors.url)}
                 {...register("url", {
                   required: "A URL is required.",
-                  maxLength: {
-                    value: 255,
-                    message: "Max length 255 characters.",
-                  },
+                  maxLength: 255,
                 })}
               />
               <Form.Control.Feedback type="invalid">
@@ -85,7 +79,7 @@ function ArticlesForm({
         <Row>
           <Col>
             <Form.Group className="mb-3">
-              <Form.Label htmlFor="explanation">Article Explanation</Form.Label>
+              <Form.Label htmlFor="explanation">Explanation</Form.Label>
               <Form.Control
                 data-testid="ArticlesForm-explanation"
                 id="explanation"
@@ -93,10 +87,7 @@ function ArticlesForm({
                 isInvalid={Boolean(errors.explanation)}
                 {...register("explanation", {
                   required: "An explanation is required.",
-                  maxLength: {
-                    value: 255,
-                    message: "Max length 255 characters.",
-                  },
+                  maxLength: 255,
                 })}
               />
               <Form.Control.Feedback type="invalid">
@@ -109,24 +100,43 @@ function ArticlesForm({
         <Row>
           <Col>
             <Form.Group className="mb-3">
-              <Form.Label htmlFor="dateAdded">
-                Date Added (ISO format)
-              </Form.Label>
+              <Form.Label htmlFor="email">Email</Form.Label>
               <Form.Control
-                data-testid="ArticlesForm-dateAdded"
-                id="dateAdded"
-                type="datetime-local"
-                isInvalid={Boolean(errors.dateAdded)}
-                {...register("dateAdded", {
-                  required: "A date is required.",
+                data-testid="ArticlesForm-email"
+                id="email"
+                type="text"
+                isInvalid={Boolean(errors.email)}
+                {...register("email", {
+                  required: "An email is required.",
+                  maxLength: 255,
                 })}
               />
               <Form.Control.Feedback type="invalid">
-                {errors.dateAdded?.message}
+                {errors.email?.message}
               </Form.Control.Feedback>
             </Form.Group>
           </Col>
         </Row>
+
+        <Col>
+          <Form.Group className="mb-3">
+            <Form.Label htmlFor="dateAdded">
+              Date Added (ISO format)
+            </Form.Label>
+            <Form.Control
+              data-testid="ArticlesForm-dateAdded"
+              id="dateAdded"
+              type="datetime-local"
+              isInvalid={Boolean(errors.dateAdded)}
+              {...register("dateAdded", {
+                required: "A date is required.",
+              })}
+            />
+            <Form.Control.Feedback type="invalid">
+              {errors.dateAdded?.message}
+            </Form.Control.Feedback>
+          </Form.Group>
+        </Col>
       </Row>
 
       <Row>

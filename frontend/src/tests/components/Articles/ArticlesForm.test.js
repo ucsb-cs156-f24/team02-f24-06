@@ -17,7 +17,7 @@ describe("ArticlesForm tests", () => {
         <ArticlesForm />
       </Router>
     );
-    await screen.findByText(/Article Title/);
+    await screen.findByText(/Title/);
     await screen.findByText(/Create/);
   });
 
@@ -38,23 +38,17 @@ describe("ArticlesForm tests", () => {
         <ArticlesForm />
       </Router>
     );
-    await screen.findByTestId("ArticlesForm-title");
-
-    const titleField = screen.getByTestId("ArticlesForm-title");
-    const urlField = screen.getByTestId("ArticlesForm-url");
-    const explanationField = screen.getByTestId("ArticlesForm-explanation");
-    const dateField = screen.getByTestId("ArticlesForm-dateAdded");
+    await screen.findByTestId("ArticlesForm-dateAdded");
+    const dateAddedField = screen.getByTestId("ArticlesForm-dateAdded");
+    const emailField = screen.getByTestId("ArticlesForm-email");
     const submitButton = screen.getByTestId("ArticlesForm-submit");
 
-    fireEvent.change(titleField, { target: { value: "x".repeat(300) } });
-    fireEvent.change(explanationField, { target: { value: "x".repeat(300) } });
-    fireEvent.change(urlField, { target: { value: "" } });
-    fireEvent.change(dateField, { target: { value: "" } });
+    fireEvent.change(dateAddedField, { target: { value: "bad-input" } });
+    fireEvent.change(emailField, { target: { value: "bad-input" } });
+
     fireEvent.click(submitButton);
 
-    const maxLengthErrors = await screen.findAllByText(/Max length 255 characters./);
-    expect(maxLengthErrors).toHaveLength(2);
-    expect(screen.getByText(/A URL is required./)).toBeInTheDocument();
+    await screen.findByText(/An article title is required./);
     expect(screen.getByText(/A date is required./)).toBeInTheDocument();
   });
 
@@ -72,6 +66,7 @@ describe("ArticlesForm tests", () => {
     await screen.findByText(/An article title is required./);
     expect(screen.getByText(/A URL is required./)).toBeInTheDocument();
     expect(screen.getByText(/An explanation is required./)).toBeInTheDocument();
+    expect(screen.getByText(/An email is required./)).toBeInTheDocument();
     expect(screen.getByText(/A date is required./)).toBeInTheDocument();
   });
 
@@ -88,19 +83,21 @@ describe("ArticlesForm tests", () => {
     const titleField = screen.getByTestId("ArticlesForm-title");
     const urlField = screen.getByTestId("ArticlesForm-url");
     const explanationField = screen.getByTestId("ArticlesForm-explanation");
+    const emailField = screen.getByTestId("ArticlesForm-email");
     const dateAddedField = screen.getByTestId("ArticlesForm-dateAdded");
     const submitButton = screen.getByTestId("ArticlesForm-submit");
 
     fireEvent.change(titleField, { target: { value: "Test Title" } });
     fireEvent.change(urlField, { target: { value: "https://example.com" } });
     fireEvent.change(explanationField, { target: { value: "Explanation text" } });
+    fireEvent.change(emailField, { target: { value: "author@example.com" } });
     fireEvent.change(dateAddedField, { target: { value: "2022-01-02T12:00:00" } });
     fireEvent.click(submitButton);
 
     await waitFor(() => expect(mockSubmitAction).toHaveBeenCalled());
 
-    expect(screen.queryByText(/Max length 255 characters./)).not.toBeInTheDocument();
     expect(screen.queryByText(/A URL is required./)).not.toBeInTheDocument();
+    expect(screen.queryByText(/An email is required./)).not.toBeInTheDocument();
     expect(screen.queryByText(/A date is required./)).not.toBeInTheDocument();
   });
 
