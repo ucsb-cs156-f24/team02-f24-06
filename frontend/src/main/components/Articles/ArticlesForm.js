@@ -1,7 +1,6 @@
 import { Button, Form, Row, Col } from "react-bootstrap";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
-import PropTypes from "prop-types";
 
 function ArticlesForm({
   initialContents,
@@ -151,13 +150,13 @@ function ArticlesForm({
               data-testid="ArticlesForm-dateAdded"
               id="dateAdded"
               type="datetime-local"
-              isInvalid={Boolean(errors.date_added)}
-              {...register("date_added", {
+              isInvalid={Boolean(errors.dateAdded)}
+              {...register("dateAdded", {
                 required: "Date added is required.",
               })}
             />
             <Form.Control.Feedback type="invalid">
-              {errors.date_added?.message}
+              {errors.dateAdded?.message}
             </Form.Control.Feedback>
           </Form.Group>
         </Col>
@@ -181,18 +180,5 @@ function ArticlesForm({
     </Form>
   );
 }
-
-ArticlesForm.propTypes = {
-  initialContents: PropTypes.shape({
-    id: PropTypes.number,
-    title: PropTypes.string,
-    url: PropTypes.string,
-    explanation: PropTypes.string,
-    email: PropTypes.string,
-    date_added: PropTypes.string,
-  }),
-  submitAction: PropTypes.func.isRequired,
-  buttonLabel: PropTypes.string,
-};
 
 export default ArticlesForm;
