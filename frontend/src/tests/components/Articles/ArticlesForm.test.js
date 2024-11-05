@@ -39,19 +39,22 @@ describe("ArticlesForm tests", () => {
       </Router>
     );
     await screen.findByTestId("ArticlesForm-url");
+    const titleField = screen.getByTestId("ArticlesForm-title");
     const urlField = screen.getByTestId("ArticlesForm-url");
-    const emailField = screen.getByTestId("ArticlesForm-email");
+    const explanationField = screen.getByTestId("ArticlesForm-explanation");
     const dateField = screen.getByTestId("ArticlesForm-dateAdded");
     const submitButton = screen.getByTestId("ArticlesForm-submit");
 
+    fireEvent.change(titleField, { target: { value: "x".repeat(300) } });
+    fireEvent.change(explanationField, { target: { value: "x".repeat(300) } });
     fireEvent.change(urlField, { target: { value: "" } });
-    fireEvent.change(emailField, { target: { value: "bad-email" } });
     fireEvent.change(dateField, { target: { value: "invalid-date" } });
     fireEvent.click(submitButton);
 
-    await screen.findByText(/A URL is required./);
-    expect(screen.getByText(/A valid email is required./)).toBeInTheDocument();
-    expect(screen.getByText(/A valid date is required./)).toBeInTheDocument();
+    const maxLengthErrors = await screen.findAllByText(/Max length 255 characters./);
+    expect(maxLengthErrors).toHaveLength(2); // One for title, one for explanation
+    expect(screen.getByText(/A URL is required./)).toBeInTheDocument();
+    expect(screen.getByText(/A valid date is required./)).toBeInTheDocument(); // Updated error message
   });
 
   test("Correct error messages on missing input", async () => {
@@ -68,7 +71,6 @@ describe("ArticlesForm tests", () => {
     await screen.findByText(/An article title is required./);
     expect(screen.getByText(/A URL is required./)).toBeInTheDocument();
     expect(screen.getByText(/An explanation is required./)).toBeInTheDocument();
-    expect(screen.getByText(/An email is required./)).toBeInTheDocument();
     expect(screen.getByText(/A valid date is required./)).toBeInTheDocument();
   });
 
@@ -85,21 +87,19 @@ describe("ArticlesForm tests", () => {
     const titleField = screen.getByTestId("ArticlesForm-title");
     const urlField = screen.getByTestId("ArticlesForm-url");
     const explanationField = screen.getByTestId("ArticlesForm-explanation");
-    const emailField = screen.getByTestId("ArticlesForm-email");
     const dateAddedField = screen.getByTestId("ArticlesForm-dateAdded");
     const submitButton = screen.getByTestId("ArticlesForm-submit");
 
     fireEvent.change(titleField, { target: { value: "Test Title" } });
     fireEvent.change(urlField, { target: { value: "https://example.com" } });
     fireEvent.change(explanationField, { target: { value: "Explanation text" } });
-    fireEvent.change(emailField, { target: { value: "author@example.com" } });
     fireEvent.change(dateAddedField, { target: { value: "2022-01-02T12:00:00" } });
     fireEvent.click(submitButton);
 
     await waitFor(() => expect(mockSubmitAction).toHaveBeenCalled());
 
-    expect(screen.queryByText(/A valid email is required./)).not.toBeInTheDocument();
     expect(screen.queryByText(/A valid date is required./)).not.toBeInTheDocument();
+    expect(screen.queryByText(/Max length 255 characters./)).not.toBeInTheDocument();
   });
 
   test("that navigate(-1) is called when Cancel is clicked", async () => {
