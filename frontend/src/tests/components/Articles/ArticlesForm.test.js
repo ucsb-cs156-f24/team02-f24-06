@@ -95,7 +95,9 @@ describe("ArticlesForm tests", () => {
     expect(screen.getByText(/URL is required/)).toBeInTheDocument();
     expect(screen.getByText(/Explanation is required/)).toBeInTheDocument();
     expect(screen.getByText(/Email is required/)).toBeInTheDocument();
-    expect(screen.getByText(/Date added is required/)).toBeInTheDocument();
+
+    // Check for the presence of "Date added is required"
+    expect(screen.queryByText(/Date added is required/)).toBeInTheDocument();
 
     const titleInput = screen.getByTestId(`${testId}-title`);
     fireEvent.change(titleInput, { target: { value: "a".repeat(256) } });
