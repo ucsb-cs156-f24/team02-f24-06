@@ -17,8 +17,10 @@ function ArticlesForm({
 
   const navigate = useNavigate();
 
-  const url_regex = /^(https?|ftp):\/\/[^\s/$.?#].[^\s]*$/i;
-  const email_regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  const isUrl_regex = /^https:\/\/.+/;
+  const isEmail_regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  const isodate_regex =
+    /(\d{4}-[01]\d-[0-3]\dT[0-2]\d:[0-5]\d:[0-5]\d\.\d+)|(\d{4}-[01]\d-[0-3]\dT[0-2]\d:[0-5]\d:[0-5]\d)|(\d{4}-[01]\d-[0-3]\dT[0-2]\d:[0-5]\d)/i;
 
   return (
     <Form onSubmit={handleSubmit(submitAction)}>
@@ -72,14 +74,15 @@ function ArticlesForm({
               type="text"
               isInvalid={Boolean(errors.url)}
               {...register("url", {
-                required: "URL is required.",
+                required: "Url is required.",
+                pattern: {
+                  value: isUrl_regex,
+                  message:
+                    "Url must be in the correct format, eg. https://fake.com",
+                },
                 maxLength: {
                   value: 255,
                   message: "Max length 255 characters.",
-                },
-                pattern: {
-                  value: url_regex,
-                  message: "URL must be valid.",
                 },
               })}
             />
@@ -121,17 +124,18 @@ function ArticlesForm({
             <Form.Control
               data-testid="ArticlesForm-email"
               id="email"
-              type="email"
+              type="text"
               isInvalid={Boolean(errors.email)}
               {...register("email", {
                 required: "Email is required.",
+                pattern: {
+                  value: isEmail_regex,
+                  message:
+                    "Email must be in the correct format, eg. fake@gmail.com",
+                },
                 maxLength: {
                   value: 255,
                   message: "Max length 255 characters.",
-                },
-                pattern: {
-                  value: email_regex,
-                  message: "Email must be valid.",
                 },
               })}
             />
@@ -145,14 +149,18 @@ function ArticlesForm({
       <Row>
         <Col>
           <Form.Group className="mb-3">
-            <Form.Label htmlFor="dateAdded">Date Added (ISO format)</Form.Label>
+            <Form.Label htmlFor="dateAdded">dateAdded (iso format)</Form.Label>
             <Form.Control
               data-testid="ArticlesForm-dateAdded"
               id="dateAdded"
               type="datetime-local"
               isInvalid={Boolean(errors.dateAdded)}
               {...register("dateAdded", {
-                required: "Date added is required.",
+                required: "dateAdded is required.",
+                pattern: {
+                  value: isodate_regex,
+                  message: "dateAdded must be in the correct format.",
+                },
               })}
             />
             <Form.Control.Feedback type="invalid">

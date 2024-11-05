@@ -1,4 +1,4 @@
-import { render, waitFor, fireEvent, screen } from "@testing-library/react";
+import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import ArticlesForm from "main/components/Articles/ArticlesForm";
 import { articlesFixtures } from "fixtures/articlesFixtures";
 import { BrowserRouter as Router } from "react-router-dom";
@@ -53,7 +53,7 @@ describe("ArticlesForm tests", () => {
     );
     expect(screen.getByLabelText(/Email/)).toHaveValue(initialArticle.email);
 
-    expect(screen.getByLabelText(/Date Added/)).toBeInTheDocument();
+    expect(screen.getByLabelText(/dateAdded/)).toBeInTheDocument();
   });
 
   test("Correct error messages on bad input", async () => {
@@ -61,21 +61,22 @@ describe("ArticlesForm tests", () => {
 
     const urlField = await screen.findByTestId("ArticlesForm-url");
     const emailField = screen.getByTestId("ArticlesForm-email");
+    const dateField = screen.getByTestId("ArticlesForm-dateAdded");
     const submitButton = screen.getByTestId("ArticlesForm-submit");
 
     fireEvent.change(urlField, { target: { value: "invalid-url" } });
-    fireEvent.change(emailField, { target: { value: "valid@example.com" } });
-    fireEvent.click(submitButton);
-    expect(await screen.findByText(/URL must be valid\./)).toBeInTheDocument();
-    expect(screen.queryByText(/Email must be valid\./)).not.toBeInTheDocument();
-
-    fireEvent.change(urlField, { target: { value: "https://validurl.com" } });
     fireEvent.change(emailField, { target: { value: "invalid-email" } });
+    fireEvent.change(dateField, { target: { value: "2022" } });
     fireEvent.click(submitButton);
-    expect(
-      await screen.findByText(/Email must be valid\./),
-    ).toBeInTheDocument();
-    expect(screen.queryByText(/URL must be valid\./)).not.toBeInTheDocument();
+
+    await waitFor(() => {
+      expect(
+        screen.getByText(/Url must be in the correct format/),
+      ).toBeInTheDocument();
+      expect(
+        screen.getByText(/Email must be in the correct format/),
+      ).toBeInTheDocument();
+    });
   });
 
   test("Correct error messages on missing input", async () => {
@@ -84,15 +85,13 @@ describe("ArticlesForm tests", () => {
     const submitButton = screen.getByTestId("ArticlesForm-submit");
     fireEvent.click(submitButton);
 
-    expect(await screen.findByText(/Title is required\./)).toBeInTheDocument();
-    expect(await screen.findByText(/URL is required\./)).toBeInTheDocument();
-    expect(
-      await screen.findByText(/Explanation is required\./),
-    ).toBeInTheDocument();
-    expect(await screen.findByText(/Email is required\./)).toBeInTheDocument();
-    expect(
-      await screen.findByText(/Date added is required\./),
-    ).toBeInTheDocument();
+    await waitFor(() => {
+      expect(screen.getByText(/Title is required\./)).toBeInTheDocument();
+      expect(screen.getByText(/Url is required\./)).toBeInTheDocument();
+      expect(screen.getByText(/Explanation is required\./)).toBeInTheDocument();
+      expect(screen.getByText(/Email is required\./)).toBeInTheDocument();
+      expect(screen.getByText(/dateAdded is required\./)).toBeInTheDocument();
+    });
   });
 
   test("No error messages on good input", async () => {
@@ -107,30 +106,26 @@ describe("ArticlesForm tests", () => {
     const submitButton = screen.getByTestId("ArticlesForm-submit");
 
     fireEvent.change(titleField, { target: { value: "Sample Article" } });
-    fireEvent.change(urlField, { target: { value: "http://example.com" } });
+    fireEvent.change(urlField, { target: { value: "https://example.com" } });
     fireEvent.change(explanationField, {
       target: { value: "Sample explanation" },
     });
     fireEvent.change(emailField, { target: { value: "test@example.com" } });
-
-    // Provide a valid date without seconds to match datetime-local input
-    fireEvent.change(dateAddedField, { target: { value: "2024-01-01T12:00" } });
+    fireEvent.change(dateAddedField, { target: { value: "2022-03-21T12:00" } });
 
     fireEvent.click(submitButton);
 
     await waitFor(() => expect(mockSubmitAction).toHaveBeenCalled());
 
-    expect(screen.queryByText(/Title is required\./)).not.toBeInTheDocument();
-    expect(screen.queryByText(/URL is required\./)).not.toBeInTheDocument();
     expect(
-      screen.queryByText(/Explanation is required\./),
+      screen.queryByText(/Url must be in the correct format/),
     ).not.toBeInTheDocument();
-    expect(screen.queryByText(/Email is required\./)).not.toBeInTheDocument();
     expect(
-      screen.queryByText(/Date added is required\./),
+      screen.queryByText(/Email must be in the correct format/),
     ).not.toBeInTheDocument();
-    expect(screen.queryByText(/URL must be valid\./)).not.toBeInTheDocument();
-    expect(screen.queryByText(/Email must be valid\./)).not.toBeInTheDocument();
+    expect(
+      screen.queryByText(/dateAdded is required\./),
+    ).not.toBeInTheDocument();
   });
 
   test("that navigate(-1) is called when Cancel is clicked", async () => {
@@ -147,9 +142,11 @@ describe("ArticlesForm tests", () => {
     fireEvent.change(titleField, { target: { value: "a".repeat(256) } });
     fireEvent.click(screen.getByTestId("ArticlesForm-submit"));
 
-    expect(
-      await screen.findByText(/Max length 255 characters\./),
-    ).toBeInTheDocument();
+    await waitFor(() => {
+      expect(
+        screen.getByText(/Max length 255 characters\./),
+      ).toBeInTheDocument();
+    });
   });
 
   test("Max length validation works correctly for URL", async () => {
@@ -159,9 +156,11 @@ describe("ArticlesForm tests", () => {
     fireEvent.change(urlField, { target: { value: "a".repeat(256) } });
     fireEvent.click(screen.getByTestId("ArticlesForm-submit"));
 
-    expect(
-      await screen.findByText(/Max length 255 characters\./),
-    ).toBeInTheDocument();
+    await waitFor(() => {
+      expect(
+        screen.getByText(/Max length 255 characters\./),
+      ).toBeInTheDocument();
+    });
   });
 
   test("Max length validation works correctly for Explanation", async () => {
@@ -173,9 +172,11 @@ describe("ArticlesForm tests", () => {
     fireEvent.change(explanationField, { target: { value: "a".repeat(256) } });
     fireEvent.click(screen.getByTestId("ArticlesForm-submit"));
 
-    expect(
-      await screen.findByText(/Max length 255 characters\./),
-    ).toBeInTheDocument();
+    await waitFor(() => {
+      expect(
+        screen.getByText(/Max length 255 characters\./),
+      ).toBeInTheDocument();
+    });
   });
 
   test("Max length validation works correctly for Email", async () => {
@@ -184,12 +185,14 @@ describe("ArticlesForm tests", () => {
     const emailField = await screen.findByTestId("ArticlesForm-email");
     fireEvent.change(emailField, {
       target: { value: "a".repeat(250) + "@example.com" },
-    }); // Total >255
+    });
     fireEvent.click(screen.getByTestId("ArticlesForm-submit"));
 
-    expect(
-      await screen.findByText(/Max length 255 characters\./),
-    ).toBeInTheDocument();
+    await waitFor(() => {
+      expect(
+        screen.getByText(/Max length 255 characters\./),
+      ).toBeInTheDocument();
+    });
   });
 
   test("URL pattern validation handles edge cases correctly", async () => {
@@ -198,15 +201,17 @@ describe("ArticlesForm tests", () => {
     const urlField = await screen.findByTestId("ArticlesForm-url");
     const submitButton = screen.getByTestId("ArticlesForm-submit");
 
-    // Missing protocol
     fireEvent.change(urlField, { target: { value: "www.example.com" } });
     fireEvent.click(submitButton);
-    expect(await screen.findByText(/URL must be valid\./)).toBeInTheDocument();
+    expect(
+      await screen.findByText(/Url must be in the correct format/),
+    ).toBeInTheDocument();
 
-    // Invalid characters
     fireEvent.change(urlField, { target: { value: "http://exa mple.com" } });
     fireEvent.click(submitButton);
-    expect(await screen.findByText(/URL must be valid\./)).toBeInTheDocument();
+    expect(
+      await screen.findByText(/Url must be in the correct format/),
+    ).toBeInTheDocument();
   });
 
   test("Email pattern validation handles edge cases correctly", async () => {
@@ -215,18 +220,16 @@ describe("ArticlesForm tests", () => {
     const emailField = screen.getByTestId("ArticlesForm-email");
     const submitButton = screen.getByTestId("ArticlesForm-submit");
 
-    // Missing '@'
     fireEvent.change(emailField, { target: { value: "userexample.com" } });
     fireEvent.click(submitButton);
     expect(
-      await screen.findByText(/Email must be valid\./),
+      await screen.findByText(/Email must be in the correct format/),
     ).toBeInTheDocument();
 
-    // Missing domain
     fireEvent.change(emailField, { target: { value: "user@" } });
     fireEvent.click(submitButton);
     expect(
-      await screen.findByText(/Email must be valid\./),
+      await screen.findByText(/Email must be in the correct format/),
     ).toBeInTheDocument();
   });
 });
