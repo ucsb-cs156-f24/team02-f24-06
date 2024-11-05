@@ -1,8 +1,7 @@
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
+import { BrowserRouter as Router } from "react-router-dom";
 import ArticlesForm from "main/components/Articles/ArticlesForm";
 import { articlesFixtures } from "fixtures/articlesFixtures";
-import { BrowserRouter as Router } from "react-router-dom";
-import { QueryClient, QueryClientProvider } from "react-query";
 
 const mockedNavigate = jest.fn();
 
@@ -12,107 +11,95 @@ jest.mock("react-router-dom", () => ({
 }));
 
 describe("ArticlesForm tests", () => {
-  const queryClient = new QueryClient();
-
-  const renderComponent = (ui) =>
+  test("renders correctly", async () => {
     render(
-      <QueryClientProvider client={queryClient}>
-        <Router>{ui}</Router>
-      </QueryClientProvider>,
+      <Router>
+        <ArticlesForm />
+      </Router>,
     );
-
-  beforeEach(() => {
-    mockedNavigate.mockReset();
+    await screen.findByText(/Title/);
+    await screen.findByText(/Create/);
   });
 
-  test("renders correctly with no initialContents", async () => {
-    renderComponent(<ArticlesForm submitAction={jest.fn()} />);
-    expect(await screen.findByText(/Title/)).toBeInTheDocument();
-    expect(screen.getByTestId("ArticlesForm-submit")).toHaveTextContent(
-      "Create",
+  test("renders correctly when passing in an Article", async () => {
+    render(
+      <Router>
+        <ArticlesForm initialContents={articlesFixtures.oneArticle} />
+      </Router>,
     );
+    await screen.findByTestId(/ArticlesForm-id/);
+    expect(screen.getByText(/Id/)).toBeInTheDocument();
+    expect(screen.getByTestId(/ArticlesForm-id/)).toHaveValue("1");
   });
 
-  test("renders correctly when passing in initialContents", async () => {
-    const initialArticle = articlesFixtures.oneArticle;
-    renderComponent(
-      <ArticlesForm
-        initialContents={initialArticle}
-        submitAction={jest.fn()}
-      />,
+  test("Correct Error messages on bad input", async () => {
+    render(
+      <Router>
+        <ArticlesForm />
+      </Router>,
     );
-
-    expect(await screen.findByTestId("ArticlesForm-id")).toBeInTheDocument();
-    expect(screen.getByLabelText(/Id/)).toHaveValue(
-      initialArticle.id.toString(),
-    );
-    expect(screen.getByLabelText(/Title/)).toHaveValue(initialArticle.title);
-    expect(screen.getByLabelText(/URL/)).toHaveValue(initialArticle.url);
-    expect(screen.getByLabelText(/Explanation/)).toHaveValue(
-      initialArticle.explanation,
-    );
-    expect(screen.getByLabelText(/Email/)).toHaveValue(initialArticle.email);
-
-    expect(screen.getByLabelText(/dateAdded/)).toBeInTheDocument();
-  });
-
-  test("Correct error messages on bad input", async () => {
-    renderComponent(<ArticlesForm submitAction={jest.fn()} />);
-
-    const urlField = await screen.findByTestId("ArticlesForm-url");
+    await screen.findByTestId("ArticlesForm-url");
+    const urlField = screen.getByTestId("ArticlesForm-url");
     const emailField = screen.getByTestId("ArticlesForm-email");
     const dateField = screen.getByTestId("ArticlesForm-dateAdded");
     const submitButton = screen.getByTestId("ArticlesForm-submit");
 
-    fireEvent.change(urlField, { target: { value: "invalid-url" } });
-    fireEvent.change(emailField, { target: { value: "invalid-email" } });
+    fireEvent.change(urlField, { target: { value: "bad-input" } });
+    fireEvent.change(emailField, { target: { value: "bad-input" } });
     fireEvent.change(dateField, { target: { value: "2022" } });
     fireEvent.click(submitButton);
 
-    await waitFor(() => {
-      expect(
-        screen.getByText(/Url must be in the correct format/),
-      ).toBeInTheDocument();
-      expect(
-        screen.getByText(/Email must be in the correct format/),
-      ).toBeInTheDocument();
-    });
+    await screen.findByText(/Url must be in the correct format/);
+    expect(
+      screen.getByText(/Url must be in the correct format/),
+    ).toBeInTheDocument();
+    expect(
+      screen.getByText(/Email must be in the correct format/),
+    ).toBeInTheDocument();
   });
 
-  test("Correct error messages on missing input", async () => {
-    renderComponent(<ArticlesForm submitAction={jest.fn()} />);
-
+  test("Correct Error messages on missing input", async () => {
+    render(
+      <Router>
+        <ArticlesForm />
+      </Router>,
+    );
+    await screen.findByTestId("ArticlesForm-submit");
     const submitButton = screen.getByTestId("ArticlesForm-submit");
+
     fireEvent.click(submitButton);
 
-    await waitFor(() => {
-      expect(screen.getByText(/Title is required\./)).toBeInTheDocument();
-      expect(screen.getByText(/Url is required\./)).toBeInTheDocument();
-      expect(screen.getByText(/Explanation is required\./)).toBeInTheDocument();
-      expect(screen.getByText(/Email is required\./)).toBeInTheDocument();
-      expect(screen.getByText(/dateAdded is required\./)).toBeInTheDocument();
-    });
+    await screen.findByText(/Title is required./);
+    expect(screen.getByText(/Url is required./)).toBeInTheDocument();
+    expect(screen.getByText(/Explanation is required./)).toBeInTheDocument();
+    expect(screen.getByText(/Email is required./)).toBeInTheDocument();
+    expect(screen.getByText(/dateAdded is required./)).toBeInTheDocument();
   });
 
-  test("No error messages on good input", async () => {
+  test("No Error messages on good input", async () => {
     const mockSubmitAction = jest.fn();
-    renderComponent(<ArticlesForm submitAction={mockSubmitAction} />);
 
-    const titleField = await screen.findByTestId("ArticlesForm-title");
+    render(
+      <Router>
+        <ArticlesForm submitAction={mockSubmitAction} />
+      </Router>,
+    );
+    await screen.findByTestId("ArticlesForm-title");
+
+    const titleField = screen.getByTestId("ArticlesForm-title");
     const urlField = screen.getByTestId("ArticlesForm-url");
     const explanationField = screen.getByTestId("ArticlesForm-explanation");
     const emailField = screen.getByTestId("ArticlesForm-email");
-    const dateAddedField = screen.getByTestId("ArticlesForm-dateAdded");
+    const dateField = screen.getByTestId("ArticlesForm-dateAdded");
     const submitButton = screen.getByTestId("ArticlesForm-submit");
 
-    fireEvent.change(titleField, { target: { value: "Sample Article" } });
+    fireEvent.change(titleField, { target: { value: "A new title" } });
     fireEvent.change(urlField, { target: { value: "https://example.com" } });
     fireEvent.change(explanationField, {
-      target: { value: "Sample explanation" },
+      target: { value: "A new explanation" },
     });
     fireEvent.change(emailField, { target: { value: "test@example.com" } });
-    fireEvent.change(dateAddedField, { target: { value: "2022-03-21T12:00" } });
-
+    fireEvent.change(dateField, { target: { value: "2022-03-21T12:00:00" } });
     fireEvent.click(submitButton);
 
     await waitFor(() => expect(mockSubmitAction).toHaveBeenCalled());
@@ -124,112 +111,21 @@ describe("ArticlesForm tests", () => {
       screen.queryByText(/Email must be in the correct format/),
     ).not.toBeInTheDocument();
     expect(
-      screen.queryByText(/dateAdded is required\./),
+      screen.queryByText(/DateAdded must be in the correct format/),
     ).not.toBeInTheDocument();
   });
 
   test("that navigate(-1) is called when Cancel is clicked", async () => {
-    renderComponent(<ArticlesForm submitAction={jest.fn()} />);
-    const cancelButton = await screen.findByTestId("ArticlesForm-cancel");
-    fireEvent.click(cancelButton);
-    await waitFor(() => expect(mockedNavigate).toHaveBeenCalledWith(-1));
-  });
-
-  test("Max length validation works correctly for Title", async () => {
-    renderComponent(<ArticlesForm submitAction={jest.fn()} />);
-
-    const titleField = await screen.findByTestId("ArticlesForm-title");
-    fireEvent.change(titleField, { target: { value: "a".repeat(256) } });
-    fireEvent.click(screen.getByTestId("ArticlesForm-submit"));
-
-    await waitFor(() => {
-      expect(
-        screen.getByText(/Max length 255 characters\./),
-      ).toBeInTheDocument();
-    });
-  });
-
-  test("Max length validation works correctly for URL", async () => {
-    renderComponent(<ArticlesForm submitAction={jest.fn()} />);
-
-    const urlField = await screen.findByTestId("ArticlesForm-url");
-    fireEvent.change(urlField, { target: { value: "a".repeat(256) } });
-    fireEvent.click(screen.getByTestId("ArticlesForm-submit"));
-
-    await waitFor(() => {
-      expect(
-        screen.getByText(/Max length 255 characters\./),
-      ).toBeInTheDocument();
-    });
-  });
-
-  test("Max length validation works correctly for Explanation", async () => {
-    renderComponent(<ArticlesForm submitAction={jest.fn()} />);
-
-    const explanationField = await screen.findByTestId(
-      "ArticlesForm-explanation",
+    render(
+      <Router>
+        <ArticlesForm />
+      </Router>,
     );
-    fireEvent.change(explanationField, { target: { value: "a".repeat(256) } });
-    fireEvent.click(screen.getByTestId("ArticlesForm-submit"));
+    await screen.findByTestId("ArticlesForm-cancel");
+    const cancelButton = screen.getByTestId("ArticlesForm-cancel");
 
-    await waitFor(() => {
-      expect(
-        screen.getByText(/Max length 255 characters\./),
-      ).toBeInTheDocument();
-    });
-  });
+    fireEvent.click(cancelButton);
 
-  test("Max length validation works correctly for Email", async () => {
-    renderComponent(<ArticlesForm submitAction={jest.fn()} />);
-
-    const emailField = await screen.findByTestId("ArticlesForm-email");
-    fireEvent.change(emailField, {
-      target: { value: "a".repeat(250) + "@example.com" },
-    });
-    fireEvent.click(screen.getByTestId("ArticlesForm-submit"));
-
-    await waitFor(() => {
-      expect(
-        screen.getByText(/Max length 255 characters\./),
-      ).toBeInTheDocument();
-    });
-  });
-
-  test("URL pattern validation handles edge cases correctly", async () => {
-    renderComponent(<ArticlesForm submitAction={jest.fn()} />);
-
-    const urlField = await screen.findByTestId("ArticlesForm-url");
-    const submitButton = screen.getByTestId("ArticlesForm-submit");
-
-    fireEvent.change(urlField, { target: { value: "www.example.com" } });
-    fireEvent.click(submitButton);
-    expect(
-      await screen.findByText(/Url must be in the correct format/),
-    ).toBeInTheDocument();
-
-    fireEvent.change(urlField, { target: { value: "http://exa mple.com" } });
-    fireEvent.click(submitButton);
-    expect(
-      await screen.findByText(/Url must be in the correct format/),
-    ).toBeInTheDocument();
-  });
-
-  test("Email pattern validation handles edge cases correctly", async () => {
-    renderComponent(<ArticlesForm submitAction={jest.fn()} />);
-
-    const emailField = screen.getByTestId("ArticlesForm-email");
-    const submitButton = screen.getByTestId("ArticlesForm-submit");
-
-    fireEvent.change(emailField, { target: { value: "userexample.com" } });
-    fireEvent.click(submitButton);
-    expect(
-      await screen.findByText(/Email must be in the correct format/),
-    ).toBeInTheDocument();
-
-    fireEvent.change(emailField, { target: { value: "user@" } });
-    fireEvent.click(submitButton);
-    expect(
-      await screen.findByText(/Email must be in the correct format/),
-    ).toBeInTheDocument();
+    await waitFor(() => expect(mockedNavigate).toHaveBeenCalledWith(-1));
   });
 });

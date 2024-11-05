@@ -176,7 +176,7 @@ function ArticlesForm({
             {buttonLabel}
           </Button>
           <Button
-            variant="secondary"
+            variant="Secondary"
             onClick={() => navigate(-1)}
             data-testid="ArticlesForm-cancel"
             className="ms-2"
