@@ -2,7 +2,11 @@ import { Button, Form, Row, Col } from "react-bootstrap";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 
-function ArticlesForm({ initialContents, submitAction, buttonLabel = "Create" }) {
+function ArticlesForm({
+  initialContents,
+  submitAction,
+  buttonLabel = "Create",
+}) {
   // Stryker disable all
   const {
     register,
@@ -105,7 +109,9 @@ function ArticlesForm({ initialContents, submitAction, buttonLabel = "Create" })
         <Row>
           <Col>
             <Form.Group className="mb-3">
-              <Form.Label htmlFor="dateAdded">Date Added (ISO format)</Form.Label>
+              <Form.Label htmlFor="dateAdded">
+                Date Added (ISO format)
+              </Form.Label>
               <Form.Control
                 data-testid="ArticlesForm-dateAdded"
                 id="dateAdded"
