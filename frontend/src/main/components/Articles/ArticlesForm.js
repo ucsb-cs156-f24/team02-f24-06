@@ -1,6 +1,7 @@
 import { Button, Form, Row, Col } from "react-bootstrap";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
+import PropTypes from "prop-types";
 
 function ArticlesForm({
   initialContents,
@@ -18,6 +19,7 @@ function ArticlesForm({
   const navigate = useNavigate();
 
   const url_regex = /^(https?|ftp):\/\/[^\s/$.?#].[^\s]*$/i;
+  const email_regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
   return (
     <Form onSubmit={handleSubmit(submitAction)}>
@@ -50,7 +52,7 @@ function ArticlesForm({
                 required: "Title is required.",
                 maxLength: {
                   value: 255,
-                  message: "Max length 255 characters",
+                  message: "Max length 255 characters.",
                 },
               })}
             />
@@ -74,11 +76,11 @@ function ArticlesForm({
                 required: "URL is required.",
                 maxLength: {
                   value: 255,
-                  message: "Max length 255 characters",
+                  message: "Max length 255 characters.",
                 },
                 pattern: {
                   value: url_regex,
-                  message: "URL must be valid",
+                  message: "URL must be valid.",
                 },
               })}
             />
@@ -102,7 +104,7 @@ function ArticlesForm({
                 required: "Explanation is required.",
                 maxLength: {
                   value: 255,
-                  message: "Max length 255 characters",
+                  message: "Max length 255 characters.",
                 },
               })}
             />
@@ -126,11 +128,11 @@ function ArticlesForm({
                 required: "Email is required.",
                 maxLength: {
                   value: 255,
-                  message: "Max length 255 characters",
+                  message: "Max length 255 characters.",
                 },
                 pattern: {
-                  value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
-                  message: "Email must be valid",
+                  value: email_regex,
+                  message: "Email must be valid.",
                 },
               })}
             />
@@ -144,18 +146,18 @@ function ArticlesForm({
       <Row>
         <Col>
           <Form.Group className="mb-3">
-            <Form.Label htmlFor="dateAdded">Date Added (iso format)</Form.Label>
+            <Form.Label htmlFor="dateAdded">Date Added (ISO format)</Form.Label>
             <Form.Control
               data-testid="ArticlesForm-dateAdded"
               id="dateAdded"
               type="datetime-local"
-              isInvalid={Boolean(errors.dateAdded)}
+              isInvalid={Boolean(errors.date_added)}
               {...register("date_added", {
                 required: "Date added is required.",
               })}
             />
             <Form.Control.Feedback type="invalid">
-              {errors.dateAdded?.message}
+              {errors.date_added?.message}
             </Form.Control.Feedback>
           </Form.Group>
         </Col>
@@ -167,9 +169,10 @@ function ArticlesForm({
             {buttonLabel}
           </Button>
           <Button
-            variant="Secondary"
+            variant="secondary"
             onClick={() => navigate(-1)}
             data-testid="ArticlesForm-cancel"
+            className="ms-2"
           >
             Cancel
           </Button>
@@ -178,5 +181,18 @@ function ArticlesForm({
     </Form>
   );
 }
+
+ArticlesForm.propTypes = {
+  initialContents: PropTypes.shape({
+    id: PropTypes.number,
+    title: PropTypes.string,
+    url: PropTypes.string,
+    explanation: PropTypes.string,
+    email: PropTypes.string,
+    date_added: PropTypes.string,
+  }),
+  submitAction: PropTypes.func.isRequired,
+  buttonLabel: PropTypes.string,
+};
 
 export default ArticlesForm;
