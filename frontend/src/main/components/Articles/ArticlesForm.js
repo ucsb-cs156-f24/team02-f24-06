@@ -2,18 +2,12 @@ import { Button, Form, Row, Col } from "react-bootstrap";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 
-function ArticlesForm({
-  initialContents,
-  submitAction,
-  buttonLabel = "Create",
-}) {
-  // Stryker disable all
+function ArticlesForm({ initialContents, submitAction, buttonLabel = "Create" }) {
   const {
     register,
     formState: { errors },
     handleSubmit,
   } = useForm({ defaultValues: initialContents || {} });
-  // Stryker restore all
 
   const navigate = useNavigate();
 
@@ -74,11 +68,10 @@ function ArticlesForm({
               type="text"
               isInvalid={Boolean(errors.url)}
               {...register("url", {
-                required: "Url is required.",
+                required: "URL is required.",
                 pattern: {
                   value: isUrl_regex,
-                  message:
-                    "Url must be in the correct format, eg. https://fake.com",
+                  message: "URL must start with https://",
                 },
                 maxLength: {
                   value: 255,
@@ -130,8 +123,7 @@ function ArticlesForm({
                 required: "Email is required.",
                 pattern: {
                   value: isEmail_regex,
-                  message:
-                    "Email must be in the correct format, eg. fake@gmail.com",
+                  message: "Email must be in the format example@example.com",
                 },
                 maxLength: {
                   value: 255,
@@ -149,17 +141,17 @@ function ArticlesForm({
       <Row>
         <Col>
           <Form.Group className="mb-3">
-            <Form.Label htmlFor="dateAdded">dateAdded (iso format)</Form.Label>
+            <Form.Label htmlFor="dateAdded">Date Added (ISO format)</Form.Label>
             <Form.Control
               data-testid="ArticlesForm-dateAdded"
               id="dateAdded"
               type="datetime-local"
               isInvalid={Boolean(errors.dateAdded)}
               {...register("dateAdded", {
-                required: "dateAdded is required.",
+                required: "Date Added is required.",
                 pattern: {
                   value: isodate_regex,
-                  message: "dateAdded must be in the correct format.",
+                  message: "Date Added must be in ISO format.",
                 },
               })}
             />
