@@ -75,7 +75,7 @@ function UCSBDiningCommonsMenuItemForm({
           {errors.name?.message}
         </Form.Control.Feedback>
       </Form.Group>
-  
+
       <Form.Group className="mb-3">
         <Form.Label htmlFor="station">station</Form.Label>
         <Form.Control

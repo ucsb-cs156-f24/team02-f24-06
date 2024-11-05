@@ -16,7 +16,7 @@ jest.mock("react-router-dom", () => ({
 describe("UCSBDiningCommonsMenuItemForm tests", () => {
   const queryClient = new QueryClient();
 
-  const expectedHeaders = ["DiningCommonsCode","Name", "Station"];
+  //const expectedHeaders = ["DiningCommonsCode","Name", "Station"];
   const testId = "UCSBDiningCommonsMenuItemForm";
 
   test("renders correctly with no initialContents", async () => {
@@ -30,17 +30,19 @@ describe("UCSBDiningCommonsMenuItemForm tests", () => {
 
     expect(await screen.findByText(/Create/)).toBeInTheDocument();
 
-//     expectedHeaders.forEach((headerText) => {
-//       const header = screen.getByText(headerText);
-//       expect(header).toBeInTheDocument();
-//     });
-   });
+    //     expectedHeaders.forEach((headerText) => {
+    //       const header = screen.getByText(headerText);
+    //       expect(header).toBeInTheDocument();
+    //     });
+  });
 
   test("renders correctly when passing in initialContents", async () => {
     render(
       <QueryClientProvider client={queryClient}>
         <Router>
-          <UCSBDiningCommonsMenuItemForm initialContents={ucsbDiningCommonsMenuItemFixtures.oneItem} />
+          <UCSBDiningCommonsMenuItemForm
+            initialContents={ucsbDiningCommonsMenuItemFixtures.oneItem}
+          />
         </Router>
       </QueryClientProvider>,
     );

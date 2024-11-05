@@ -7,7 +7,6 @@ export default {
   component: UCSBDiningCommonsMenuItemForm,
 };
 
-
 const Template = (args) => {
   return <UCSBDiningCommonsMenuItemForm {...args} />;
 };
@@ -15,7 +14,6 @@ const Template = (args) => {
 export const Create = Template.bind({});
 
 Create.args = {
-  
   buttonLabel: "Create",
   submitAction: (data) => {
     console.log("Submit was clicked with data: ", data);
