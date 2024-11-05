@@ -25,7 +25,7 @@
             <div class='fl pad1y space-right2'>
                 <span class="strong">100% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>5/5</span>
+                <span class='fraction'>7/7</span>
             </div>
         
             
@@ -46,7 +46,7 @@
             <div class='fl pad1y space-right2'>
                 <span class="strong">100% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>5/5</span>
+                <span class='fraction'>7/7</span>
             </div>
         
             
@@ -245,7 +245,24 @@
 <a name='L180'></a><a href='#L180'>180</a>
 <a name='L181'></a><a href='#L181'>181</a>
 <a name='L182'></a><a href='#L182'>182</a>
-<a name='L183'></a><a href='#L183'>183</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<a name='L183'></a><a href='#L183'>183</a>
+<a name='L184'></a><a href='#L184'>184</a>
+<a name='L185'></a><a href='#L185'>185</a>
+<a name='L186'></a><a href='#L186'>186</a>
+<a name='L187'></a><a href='#L187'>187</a>
+<a name='L188'></a><a href='#L188'>188</a>
+<a name='L189'></a><a href='#L189'>189</a>
+<a name='L190'></a><a href='#L190'>190</a>
+<a name='L191'></a><a href='#L191'>191</a>
+<a name='L192'></a><a href='#L192'>192</a>
+<a name='L193'></a><a href='#L193'>193</a>
+<a name='L194'></a><a href='#L194'>194</a>
+<a name='L195'></a><a href='#L195'>195</a>
+<a name='L196'></a><a href='#L196'>196</a>
+<a name='L197'></a><a href='#L197'>197</a>
+<a name='L198'></a><a href='#L198'>198</a>
+<a name='L199'></a><a href='#L199'>199</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -264,6 +281,7 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">9x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">9x</span>
 <span class="cline-any cline-yes">9x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">9x</span>
@@ -427,9 +445,24 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import { Button, Form, Row, Col } from "react-bootstrap";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
+import PropTypes from "prop-types";
 &nbsp;
 function ArticlesForm({
   initialContents,
@@ -447,6 +480,7 @@ function ArticlesForm({
   const navigate = useNavigate();
 &nbsp;
   const url_regex = /^(https?|ftp):\/\/[^\s/$.?#].[^\s]*$/i;
+  const email_regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 &nbsp;
   return (
     &lt;Form onSubmit={handleSubmit(submitAction)}&gt;
@@ -479,7 +513,7 @@ function ArticlesForm({
                 required: "Title is required.",
                 maxLength: {
                   value: 255,
-                  message: "Max length 255 characters",
+                  message: "Max length 255 characters.",
                 },
               })}
             /&gt;
@@ -503,11 +537,11 @@ function ArticlesForm({
                 required: "URL is required.",
                 maxLength: {
                   value: 255,
-                  message: "Max length 255 characters",
+                  message: "Max length 255 characters.",
                 },
                 pattern: {
                   value: url_regex,
-                  message: "URL must be valid",
+                  message: "URL must be valid.",
                 },
               })}
             /&gt;
@@ -531,7 +565,7 @@ function ArticlesForm({
                 required: "Explanation is required.",
                 maxLength: {
                   value: 255,
-                  message: "Max length 255 characters",
+                  message: "Max length 255 characters.",
                 },
               })}
             /&gt;
@@ -555,11 +589,11 @@ function ArticlesForm({
                 required: "Email is required.",
                 maxLength: {
                   value: 255,
-                  message: "Max length 255 characters",
+                  message: "Max length 255 characters.",
                 },
                 pattern: {
-                  value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
-                  message: "Email must be valid",
+                  value: email_regex,
+                  message: "Email must be valid.",
                 },
               })}
             /&gt;
@@ -573,18 +607,18 @@ function ArticlesForm({
       &lt;Row&gt;
         &lt;Col&gt;
           &lt;Form.Group className="mb-3"&gt;
-            &lt;Form.Label htmlFor="dateAdded"&gt;Date Added (iso format)&lt;/Form.Label&gt;
+            &lt;Form.Label htmlFor="dateAdded"&gt;Date Added (ISO format)&lt;/Form.Label&gt;
             &lt;Form.Control
               data-testid="ArticlesForm-dateAdded"
               id="dateAdded"
               type="datetime-local"
-              isInvalid={Boolean(errors.dateAdded)}
+              isInvalid={Boolean(errors.date_added)}
               {...register("date_added", {
                 required: "Date added is required.",
               })}
             /&gt;
             &lt;Form.Control.Feedback type="invalid"&gt;
-              {errors.dateAdded?.message}
+              {errors.date_added?.message}
             &lt;/Form.Control.Feedback&gt;
           &lt;/Form.Group&gt;
         &lt;/Col&gt;
@@ -596,9 +630,10 @@ function ArticlesForm({
             {buttonLabel}
           &lt;/Button&gt;
           &lt;Button
-            variant="Secondary"
+            variant="secondary"
             onClick={() =&gt; navigate(-1)}
             data-testid="ArticlesForm-cancel"
+            className="ms-2"
           &gt;
             Cancel
           &lt;/Button&gt;
@@ -608,6 +643,19 @@ function ArticlesForm({
   );
 }
 &nbsp;
+ArticlesForm.propTypes = {
+  initialContents: PropTypes.shape({
+    id: PropTypes.number,
+    title: PropTypes.string,
+    url: PropTypes.string,
+    explanation: PropTypes.string,
+    email: PropTypes.string,
+    date_added: PropTypes.string,
+  }),
+  submitAction: PropTypes.func.isRequired,
+  buttonLabel: PropTypes.string,
+};
+&nbsp;
 export default ArticlesForm;
 &nbsp;</pre></td></tr></table></pre>
 
@@ -616,7 +664,7 @@ export default ArticlesForm;
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2024-11-05T00:43:03.769Z
+                at 2024-11-05T03:01:12.272Z
             </div>
         <script src="../../prettify.js"></script>
         <script>
