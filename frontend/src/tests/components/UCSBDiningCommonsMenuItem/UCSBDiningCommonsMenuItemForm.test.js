@@ -30,7 +30,7 @@ describe("UCSBDiningCommonsMenuItemForm tests suites", () => {
     expect(await screen.findByText(/Create/)).toBeInTheDocument();
   });
 
-  test("run correctly when passing in initialContents ", async () => {
+  test("run correctly when passing in initialContents", async () => {
     render(
       <QueryClientProvider client={queryClient}>
         <Router>
@@ -63,7 +63,7 @@ describe("UCSBDiningCommonsMenuItemForm tests suites", () => {
     await waitFor(() => expect(mockedNavigate).toHaveBeenCalledWith(-1));
   });
 
-  test(" correct tests are performed", async () => {
+  test("correct tests are performed", async () => {
     render(
       <QueryClientProvider client={queryClient}>
         <Router>
