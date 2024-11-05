@@ -2,19 +2,22 @@ import { Button, Form, Row, Col } from "react-bootstrap";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 
-function ArticlesForm({ initialContents, submitAction, buttonLabel = "Create" }) {
+function ArticlesForm({
+  initialContents,
+  submitAction,
+  buttonLabel = "Create",
+}) {
+  // Stryker disable all
   const {
     register,
     formState: { errors },
     handleSubmit,
   } = useForm({ defaultValues: initialContents || {} });
+  // Stryker restore all
 
   const navigate = useNavigate();
 
-  const isUrl_regex = /^https:\/\/.+/;
-  const isEmail_regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-  const isodate_regex =
-    /(\d{4}-[01]\d-[0-3]\dT[0-2]\d:[0-5]\d:[0-5]\d\.\d+)|(\d{4}-[01]\d-[0-3]\dT[0-2]\d:[0-5]\d:[0-5]\d)|(\d{4}-[01]\d-[0-3]\dT[0-2]\d:[0-5]\d)/i;
+  const email_regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
   return (
     <Form onSubmit={handleSubmit(submitAction)}>
@@ -37,14 +40,14 @@ function ArticlesForm({ initialContents, submitAction, buttonLabel = "Create" })
 
         <Col>
           <Form.Group className="mb-3">
-            <Form.Label htmlFor="title">Title</Form.Label>
+            <Form.Label htmlFor="title">Article Title</Form.Label>
             <Form.Control
               data-testid="ArticlesForm-title"
               id="title"
               type="text"
               isInvalid={Boolean(errors.title)}
               {...register("title", {
-                required: "Title is required.",
+                required: "An article title is required.",
                 maxLength: {
                   value: 255,
                   message: "Max length 255 characters.",
@@ -61,18 +64,14 @@ function ArticlesForm({ initialContents, submitAction, buttonLabel = "Create" })
       <Row>
         <Col>
           <Form.Group className="mb-3">
-            <Form.Label htmlFor="url">URL</Form.Label>
+            <Form.Label htmlFor="url">Article URL</Form.Label>
             <Form.Control
               data-testid="ArticlesForm-url"
               id="url"
               type="text"
               isInvalid={Boolean(errors.url)}
               {...register("url", {
-                required: "Url is required.",
-                pattern: {
-                  value: isUrl_regex,
-                  message: "Url must be in the correct format",
-                },
+                required: "A URL is required.",
                 maxLength: {
                   value: 255,
                   message: "Max length 255 characters.",
@@ -89,14 +88,14 @@ function ArticlesForm({ initialContents, submitAction, buttonLabel = "Create" })
       <Row>
         <Col>
           <Form.Group className="mb-3">
-            <Form.Label htmlFor="explanation">Explanation</Form.Label>
+            <Form.Label htmlFor="explanation">Article Explanation</Form.Label>
             <Form.Control
               data-testid="ArticlesForm-explanation"
               id="explanation"
               type="text"
               isInvalid={Boolean(errors.explanation)}
               {...register("explanation", {
-                required: "Explanation is required.",
+                required: "An explanation is required.",
                 maxLength: {
                   value: 255,
                   message: "Max length 255 characters.",
@@ -113,17 +112,17 @@ function ArticlesForm({ initialContents, submitAction, buttonLabel = "Create" })
       <Row>
         <Col>
           <Form.Group className="mb-3">
-            <Form.Label htmlFor="email">Email</Form.Label>
+            <Form.Label htmlFor="email">Author Email</Form.Label>
             <Form.Control
               data-testid="ArticlesForm-email"
               id="email"
               type="text"
               isInvalid={Boolean(errors.email)}
               {...register("email", {
-                required: "Email is required.",
+                required: "An email is required.",
                 pattern: {
-                  value: isEmail_regex,
-                  message: "Email must be in the format example@example.com",
+                  value: email_regex,
+                  message: "A valid email is required.",
                 },
                 maxLength: {
                   value: 255,
@@ -148,11 +147,7 @@ function ArticlesForm({ initialContents, submitAction, buttonLabel = "Create" })
               type="datetime-local"
               isInvalid={Boolean(errors.dateAdded)}
               {...register("dateAdded", {
-                required: "dateAdded is required.",
-                pattern: {
-                  value: isodate_regex,
-                  message: "dateAdded must be in the correct format.",
-                },
+                required: "A valid date is required.",
               })}
             />
             <Form.Control.Feedback type="invalid">

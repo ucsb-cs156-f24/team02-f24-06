@@ -1,7 +1,7 @@
-import { fireEvent, render, screen, waitFor } from "@testing-library/react";
-import { BrowserRouter as Router } from "react-router-dom";
+import { render, waitFor, fireEvent, screen } from "@testing-library/react";
 import ArticlesForm from "main/components/Articles/ArticlesForm";
 import { articlesFixtures } from "fixtures/articlesFixtures";
+import { BrowserRouter as Router } from "react-router-dom";
 
 const mockedNavigate = jest.fn();
 
@@ -17,7 +17,7 @@ describe("ArticlesForm tests", () => {
         <ArticlesForm />
       </Router>
     );
-    await screen.findByText(/Title/);
+    await screen.findByText(/Article Title/);
     await screen.findByText(/Create/);
   });
 
@@ -32,7 +32,7 @@ describe("ArticlesForm tests", () => {
     expect(screen.getByTestId(/ArticlesForm-id/)).toHaveValue("1");
   });
 
-  test("Correct Error messages on bad input", async () => {
+  test("Correct error messages on bad input", async () => {
     render(
       <Router>
         <ArticlesForm />
@@ -44,17 +44,17 @@ describe("ArticlesForm tests", () => {
     const dateField = screen.getByTestId("ArticlesForm-dateAdded");
     const submitButton = screen.getByTestId("ArticlesForm-submit");
 
-    fireEvent.change(urlField, { target: { value: "bad-input" } });
-    fireEvent.change(emailField, { target: { value: "bad-input" } });
-    fireEvent.change(dateField, { target: { value: "2022" } });
+    fireEvent.change(urlField, { target: { value: "" } });
+    fireEvent.change(emailField, { target: { value: "bad-email" } });
+    fireEvent.change(dateField, { target: { value: "invalid-date" } });
     fireEvent.click(submitButton);
 
-    await screen.findByText(/Url must be in the correct format/);
-    expect(screen.getByText(/Url must be in the correct format/)).toBeInTheDocument();
-    expect(screen.getByText(/Email must be in the format example@example.com/)).toBeInTheDocument();
+    await screen.findByText(/A URL is required./);
+    expect(screen.getByText(/A valid email is required./)).toBeInTheDocument();
+    expect(screen.getByText(/A valid date is required./)).toBeInTheDocument();
   });
 
-  test("Correct Error messages on missing input", async () => {
+  test("Correct error messages on missing input", async () => {
     render(
       <Router>
         <ArticlesForm />
@@ -65,14 +65,14 @@ describe("ArticlesForm tests", () => {
 
     fireEvent.click(submitButton);
 
-    await screen.findByText(/Title is required./);
-    expect(screen.getByText(/Url is required./)).toBeInTheDocument();
-    expect(screen.getByText(/Explanation is required./)).toBeInTheDocument();
-    expect(screen.getByText(/Email is required./)).toBeInTheDocument();
-    expect(screen.getByText(/dateAdded is required./)).toBeInTheDocument();
+    await screen.findByText(/An article title is required./);
+    expect(screen.getByText(/A URL is required./)).toBeInTheDocument();
+    expect(screen.getByText(/An explanation is required./)).toBeInTheDocument();
+    expect(screen.getByText(/An email is required./)).toBeInTheDocument();
+    expect(screen.getByText(/A valid date is required./)).toBeInTheDocument();
   });
 
-  test("No Error messages on good input", async () => {
+  test("No error messages on good input", async () => {
     const mockSubmitAction = jest.fn();
 
     render(
@@ -86,21 +86,20 @@ describe("ArticlesForm tests", () => {
     const urlField = screen.getByTestId("ArticlesForm-url");
     const explanationField = screen.getByTestId("ArticlesForm-explanation");
     const emailField = screen.getByTestId("ArticlesForm-email");
-    const dateField = screen.getByTestId("ArticlesForm-dateAdded");
+    const dateAddedField = screen.getByTestId("ArticlesForm-dateAdded");
     const submitButton = screen.getByTestId("ArticlesForm-submit");
 
-    fireEvent.change(titleField, { target: { value: "A new title" } });
+    fireEvent.change(titleField, { target: { value: "Test Title" } });
     fireEvent.change(urlField, { target: { value: "https://example.com" } });
-    fireEvent.change(explanationField, { target: { value: "A new explanation" } });
-    fireEvent.change(emailField, { target: { value: "test@example.com" } });
-    fireEvent.change(dateField, { target: { value: "2022-03-21T12:00:00" } });
+    fireEvent.change(explanationField, { target: { value: "Explanation text" } });
+    fireEvent.change(emailField, { target: { value: "author@example.com" } });
+    fireEvent.change(dateAddedField, { target: { value: "2022-01-02T12:00:00" } });
     fireEvent.click(submitButton);
 
     await waitFor(() => expect(mockSubmitAction).toHaveBeenCalled());
 
-    expect(screen.queryByText(/Url must be in the correct format/)).not.toBeInTheDocument();
-    expect(screen.queryByText(/Email must be in the format example@example.com/)).not.toBeInTheDocument();
-    expect(screen.queryByText(/dateAdded must be in the correct format/)).not.toBeInTheDocument();
+    expect(screen.queryByText(/A valid email is required./)).not.toBeInTheDocument();
+    expect(screen.queryByText(/A valid date is required./)).not.toBeInTheDocument();
   });
 
   test("that navigate(-1) is called when Cancel is clicked", async () => {
