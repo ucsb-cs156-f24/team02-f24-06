@@ -18,7 +18,7 @@ describe("UCSBDiningCommonsMenuItemForm tests suites", () => {
 
   const testId = "UCSBDiningCommonsMenuItemForm";
 
-  test("return correctly with no initialContents", async () => {
+  test("test1", async () => {
     render(
       <QueryClientProvider client={queryClient}>
         <Router>
@@ -30,7 +30,7 @@ describe("UCSBDiningCommonsMenuItemForm tests suites", () => {
     expect(await screen.findByText(/Create/)).toBeInTheDocument();
   });
 
-  test("run correctly when passing in initialContents", async () => {
+  test("test2", async () => {
     render(
       <QueryClientProvider client={queryClient}>
         <Router>
@@ -47,7 +47,7 @@ describe("UCSBDiningCommonsMenuItemForm tests suites", () => {
     expect(screen.getByText("Id")).toBeInTheDocument();
   });
 
-  test("that navigate(-1) is called when Cancel is clicked", async () => {
+  test("test3", async () => {
     render(
       <QueryClientProvider client={queryClient}>
         <Router>
@@ -63,7 +63,7 @@ describe("UCSBDiningCommonsMenuItemForm tests suites", () => {
     await waitFor(() => expect(mockedNavigate).toHaveBeenCalledWith(-1));
   });
 
-  test("correct tests are performed", async () => {
+  test("test4", async () => {
     render(
       <QueryClientProvider client={queryClient}>
         <Router>
@@ -88,7 +88,7 @@ describe("UCSBDiningCommonsMenuItemForm tests suites", () => {
     ).toBeInTheDocument();
   });
 
-  test("no validation errors on good input", async () => {
+  test("test5", async () => {
     const mockSubmitAction = jest.fn();
 
     render(
@@ -120,5 +120,57 @@ describe("UCSBDiningCommonsMenuItemForm tests suites", () => {
     expect(
       screen.queryByText("Max length 30 characters"),
     ).not.toBeInTheDocument();
+  });
+  test("7 test", async () => {
+    render(
+      <QueryClientProvider client={queryClient}>
+        <Router>
+          <UCSBDiningCommonsMenuItemForm />
+        </Router>
+      </QueryClientProvider>,
+    );
+    const submitButton = await screen.findByText(/Create/);
+    fireEvent.click(submitButton);
+    expect(
+      await screen.findByText("diningCommonsCode is required."),
+    ).toBeInTheDocument();
+    expect(await screen.findByText("Name is required.")).toBeInTheDocument();
+    expect(await screen.findByText("Station is required.")).toBeInTheDocument();
+
+    const diningCommonsCodeInput = screen.getByTestId(
+      `${testId}-diningCommonsCode`,
+    );
+    fireEvent.change(diningCommonsCodeInput, {
+      target: { value: "a".repeat(31) },
+    });
+    fireEvent.click(submitButton);
+
+    expect(
+      await screen.findByText("Max length 30 characters"),
+    ).toBeInTheDocument();
+  });
+  test("8 test", async () => {
+    render(
+      <QueryClientProvider client={queryClient}>
+        <Router>
+          <UCSBDiningCommonsMenuItemForm />
+        </Router>
+      </QueryClientProvider>,
+    );
+    const submitButton = await screen.findByText(/Create/);
+    fireEvent.click(submitButton);
+    expect(
+      await screen.findByText("diningCommonsCode is required."),
+    ).toBeInTheDocument();
+    expect(await screen.findByText("Name is required.")).toBeInTheDocument();
+    expect(await screen.findByText("Station is required.")).toBeInTheDocument();
+
+    const stationCodeInput = screen.getByTestId(`${testId}-station`);
+    fireEvent.change(stationCodeInput, { target: { value: "a".repeat(31) } });
+    fireEvent.click(submitButton);
+
+    expect(
+      await screen.findByText("Max length 30 characters"),
+    ).toBeInTheDocument();
   });
 });
