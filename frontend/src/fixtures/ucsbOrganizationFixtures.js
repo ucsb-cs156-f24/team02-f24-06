@@ -1,4 +1,4 @@
-const organizationFixtures = {
+const ucsbOrganizationFixtures = {
   oneOrg: [
     {
       orgCode: "ACM",
@@ -13,7 +13,7 @@ const organizationFixtures = {
       orgCode: "TASA",
       orgTranslationShort: "TASA",
       orgTranslation: "Taiwanese American Student Association",
-      inactive: false,
+      inactive: true,
     },
 
     {
@@ -32,4 +32,4 @@ const organizationFixtures = {
   ],
 };
 
-export { organizationFixtures };
+export { ucsbOrganizationFixtures };
