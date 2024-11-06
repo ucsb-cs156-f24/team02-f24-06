@@ -35,7 +35,6 @@ import MenuItemReviewCreatePage from "main/pages/MenuItemReview/MenuItemReviewCr
 import MenuItemReviewEditPage from "main/pages/MenuItemReview/MenuItemReviewEditPage";
 import MenuItemReviewIndexPage from "main/pages/MenuItemReview/MenuItemReviewIndexPage";
 
-
 import { hasRole, useCurrentUser } from "main/utils/currentUser";
 
 import "bootstrap/dist/css/bootstrap.css";
@@ -207,7 +206,11 @@ function App() {
         )}
         {hasRole(currentUser, "ROLE_USER") && (
           <>
-            <Route exact path="/menuitemreview" element={<MenuItemReviewIndexPage />} />
+            <Route
+              exact
+              path="/menuitemreview"
+              element={<MenuItemReviewIndexPage />}
+            />
           </>
         )}
         {hasRole(currentUser, "ROLE_ADMIN") && (
