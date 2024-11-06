@@ -5,8 +5,8 @@ import { currentUserFixtures } from "fixtures/currentUserFixtures";
 import { http, HttpResponse } from "msw";
 
 export default {
-    title: "components/MenuItemReview/MenuItemReviewTable",
-    component: MenuItemReviewTable,
+  title: "components/MenuItemReview/MenuItemReviewTable",
+  component: MenuItemReviewTable,
 };
 
 const Template = (args) => {
@@ -16,7 +16,7 @@ const Template = (args) => {
 export const Empty = Template.bind({});
 
 Empty.args = {
-    menuitemreview: [],
+  menuitemreview: [],
 };
 
 export const ThreeItemsOrdinaryUser = Template.bind({});
