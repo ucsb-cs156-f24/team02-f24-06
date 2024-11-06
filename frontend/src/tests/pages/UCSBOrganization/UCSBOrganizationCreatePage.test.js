@@ -138,7 +138,7 @@ describe("UCSBOrganizationCreatePage tests", () => {
     expect(mockToast).toHaveBeenCalledWith(
       "New UCSB Organization Created - orgCode: sailclub",
     );
-    expect(mockNavigate).toBeCalledWith({ to: "/ucsborganizations" });
+    expect(mockNavigate).toBeCalledWith({ to: "/ucsborganization" });
   });
 
   test("on submit, makes request to backend, and redirects to /ucsborganizations, inactive = true", async () => {
@@ -206,6 +206,6 @@ describe("UCSBOrganizationCreatePage tests", () => {
     expect(mockToast).toHaveBeenCalledWith(
       "New UCSB Organization Created - orgCode: sailclub",
     );
-    expect(mockNavigate).toHaveBeenCalledWith({ to: "/ucsborganizations" });
+    expect(mockNavigate).toHaveBeenCalledWith({ to: "/ucsborganization" });
   });
 });
