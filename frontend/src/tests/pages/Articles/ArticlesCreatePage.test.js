@@ -52,7 +52,7 @@ describe("ArticlesCreatePage tests", () => {
         <MemoryRouter>
           <ArticlesCreatePage />
         </MemoryRouter>
-      </QueryClientProvider>
+      </QueryClientProvider>,
     );
 
     await waitFor(() => {
@@ -68,7 +68,7 @@ describe("ArticlesCreatePage tests", () => {
       url: "https://samplewebsite.com/article1",
       explanation: "This is a sample explanation for the first article.",
       email: "sampleauthor1@example.com",
-      dateAdded: "2022-06-15T10:00:00",
+      dateAdded: "2022-06-15T10:00",
     };
 
     axiosMock.onPost("/api/articles/post").reply(202, article);
@@ -78,7 +78,7 @@ describe("ArticlesCreatePage tests", () => {
         <MemoryRouter>
           <ArticlesCreatePage />
         </MemoryRouter>
-      </QueryClientProvider>
+      </QueryClientProvider>,
     );
 
     await waitFor(() => {
@@ -93,10 +93,16 @@ describe("ArticlesCreatePage tests", () => {
     const submitButton = screen.getByTestId("ArticlesForm-submit");
 
     fireEvent.change(titleField, { target: { value: "Sample Article Title" } });
-    fireEvent.change(urlField, { target: { value: "https://samplewebsite.com/article1" } });
-    fireEvent.change(explanationField, { target: { value: "This is a sample explanation for the first article." } });
-    fireEvent.change(emailField, { target: { value: "sampleauthor1@example.com" } });
-    fireEvent.change(dateAddedField, { target: { value: "2022-06-15T10:00:00" } });
+    fireEvent.change(urlField, {
+      target: { value: "https://samplewebsite.com/article1" },
+    });
+    fireEvent.change(explanationField, {
+      target: { value: "This is a sample explanation for the first article." },
+    });
+    fireEvent.change(emailField, {
+      target: { value: "sampleauthor1@example.com" },
+    });
+    fireEvent.change(dateAddedField, { target: { value: "2022-06-15T10:00" } });
 
     expect(submitButton).toBeInTheDocument();
 
@@ -109,11 +115,11 @@ describe("ArticlesCreatePage tests", () => {
       url: "https://samplewebsite.com/article1",
       explanation: "This is a sample explanation for the first article.",
       email: "sampleauthor1@example.com",
-      dateAdded: "2022-06-15T10:00:00",
+      dateAdded: "2022-06-15T10:00",
     });
 
     expect(mockToast).toBeCalledWith(
-      "New article Created - id: 1 title: Sample Article Title"
+      "New article Created - id: 1 title: Sample Article Title",
     );
     expect(mockNavigate).toBeCalledWith({ to: "/articles" });
   });
