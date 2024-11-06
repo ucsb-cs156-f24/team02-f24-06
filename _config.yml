@@ -23,4 +23,4 @@ repo_name: "TBD"
 repo: ucsb-cs156-f24/team02-f24-06
 owner: ucsb-cs156-f24
 repo_name: team02-f24-06
-pull_requests: [{"author":{"id":"MDQ6VXNlcjQzMzk0Njg0","is_bot":false,"login":"chriswlai","name":"Christopher Lai"},"headRefName":"cl-index","number":101,"title":"Add ucsbOrganizations Index Page","url":"https://github.com/ucsb-cs156-f24/team02-f24-06/pull/101"},{"author":{"id":"U_kgDOB2_WkA","is_bot":false,"login":"skanda-vasishta","name":""},"headRefName":"sv-placeholders","number":100,"title":"menu item review create page, tests, storybook; resolves issue #40","url":"https://github.com/ucsb-cs156-f24/team02-f24-06/pull/100"}]
+pull_requests: [{"author":{"id":"MDQ6VXNlcjQzMzk0Njg0","is_bot":false,"login":"chriswlai","name":"Christopher Lai"},"headRefName":"cl-index","number":101,"title":"Add ucsbOrganizations Index Page","url":"https://github.com/ucsb-cs156-f24/team02-f24-06/pull/101"}]
