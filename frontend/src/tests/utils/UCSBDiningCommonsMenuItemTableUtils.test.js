@@ -1,21 +1,21 @@
-import { onDeleteSuccess } from 'main/utils/UCSBDiningCommonsMenuItemUtils';
-import { toast } from 'react-toastify';
+import { onDeleteSuccess } from "main/utils/UCSBDiningCommonsMenuItemUtils";
+import { toast } from "react-toastify";
 
-jest.mock('react-toastify', () => ({
+jest.mock("react-toastify", () => ({
   toast: jest.fn(),
 }));
 
-describe('onDeleteSuccess', () => {
+describe("onDeleteSuccess", () => {
   beforeEach(() => {
-    jest.spyOn(console, 'log').mockImplementation(() => {});
+    jest.spyOn(console, "log").mockImplementation(() => {});
   });
 
   afterEach(() => {
     jest.restoreAllMocks();
   });
 
-  test('calls console.log and toast with the message', () => {
-    const message = 'Item deleted successfully';
+  test("calls console.log and toast with the message", () => {
+    const message = "Item deleted successfully";
 
     onDeleteSuccess(message);
 
