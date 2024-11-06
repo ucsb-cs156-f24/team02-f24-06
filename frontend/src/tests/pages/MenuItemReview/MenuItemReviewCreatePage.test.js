@@ -67,10 +67,10 @@ describe("MenuItemReviewCreatePage tests", () => {
     const menuItem = {
       id: 17,
       itemId: 18,
-      reviewerEmail: 'email',
+      reviewerEmail: "email",
       stars: 3,
       dateReviewed: "2022-02-02T00:00",
-      comments: "comment"
+      comments: "comment",
     };
 
     axiosMock.onPost("/api/menuitemreview/post").reply(202, menuItem);
@@ -90,17 +90,23 @@ describe("MenuItemReviewCreatePage tests", () => {
     });
 
     const itemIDfield = screen.getByTestId("MenuItemReview-itemID");
-    const reviewerEmailField = screen.getByTestId("MenuItemReviewForm-reviewerEmail");
+    const reviewerEmailField = screen.getByTestId(
+      "MenuItemReviewForm-reviewerEmail",
+    );
     const starsField = screen.getByTestId("MenuItemReview-stars");
-    const dateReviewedField = screen.getByTestId("MenuItemReviewForm-dateReviewed");
+    const dateReviewedField = screen.getByTestId(
+      "MenuItemReviewForm-dateReviewed",
+    );
     const commentsField = screen.getByTestId("MenuItemReview-comments");
 
     const submitButton = screen.getByTestId("MenuItemReviewForm-submit");
 
-    fireEvent.change(itemIDfield, { target: { value: '18' } });
-    fireEvent.change(reviewerEmailField, { target: { value: 'email' } });
-    fireEvent.change(starsField, { target: { value: '3' } });
-    fireEvent.change(dateReviewedField, { target: { value: '2022-02-02T00:00' } });
+    fireEvent.change(itemIDfield, { target: { value: "18" } });
+    fireEvent.change(reviewerEmailField, { target: { value: "email" } });
+    fireEvent.change(starsField, { target: { value: "3" } });
+    fireEvent.change(dateReviewedField, {
+      target: { value: "2022-02-02T00:00" },
+    });
     fireEvent.change(commentsField, { target: { value: "comment2" } });
 
     expect(submitButton).toBeInTheDocument();
@@ -110,15 +116,15 @@ describe("MenuItemReviewCreatePage tests", () => {
     await waitFor(() => expect(axiosMock.history.post.length).toBe(1));
 
     expect(axiosMock.history.post[0].params).toEqual({
-      itemId: '18',
+      itemId: "18",
       reviewerEmail: "email",
-      stars: '3',
-      dateReviewed: '2022-02-02T00:00',
+      stars: "3",
+      dateReviewed: "2022-02-02T00:00",
       comments: "comment2",
     });
 
     expect(mockToast).toBeCalledWith(
-      'New MenuItemReview Created - id: 17 reviewerEmail: email'
+      "New MenuItemReview Created - id: 17 reviewerEmail: email",
     );
     expect(mockNavigate).toBeCalledWith({ to: "/menuitemreview" });
   });
