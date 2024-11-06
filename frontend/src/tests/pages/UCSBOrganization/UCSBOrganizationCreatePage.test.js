@@ -64,7 +64,6 @@ describe("UCSBOrganizationCreatePage tests", () => {
     });
   });
 
-
   test("on submit, makes request to backend, and redirects to /ucsborganizations", async () => {
     const queryClient = new QueryClient();
     const test_organization = {
@@ -74,10 +73,12 @@ describe("UCSBOrganizationCreatePage tests", () => {
       inactive: false,
     };
 
-    axiosMock.onPost("/api/ucsborganizations/post").reply(200, test_organization);
+    axiosMock
+      .onPost("/api/ucsborganizations/post")
+      .reply(200, test_organization);
 
     // axiosMock.onPost("/api/ucsborganizations/post").reply(200, {
-      
+
     // });
 
     render(
@@ -149,7 +150,9 @@ describe("UCSBOrganizationCreatePage tests", () => {
       inactive: true,
     };
 
-    axiosMock.onPost("/api/ucsborganizations/post").reply(200, test_organization);
+    axiosMock
+      .onPost("/api/ucsborganizations/post")
+      .reply(200, test_organization);
 
     render(
       <QueryClientProvider client={queryClient}>
