@@ -1,4 +1,4 @@
-import { render, screen, fireEvent, waitFor } from "@testing-library/react";
+import { render, screen, waitFor } from "@testing-library/react";
 import UCSBOrganizationCreatePage from "main/pages/UCSBOrganization/UCSBOrganizationCreatePage";
 import { QueryClient, QueryClientProvider } from "react-query";
 import { MemoryRouter } from "react-router-dom";
@@ -112,11 +112,6 @@ describe("UCSBOrganizationCreatePage tests", () => {
     const createButton = screen.getByText("Create");
     expect(createButton).toBeInTheDocument();
 
-    // fireEvent.change(orgCodeInput, { target: { value: "sailclub" } });
-    // fireEvent.change(orgTranslationShortInput, {
-    //   target: { value: "Sail Club" },
-    // });
-    // fireEvent.click(createButton);
     await userEvent.type(orgCodeInput, "sailclub");
     await userEvent.type(orgTranslationShortInput, "Sail Club");
     await userEvent.type(orgTranslationInput, "Sailing Club");
