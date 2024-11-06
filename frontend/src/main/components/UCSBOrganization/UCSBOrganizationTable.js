@@ -9,11 +9,7 @@ import {
 import { useNavigate } from "react-router-dom";
 import { hasRole } from "main/utils/currentUser";
 
-export default function OrganizationTable({
-  organizations,
-  currentUser,
-  testIdPrefix = "OrganizationTable",
-}) {
+export default function OrganizationTable({ organizations, currentUser }) {
   const navigate = useNavigate();
 
   const editCallback = (cell) => {
@@ -56,13 +52,19 @@ export default function OrganizationTable({
   ];
 
   if (hasRole(currentUser, "ROLE_ADMIN")) {
-    columns.push(ButtonColumn("Edit", "primary", editCallback, testIdPrefix));
     columns.push(
-      ButtonColumn("Delete", "danger", deleteCallback, testIdPrefix),
+      ButtonColumn("Edit", "primary", editCallback, "OrganizationTable"),
+    );
+    columns.push(
+      ButtonColumn("Delete", "danger", deleteCallback, "OrganizationTable"),
     );
   }
 
   return (
-    <OurTable data={organizations} columns={columns} testid={testIdPrefix} />
+    <OurTable
+      data={organizations}
+      columns={columns}
+      testid={"OrganizationTable"}
+    />
   );
 }
