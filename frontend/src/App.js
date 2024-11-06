@@ -186,7 +186,8 @@ function App() {
             <Route 
               exact 
               path="/articles" 
-              element={<ArticlesIndexPage />} />
+              element={<ArticlesIndexPage />} 
+            />
           </>
         )}
         {hasRole(currentUser, "ROLE_ADMIN") && (
