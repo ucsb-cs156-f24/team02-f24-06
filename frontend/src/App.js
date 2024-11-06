@@ -27,6 +27,10 @@ import ArticlesIndexPage from "main/pages/Articles/ArticlesIndexPage";
 import ArticlesCreatePage from "main/pages/Articles/ArticlesCreatePage";
 import ArticlesEditPage from "main/pages/Articles/ArticlesEditPage";
 
+import HelpRequestCreatePage from "main/pages/HelpRequest/HelpRequestCreatePage";
+import HelpRequestEditPage from "main/pages/HelpRequest/HelpRequestEditPage";
+import HelpRequestIndexPage from "main/pages/HelpRequest/HelpRequestIndexPage";
+
 import { hasRole, useCurrentUser } from "main/utils/currentUser";
 
 import "bootstrap/dist/css/bootstrap.css";
@@ -128,6 +132,29 @@ function App() {
               exact
               path="/ucsborganization/create"
               element={<UCSBOrganizationCreatePage />}
+            />
+          </>
+        )}
+        {hasRole(currentUser, "ROLE_USER") && (
+          <>
+            <Route
+              exact
+              path="/helprequest"
+              element={<HelpRequestIndexPage />}
+            />
+          </>
+        )}
+        {hasRole(currentUser, "ROLE_ADMIN") && (
+          <>
+            <Route
+              exact
+              path="/helprequest/edit/:id"
+              element={<HelpRequestEditPage />}
+            />
+            <Route
+              exact
+              path="/helprequest/create"
+              element={<HelpRequestCreatePage />}
             />
           </>
         )}
