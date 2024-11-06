@@ -25,7 +25,7 @@ export default function UCSBDiningCommonsMenuItemTable({
     { onSuccess: onDeleteSuccess },
     ["/api/ucsbdiningcommonsmenuitem/all"],
   );
- 
+
   const deleteCallback = async (cell) => {
     deleteMutation.mutate(cell);
   };
@@ -33,7 +33,7 @@ export default function UCSBDiningCommonsMenuItemTable({
   const columns = [
     {
       Header: "id",
-      accessor: "id", 
+      accessor: "id",
     },
     {
       Header: "diningCommonsCode",
@@ -57,6 +57,10 @@ export default function UCSBDiningCommonsMenuItemTable({
   }
 
   return (
-    <OurTable data={UCSBDiningCommonsMenuItem} columns={columns} testid={testIdPrefix} />
+    <OurTable
+      data={UCSBDiningCommonsMenuItem}
+      columns={columns}
+      testid={testIdPrefix}
+    />
   );
 }

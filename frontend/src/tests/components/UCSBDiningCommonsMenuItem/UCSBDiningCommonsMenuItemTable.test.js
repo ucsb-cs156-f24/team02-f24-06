@@ -34,22 +34,24 @@ describe("UCSBDiningCommonsMenuItemTable tests suites", () => {
       <QueryClientProvider client={queryClient}>
         <MemoryRouter>
           <UCSBDiningCommonsMenuItemTable
-            UCSBDiningCommonsMenuItem={ucsbDiningCommonsMenuItemFixtures.threeItems}
+            UCSBDiningCommonsMenuItem={
+              ucsbDiningCommonsMenuItemFixtures.threeItems
+            }
             currentUser={currentUser}
           />
         </MemoryRouter>
-      </QueryClientProvider>
+      </QueryClientProvider>,
     );
 
-    expect(await screen.findByTestId(`${testId}-cell-row-0-col-id`)).toHaveTextContent(
-      "1"
-    );
     expect(
-      screen.getByTestId(`${testId}-cell-row-0-col-diningCommonsCode`)
+      await screen.findByTestId(`${testId}-cell-row-0-col-id`),
+    ).toHaveTextContent("1");
+    expect(
+      screen.getByTestId(`${testId}-cell-row-0-col-diningCommonsCode`),
     ).toHaveTextContent("DLG");
 
     const deleteButton = screen.getByTestId(
-      `${testId}-cell-row-0-col-Delete-button`
+      `${testId}-cell-row-0-col-Delete-button`,
     );
     expect(deleteButton).toBeInTheDocument();
 
@@ -58,7 +60,6 @@ describe("UCSBDiningCommonsMenuItemTable tests suites", () => {
     await waitFor(() => expect(axiosMock.history.delete.length).toBe(1));
     expect(axiosMock.history.delete[0].params).toEqual({ id: 1 });
   });
- 
 
   test("Test2", async () => {
     const currentUser = currentUserFixtures.adminUser;
@@ -67,20 +68,26 @@ describe("UCSBDiningCommonsMenuItemTable tests suites", () => {
       <QueryClientProvider client={queryClient}>
         <MemoryRouter>
           <UCSBDiningCommonsMenuItemTable
-            UCSBDiningCommonsMenuItem={ucsbDiningCommonsMenuItemFixtures.threeItems}
+            UCSBDiningCommonsMenuItem={
+              ucsbDiningCommonsMenuItemFixtures.threeItems
+            }
             currentUser={currentUser}
           />
         </MemoryRouter>
-      </QueryClientProvider>
+      </QueryClientProvider>,
     );
 
-    const editButton = screen.getByTestId(`${testId}-cell-row-0-col-Edit-button`);
+    const editButton = screen.getByTestId(
+      `${testId}-cell-row-0-col-Edit-button`,
+    );
     expect(editButton).toBeInTheDocument();
 
     fireEvent.click(editButton);
 
     await waitFor(() => {
-      expect(mockedNavigate).toHaveBeenCalledWith("/ucsbdiningcommonsmenuitem/edit/1");
+      expect(mockedNavigate).toHaveBeenCalledWith(
+        "/ucsbdiningcommonsmenuitem/edit/1",
+      );
     });
   });
   test("Test3", () => {
@@ -90,18 +97,24 @@ describe("UCSBDiningCommonsMenuItemTable tests suites", () => {
       <QueryClientProvider client={queryClient}>
         <MemoryRouter>
           <UCSBDiningCommonsMenuItemTable
-            UCSBDiningCommonsMenuItem={ucsbDiningCommonsMenuItemFixtures.threeItems}
+            UCSBDiningCommonsMenuItem={
+              ucsbDiningCommonsMenuItemFixtures.threeItems
+            }
             currentUser={currentUser}
           />
         </MemoryRouter>
-      </QueryClientProvider>
+      </QueryClientProvider>,
     );
     expect(screen.queryByText("Edit")).not.toBeInTheDocument();
     expect(screen.queryByText("Delete")).not.toBeInTheDocument();
-    const editButton = screen.queryByTestId(`${testId}-cell-row-0-col-Edit-button`);
+    const editButton = screen.queryByTestId(
+      `${testId}-cell-row-0-col-Edit-button`,
+    );
     expect(editButton).not.toBeInTheDocument();
 
-    const deleteButton = screen.queryByTestId(`${testId}-cell-row-0-col-Delete-button`);
+    const deleteButton = screen.queryByTestId(
+      `${testId}-cell-row-0-col-Delete-button`,
+    );
     expect(deleteButton).not.toBeInTheDocument();
   });
 });
