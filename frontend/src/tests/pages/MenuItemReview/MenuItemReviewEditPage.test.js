@@ -127,11 +127,11 @@ describe("MenuItemReviewEditPage tests", () => {
 
       await screen.findByTestId("MenuItemReviewForm-reviewerEmail");
 
-      const itemIDfield = screen.getByTestId("MenuItemReview-itemID");
+      // const itemIDfield = screen.getByTestId("MenuItemReview-itemID");
       const reviewerEmailField = screen.getByTestId(
         "MenuItemReviewForm-reviewerEmail",
       );
-      const starsField = screen.getByTestId("MenuItemReview-stars");
+      // const starsField = screen.getByTestId("MenuItemReview-stars");
       const dateReviewedField = screen.getByTestId(
         "MenuItemReviewForm-dateReviewed",
       );
