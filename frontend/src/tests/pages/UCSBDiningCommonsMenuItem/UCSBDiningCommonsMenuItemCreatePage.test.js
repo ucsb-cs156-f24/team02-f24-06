@@ -62,7 +62,7 @@ describe("UCSBDiningCommonsMenuItemCreatePage tests", () => {
     });
   });
 
-  test("on submit, makes request to backend, and redirects to ", async () => {
+  test("on submit, makes request to backend, and redirects to", async () => {
     const queryClient = new QueryClient();
     const item = {
       id: 1,
