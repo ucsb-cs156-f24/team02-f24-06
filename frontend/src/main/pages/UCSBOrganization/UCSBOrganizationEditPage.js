@@ -13,9 +13,10 @@ export default function UCSBOrganizationEditPage({ storybook = false }) {
     error: _error,
     status: _status,
   } = useBackend(
-    // This key should include the unique parameter for caching purposes
-    [`/api/ucsborganizations`, { orgCode: id }],
+    // Stryker disable next-line all : don't test internal caching of React Query
+    [`/api/ucsborganizations`, id],
     {
+      // Stryker disable next-line all : GET is the default, so changing this to "" doesn't introduce a bug
       method: "GET",
       url: `/api/ucsborganizations`,
       params: { orgCode: id },  // Ensure orgCode is passed here in params
@@ -32,7 +33,7 @@ export default function UCSBOrganizationEditPage({ storybook = false }) {
       orgCode: ucsbOrganization.orgCode,
       orgTranslationShort: ucsbOrganization.orgTranslationShort,
       orgTranslation: ucsbOrganization.orgTranslation,
-      inactive: ucsbOrganization.inactive, // === "true" || ucsbOrganization.inactive === true, // Ensure boolean
+      inactive: ucsbOrganization.inactive,
     },
   });
 
@@ -43,6 +44,7 @@ export default function UCSBOrganizationEditPage({ storybook = false }) {
   const mutation = useBackendMutation(
     objectToAxiosPutParams,
     { onSuccess },
+    // Stryker disable next-line all : hard to test for query caching
     [`/api/ucsborganizations?orgCode=${id}`],
   );
 

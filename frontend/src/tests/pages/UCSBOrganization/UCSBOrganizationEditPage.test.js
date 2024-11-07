@@ -8,10 +8,13 @@ import { systemInfoFixtures } from "fixtures/systemInfoFixtures";
 import axios from "axios";
 import AxiosMockAdapter from "axios-mock-adapter";
 
+import mockConsole from "jest-mock-console";
+
 const mockToast = jest.fn();
 jest.mock("react-toastify", () => {
   const originalModule = jest.requireActual("react-toastify");
   return {
+    __esModule: true,
     ...originalModule,
     toast: (x) => mockToast(x),
   };
@@ -21,6 +24,7 @@ const mockNavigate = jest.fn();
 jest.mock("react-router-dom", () => {
   const originalModule = jest.requireActual("react-router-dom");
   return {
+    __esModule: true,
     ...originalModule,
     useParams: () => ({
       id: "ACM",
@@ -34,15 +38,11 @@ jest.mock("react-router-dom", () => {
 
 describe("UCSBOrganizationEditPage tests", () => {
   const axiosMock = new AxiosMockAdapter(axios);
-  const queryClient = new QueryClient();
-
-  afterEach(() => {
-    axiosMock.reset();
-    axiosMock.resetHistory();
-  });
 
   describe("when the backend doesn't return data", () => {
     beforeEach(() => {
+      axiosMock.reset();
+      axiosMock.resetHistory();
       axiosMock
         .onGet("/api/currentUser")
         .reply(200, apiCurrentUserFixtures.userOnly);
@@ -54,24 +54,29 @@ describe("UCSBOrganizationEditPage tests", () => {
         .timeout();
     });
 
+    const queryClient = new QueryClient();
     test("renders header but form is not present", async () => {
+      const restoreConsole = mockConsole();
+
       render(
         <QueryClientProvider client={queryClient}>
           <MemoryRouter>
             <UCSBOrganizationEditPage />
           </MemoryRouter>
-        </QueryClientProvider>
+        </QueryClientProvider>,
       );
-
       await screen.findByText("Edit UCSB Organization");
       expect(
-        screen.queryByTestId("UCSBOrganizationForm-orgCode")
+        screen.queryByTestId("UCSBOrganizationForm-orgCode"),
       ).not.toBeInTheDocument();
+      restoreConsole();
     });
   });
 
-  describe("when the backend is working normally", () => {
+  describe("tests where backend is working normally", () => {
     beforeEach(() => {
+      axiosMock.reset();
+      axiosMock.resetHistory();
       axiosMock
         .onGet("/api/currentUser")
         .reply(200, apiCurrentUserFixtures.userOnly);
@@ -94,88 +99,97 @@ describe("UCSBOrganizationEditPage tests", () => {
       });
     });
 
-    test("renders form with initial data", async () => {
+    const queryClient = new QueryClient();
+    test("renders without crashing", async () => {
       render(
         <QueryClientProvider client={queryClient}>
           <MemoryRouter>
             <UCSBOrganizationEditPage />
           </MemoryRouter>
-        </QueryClientProvider>
+        </QueryClientProvider>,
       );
 
-      const orgCodeField = await screen.findByTestId("UCSBOrganizationForm-orgCode");
-      expect(orgCodeField).toHaveValue("ACM");
+      await screen.findByTestId("UCSBOrganizationForm-orgCode");
     });
 
-    test("updates organization information upon form submission", async () => {
+    test("Is populated with the data provided", async () => {
       render(
         <QueryClientProvider client={queryClient}>
           <MemoryRouter>
             <UCSBOrganizationEditPage />
           </MemoryRouter>
-        </QueryClientProvider>
+        </QueryClientProvider>,
       );
 
-      const orgTranslationShortField = await screen.findByTestId("UCSBOrganizationForm-orgTranslationShort");
-      const orgTranslationField = screen.getByTestId("UCSBOrganizationForm-orgTranslation");
+      await screen.findByTestId("UCSBOrganizationForm-orgCode");
+
+      const orgCodeField = screen.getByTestId("UCSBOrganizationForm-orgCode");
+      const orgTranslationShortField = screen.getByTestId(
+        "UCSBOrganizationForm-orgTranslationShort",
+      );
+      const orgTranslationField = screen.getByTestId(
+        "UCSBOrganizationForm-orgTranslation",
+      );
       const inactiveField = screen.getByTestId("UCSBOrganizationForm-inactive");
       const submitButton = screen.getByTestId("UCSBOrganizationForm-submit");
 
-      fireEvent.change(orgTranslationShortField, { target: { value: "Updated ACM" } });
-      fireEvent.change(orgTranslationField, { target: { value: "Updated Association for Computing Machinery" } });
-      fireEvent.change(inactiveField, { target: { value: "true" } });
-
-      fireEvent.click(submitButton);
-
-      await waitFor(() => expect(mockToast).toHaveBeenCalledWith("UCSB Organization Updated - orgCode: ACM"));
-      expect(mockNavigate).toHaveBeenCalledWith({ to: "/ucsborganization" });
-
-      const putRequest = axiosMock.history.put[0];
-      expect(JSON.parse(putRequest.data)).toEqual({
-        orgCode: "ACM",
-        orgTranslationShort: "Updated ACM",
-        orgTranslation: "Updated Association for Computing Machinery",
-        inactive: "true",
-      });
-      expect(putRequest.method).toBe("put");
-    });
-  });
-
-  describe("when backend returns a 404 error", () => {
-    beforeEach(() => {
-      axiosMock
-        .onGet("/api/currentUser")
-        .reply(200, apiCurrentUserFixtures.userOnly);
-      axiosMock
-        .onGet("/api/systemInfo")
-        .reply(200, systemInfoFixtures.showingNeither);
-      axiosMock
-        .onGet("/api/ucsborganizations", { params: { orgCode: "INVALID" } })
-        .reply(404, { message: "Not Found" });
-      
-      jest.mock("react-router-dom", () => {
-        const originalModule = jest.requireActual("react-router-dom");
-        return {
-          ...originalModule,
-          useParams: () => ({
-            id: "INVALID",
-          }),
-        };
-      });
+      expect(orgCodeField).toHaveValue("ACM");
+      expect(orgTranslationShortField).toHaveValue(
+        "Association for Computing Machinery",
+      );
+      expect(orgTranslationField).toHaveValue(
+        "The Association for Computing Machinery",
+      );
+      expect(inactiveField).toHaveValue("false"); // dropdown value for inactive status
+      expect(submitButton).toBeInTheDocument();
     });
 
-    test("displays error message when organization not found", async () => {
+    test("Changes when you click Update", async () => {
       render(
         <QueryClientProvider client={queryClient}>
           <MemoryRouter>
             <UCSBOrganizationEditPage />
           </MemoryRouter>
-        </QueryClientProvider>
+        </QueryClientProvider>,
       );
 
-      // const errorMessage = await screen.findByText(/UCSBOrganization with id INVALID not found/i);
-      // expect(errorMessage).toBeInTheDocument();
-      // expect(screen.queryByTestId("UCSBOrganizationForm-orgCode")).not.toBeInTheDocument();
+      await screen.findByTestId("UCSBOrganizationForm-orgCode");
+
+      const orgTranslationShortField = screen.getByTestId(
+        "UCSBOrganizationForm-orgTranslationShort",
+      );
+      const orgTranslationField = screen.getByTestId(
+        "UCSBOrganizationForm-orgTranslation",
+      );
+      const inactiveField = screen.getByTestId("UCSBOrganizationForm-inactive");
+      const submitButton = screen.getByTestId("UCSBOrganizationForm-submit");
+
+      fireEvent.change(orgTranslationShortField, {
+        target: { value: "Updated ACM" },
+      });
+      fireEvent.change(orgTranslationField, {
+        target: { value: "Updated Association for Computing Machinery" },
+      });
+      fireEvent.change(inactiveField, { target: { value: "true" } }); // select the "true" option in the dropdown
+
+      fireEvent.click(submitButton);
+
+      await waitFor(() => expect(mockToast).toBeCalled());
+      expect(mockToast).toHaveBeenCalledWith(
+        "UCSB Organization Updated - orgCode: ACM",
+      );
+      expect(mockNavigate).toHaveBeenCalledWith({ to: "/ucsborganization" });
+
+      expect(axiosMock.history.put.length).toBe(1); // times called
+      expect(axiosMock.history.put[0].params).toEqual({ orgCode: "ACM" });
+      expect(axiosMock.history.put[0].data).toBe(
+        JSON.stringify({
+          orgCode: "ACM",
+          orgTranslationShort: "Updated ACM",
+          orgTranslation: "Updated Association for Computing Machinery",
+          inactive: "true",
+        }),
+      ); // posted object
     });
   });
 });
