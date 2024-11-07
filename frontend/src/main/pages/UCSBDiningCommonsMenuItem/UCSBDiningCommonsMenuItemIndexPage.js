@@ -40,7 +40,10 @@ export default function RestaurantIndexPage() {
       <div className="pt-2">
         {createButton()}
         <h1>UCSB Dining Commons Menu Item</h1>
-        <UCSBDiningCommonsMenuItemTable UCSBDiningCommonsMenuItem={UCSBDiningCommonsMenuItem} currentUser={currentUser} />
+        <UCSBDiningCommonsMenuItemTable
+          UCSBDiningCommonsMenuItem={UCSBDiningCommonsMenuItem}
+          currentUser={currentUser}
+        />
       </div>
     </BasicLayout>
   );
