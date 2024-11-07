@@ -128,7 +128,9 @@ describe("HelpRequestEditPage tests", () => {
       await screen.findByTestId("HelpRequestForm-requesterEmail");
 
       const idField = screen.getByTestId("HelpRequestForm-id");
-      const requesterEmailField = screen.getByTestId("HelpRequestForm-requesterEmail");
+      const requesterEmailField = screen.getByTestId(
+        "HelpRequestForm-requesterEmail",
+      );
       const teamIdField = screen.getByTestId("HelpRequestForm-teamId");
       const tableOrBreakoutRoomField = screen.getByTestId(
         "HelpRequestForm-tableOrBreakoutRoom",
@@ -139,9 +141,7 @@ describe("HelpRequestEditPage tests", () => {
       const explanationField = screen.getByTestId(
         "HelpRequestForm-explanation",
       );
-      const solvedField = screen.getByTestId(
-        "HelpRequestForm-solved",
-      );
+      const solvedField = screen.getByTestId("HelpRequestForm-solved");
       const submitButton = screen.getByTestId("HelpRequestForm-submit");
 
       expect(idField).toHaveValue("17");
@@ -166,7 +166,9 @@ describe("HelpRequestEditPage tests", () => {
       await screen.findByTestId("HelpRequestForm-requesterEmail");
 
       const idField = screen.getByTestId("HelpRequestForm-id");
-      const requesterEmailField = screen.getByTestId("HelpRequestForm-requesterEmail");
+      const requesterEmailField = screen.getByTestId(
+        "HelpRequestForm-requesterEmail",
+      );
       const teamIdField = screen.getByTestId("HelpRequestForm-teamId");
       const tableOrBreakoutRoomField = screen.getByTestId(
         "HelpRequestForm-tableOrBreakoutRoom",
@@ -177,9 +179,7 @@ describe("HelpRequestEditPage tests", () => {
       const explanationField = screen.getByTestId(
         "HelpRequestForm-explanation",
       );
-      const solvedField = screen.getByTestId(
-        "HelpRequestForm-solved",
-      );
+      const solvedField = screen.getByTestId("HelpRequestForm-solved");
       const submitButton = screen.getByTestId("HelpRequestForm-submit");
 
       expect(idField).toHaveValue("17");
@@ -192,7 +192,9 @@ describe("HelpRequestEditPage tests", () => {
 
       expect(submitButton).toBeInTheDocument();
 
-      fireEvent.change(requesterEmailField, { target: { value: "changed@ucsb.edu" } });
+      fireEvent.change(requesterEmailField, {
+        target: { value: "changed@ucsb.edu" },
+      });
       fireEvent.change(teamIdField, { target: { value: "f24-11am-4" } });
       fireEvent.change(tableOrBreakoutRoomField, {
         target: { value: "9" },
