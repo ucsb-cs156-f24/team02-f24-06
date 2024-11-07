@@ -23,4 +23,4 @@ repo_name: "TBD"
 repo: ucsb-cs156-f24/team02-f24-06
 owner: ucsb-cs156-f24
 repo_name: team02-f24-06
-pull_requests: [{"author":{"id":"MDQ6VXNlcjYzNTg4NzIx","is_bot":false,"login":"SexyCarrots","name":"Xinghan Yang"},"headRefName":"sexycarrots-dev","number":111,"title":"Create diningcommonsmenuitem create","url":"https://github.com/ucsb-cs156-f24/team02-f24-06/pull/111"},{"author":{"id":"MDQ6VXNlcjU3NDYyMjQz","is_bot":false,"login":"vprchlik","name":"Victor Prchlik"},"headRefName":"vp-Articles-edit","number":105,"title":"vp - Added edit page for Articles","url":"https://github.com/ucsb-cs156-f24/team02-f24-06/pull/105"}]
+pull_requests: [{"author":{"id":"MDQ6VXNlcjU3NDYyMjQz","is_bot":false,"login":"vprchlik","name":"Victor Prchlik"},"headRefName":"vp-Articles-edit","number":105,"title":"vp - Added edit page for Articles","url":"https://github.com/ucsb-cs156-f24/team02-f24-06/pull/105"}]
