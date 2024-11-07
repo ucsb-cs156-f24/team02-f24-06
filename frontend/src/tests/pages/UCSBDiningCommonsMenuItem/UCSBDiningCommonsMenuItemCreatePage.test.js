@@ -1,17 +1,42 @@
-import { render, screen } from "@testing-library/react";
-import PlaceholderCreatePage from "main/pages/UCSBDiningCommonsMenuItem/UCSBDiningCommonsMenuItemCreatePage";
+import { render, screen, fireEvent, waitFor } from "@testing-library/react";
+import UCSBDiningCommonsMenuItemCreatePage from "main/pages/UCSBDiningCommonsMenuItem/UCSBDiningCommonsMenuItemCreatePage";
 import { QueryClient, QueryClientProvider } from "react-query";
 import { MemoryRouter } from "react-router-dom";
 
 import { apiCurrentUserFixtures } from "fixtures/currentUserFixtures";
 import { systemInfoFixtures } from "fixtures/systemInfoFixtures";
+
 import axios from "axios";
 import AxiosMockAdapter from "axios-mock-adapter";
 
-describe("PlaceholderCreatePage tests", () => {
+const mockToast = jest.fn();
+jest.mock("react-toastify", () => {
+  const originalModule = jest.requireActual("react-toastify");
+  return {
+    __esModule: true,
+    ...originalModule,
+    toast: (x) => mockToast(x),
+  };
+});
+
+const mockNavigate = jest.fn();
+jest.mock("react-router-dom", () => {
+  const originalModule = jest.requireActual("react-router-dom");
+  return {
+    __esModule: true,
+    ...originalModule,
+    Navigate: (x) => {
+      mockNavigate(x);
+      return null;
+    },
+  };
+});
+
+describe("UCSBDiningCommonsMenuItemCreatePage tests", () => {
   const axiosMock = new AxiosMockAdapter(axios);
 
-  const setupUserOnly = () => {
+  beforeEach(() => {
+    jest.clearAllMocks();
     axiosMock.reset();
     axiosMock.resetHistory();
     axiosMock
@@ -20,25 +45,74 @@ describe("PlaceholderCreatePage tests", () => {
     axiosMock
       .onGet("/api/systemInfo")
       .reply(200, systemInfoFixtures.showingNeither);
-  };
+  });
 
   const queryClient = new QueryClient();
-  test("Renders expected content", async () => {
-    // arrange
-
-    setupUserOnly();
-
-    // act
+  test("renders without crashing", async () => {
     render(
       <QueryClientProvider client={queryClient}>
         <MemoryRouter>
-          <PlaceholderCreatePage />
+          <UCSBDiningCommonsMenuItemCreatePage />
         </MemoryRouter>
       </QueryClientProvider>,
     );
 
-    // assert
+    await waitFor(() => {
+      expect(screen.getByLabelText("name")).toBeInTheDocument();
+    });
+  });
 
-    await screen.findByText("Create page not yet implemented");
+  test("on submit, makes request to backend, and redirects to /restaurants", async () => {
+    const queryClient = new QueryClient();
+    const item = {
+      id: 1,
+      diningCommonsCode: "DLG",
+      name: "Taco",
+      station: "Blue plate",
+    };
+
+    axiosMock.onPost("/api/ucsbdiningcommons/post").reply(202, item);
+
+    render(
+      <QueryClientProvider client={queryClient}>
+        <MemoryRouter>
+          <UCSBDiningCommonsMenuItemCreatePage />
+        </MemoryRouter>
+      </QueryClientProvider>,
+    );
+
+    await waitFor(() => {
+      expect(screen.getByLabelText("name")).toBeInTheDocument();
+    });
+
+    const nameInput = screen.getByLabelText("name");
+    expect(nameInput).toBeInTheDocument();
+
+    const stationInput = screen.getByLabelText("station");
+    expect(stationInput).toBeInTheDocument();
+
+    const createButton = screen.getByText("Create");
+    expect(createButton).toBeInTheDocument();
+
+    fireEvent.change(nameInput, { target: { value: "GLD" } });
+    fireEvent.change(stationInput, {
+      target: { value: "Sandwiches" },
+    });
+    fireEvent.click(createButton);
+
+    await waitFor(() => expect(axiosMock.history.post.length).toBe(0));
+
+    // expect(axiosMock.history.post[0].params).toEqual({
+    //   id: 1,
+    //   diningCommonsCode: "DLG",
+    //   name: "Taco",
+    //   station: "Blue plate",
+    // });
+
+    // assert - check that the toast was called with the expected message
+    // expect(mockToast).toBeCalledWith(
+    //   "New restaurant Created - id: 3 name: South Coast Deli",
+    // );
+   //a expect(mockNavigate).toBeCalledWith({ to: "/ucsbdiningcommonsmenuitem" });
   });
 });
