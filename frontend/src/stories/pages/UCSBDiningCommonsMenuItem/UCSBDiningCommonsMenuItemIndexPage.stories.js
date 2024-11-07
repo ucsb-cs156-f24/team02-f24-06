@@ -7,7 +7,7 @@ import { http, HttpResponse } from "msw";
 import UCSBDiningCommonsMenuItemIndexPage from "main/pages/UCSBDiningCommonsMenuItem/UCSBDiningCommonsMenuItemIndexPage";
 
 export default {
-  title: "pages/Restaurants/RestaurantIndexPage",
+  title: "pages/UCSBDiningCommonsMenuItem/UCSBDiningCommonsMenuItem",
   component: UCSBDiningCommonsMenuItemIndexPage,
 };
 
