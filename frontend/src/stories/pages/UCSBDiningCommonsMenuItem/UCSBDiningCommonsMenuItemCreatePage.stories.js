@@ -5,7 +5,6 @@ import { http, HttpResponse } from "msw";
 
 import UCSBDiningCommonsMenuItemCreatePage from "main/pages/UCSBDiningCommonsMenuItem/UCSBDiningCommonsMenuItemCreatePage";
 
-
 export default {
   title: "pages/UCSBDiningCommonsMenuItem/UCSBDiningCommonsMenuItemCreatePage",
   component: UCSBDiningCommonsMenuItemCreatePage,

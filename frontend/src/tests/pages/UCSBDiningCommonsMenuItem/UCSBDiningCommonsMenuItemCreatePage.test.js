@@ -62,7 +62,7 @@ describe("UCSBDiningCommonsMenuItemCreatePage tests", () => {
     });
   });
 
-  test("on submit, makes request to backend, and redirects to /restaurants", async () => {
+  test("on submit, makes request to backend, and redirects to ", async () => {
     const queryClient = new QueryClient();
     const item = {
       id: 1,
@@ -71,7 +71,7 @@ describe("UCSBDiningCommonsMenuItemCreatePage tests", () => {
       station: "Blue plate",
     };
 
-    axiosMock.onPost("/api/ucsbdiningcommons/post").reply(202, item);
+    axiosMock.onPost("/api/ucsbdiningcommonsmenuitem/post").reply(202, item);
 
     render(
       <QueryClientProvider client={queryClient}>
@@ -84,6 +84,8 @@ describe("UCSBDiningCommonsMenuItemCreatePage tests", () => {
     await waitFor(() => {
       expect(screen.getByLabelText("name")).toBeInTheDocument();
     });
+    const codeInput = screen.getByLabelText("diningCommonsCode");
+    expect(codeInput).toBeInTheDocument();
 
     const nameInput = screen.getByLabelText("name");
     expect(nameInput).toBeInTheDocument();
@@ -94,25 +96,28 @@ describe("UCSBDiningCommonsMenuItemCreatePage tests", () => {
     const createButton = screen.getByText("Create");
     expect(createButton).toBeInTheDocument();
 
-    fireEvent.change(nameInput, { target: { value: "GLD" } });
-    fireEvent.change(stationInput, {
-      target: { value: "Sandwiches" },
+    fireEvent.change(codeInput, {
+      target: { value: "DLG" },
     });
+    fireEvent.change(nameInput, { target: { value: "Taco" } });
+    fireEvent.change(stationInput, {
+      target: { value: "Blue plate" },
+    });
+
     fireEvent.click(createButton);
 
-    await waitFor(() => expect(axiosMock.history.post.length).toBe(0));
+    await waitFor(() => expect(axiosMock.history.post.length).toBe(1));
 
-    // expect(axiosMock.history.post[0].params).toEqual({
-    //   id: 1,
-    //   diningCommonsCode: "DLG",
-    //   name: "Taco",
-    //   station: "Blue plate",
-    // });
+    expect(axiosMock.history.post[0].params).toEqual({
+      diningCommonsCode: "DLG",
 
-    // assert - check that the toast was called with the expected message
-    // expect(mockToast).toBeCalledWith(
-    //   "New restaurant Created - id: 3 name: South Coast Deli",
-    // );
-   //a expect(mockNavigate).toBeCalledWith({ to: "/ucsbdiningcommonsmenuitem" });
+      name: "Taco",
+      station: "Blue plate",
+    });
+
+    expect(mockToast).toBeCalledWith(
+      "New item Created - id: 1 diningCommonsCode: DLG name: Taco station: Blue plate",
+    );
+    expect(mockNavigate).toBeCalledWith({ to: "/diningcommonsmenuitem" });
   });
 });
