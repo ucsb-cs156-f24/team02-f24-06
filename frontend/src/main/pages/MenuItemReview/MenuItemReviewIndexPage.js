@@ -39,7 +39,10 @@ export default function MenuItemReviewIndexPage() {
       <div className="pt-2">
         {createButton()}
         <h1>MenuItemReview</h1>
-        <MenuItemReviewTable menuitemreview={menuItems} currentUser={currentUser} />
+        <MenuItemReviewTable
+          menuitemreview={menuItems}
+          currentUser={currentUser}
+        />
       </div>
     </BasicLayout>
   );
