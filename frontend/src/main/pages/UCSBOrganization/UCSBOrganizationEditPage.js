@@ -19,7 +19,7 @@ export default function UCSBOrganizationEditPage({ storybook = false }) {
       // Stryker disable next-line all : GET is the default, so changing this to "" doesn't introduce a bug
       method: "GET",
       url: `/api/ucsborganizations`,
-      params: { orgCode: id },  // Ensure orgCode is passed here in params
+      params: { orgCode: id }, // Ensure orgCode is passed here in params
     },
   );
 
@@ -39,7 +39,7 @@ export default function UCSBOrganizationEditPage({ storybook = false }) {
 
   const onSuccess = (ucsbOrganization) => {
     toast(`UCSB Organization Updated - orgCode: ${ucsbOrganization.orgCode}`);
-  }
+  };
 
   const mutation = useBackendMutation(
     objectToAxiosPutParams,
@@ -52,7 +52,7 @@ export default function UCSBOrganizationEditPage({ storybook = false }) {
 
   const onSubmit = async (data) => {
     mutation.mutate(data);
-  }
+  };
 
   if (isSuccess && !storybook) {
     return <Navigate to="/ucsborganization" />;
@@ -63,9 +63,9 @@ export default function UCSBOrganizationEditPage({ storybook = false }) {
       <div className="pt-2">
         <h1>Edit UCSB Organization</h1>
         {ucsbOrganization && (
-          <UCSBOrganizationForm 
-            initialContents={ucsbOrganization} 
-            submitAction={onSubmit} 
+          <UCSBOrganizationForm
+            initialContents={ucsbOrganization}
+            submitAction={onSubmit}
             buttonLabel="Update"
           />
         )}
