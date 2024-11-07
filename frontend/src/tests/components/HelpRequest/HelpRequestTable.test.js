@@ -145,13 +145,29 @@ describe("UserTable tests", () => {
 
   test("Renders 'True' or 'False' based on cell.value", () => {
     const currentUser = currentUserFixtures.userOnly;
-  
+
     // Mock data with cell.value set to true and false for testing
     const mockHelpRequests = [
-      { id: 1, requesterEmail: "user@example.com", teamId: "team1", tableOrBreakoutRoom: "1", requestTime: "2023-01-01T12:00", explanation: "Need help", solved: true },
-      { id: 2, requesterEmail: "user2@example.com", teamId: "team2", tableOrBreakoutRoom: "2", requestTime: "2023-01-02T12:00", explanation: "Issue with code", solved: false }
+      {
+        id: 1,
+        requesterEmail: "user@example.com",
+        teamId: "team1",
+        tableOrBreakoutRoom: "1",
+        requestTime: "2023-01-01T12:00",
+        explanation: "Need help",
+        solved: true,
+      },
+      {
+        id: 2,
+        requesterEmail: "user2@example.com",
+        teamId: "team2",
+        tableOrBreakoutRoom: "2",
+        requestTime: "2023-01-02T12:00",
+        explanation: "Issue with code",
+        solved: false,
+      },
     ];
-  
+
     render(
       <QueryClientProvider client={queryClient}>
         <MemoryRouter>
@@ -160,13 +176,13 @@ describe("UserTable tests", () => {
             currentUser={currentUser}
           />
         </MemoryRouter>
-      </QueryClientProvider>
+      </QueryClientProvider>,
     );
-  
+
     // Check that it displays "True" for solved === true and "False" for solved === false
     expect(screen.getByText("True")).toBeInTheDocument();
     expect(screen.getByText("False")).toBeInTheDocument();
-  });  
+  });
 
   test("Edit button navigates to the edit page for admin user", async () => {
     const currentUser = currentUserFixtures.adminUser;
