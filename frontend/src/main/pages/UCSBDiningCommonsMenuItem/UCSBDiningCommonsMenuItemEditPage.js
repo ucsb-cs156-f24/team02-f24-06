@@ -1,4 +1,5 @@
 import BasicLayout from "main/layouts/BasicLayout/BasicLayout";
+export default function RestaurantEditPage({ storybook = false }) {
 
 export default function UCSBDiningCommonsMenuItemEditPage() {
   // Stryker disable all : UCSBDiningCommonsMenuItem for future implementation
