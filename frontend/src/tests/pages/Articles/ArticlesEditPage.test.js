@@ -196,7 +196,7 @@ describe("ArticlesEditPage tests", () => {
 
       await waitFor(() => expect(mockToast).toBeCalled());
       expect(mockToast).toBeCalledWith(
-        "Articles Updated - id: 1 title: Another Sample Article",
+        "Article Updated - id: 1 title: Another Sample Article",
       );
       expect(mockNavigate).toBeCalledWith({ to: "/articles" });
 
