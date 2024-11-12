@@ -66,7 +66,7 @@ public class MenuItemReviewIT {
 
                 MenuItemReview menuItemReview = MenuItemReview.builder()
                                 .itemId(10)
-                                .reviewerEmail("test@gmail.com")
+                                .reviewerEmail("test@email.com")
                                 .stars(10)
                                 .dateReviewed(LocalDateTime.now())
                                 .build();
