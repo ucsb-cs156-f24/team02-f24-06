@@ -23,4 +23,4 @@ repo_name: "TBD"
 repo: ucsb-cs156-f24/team02-f24-06
 owner: ucsb-cs156-f24
 repo_name: team02-f24-06
-pull_requests: [{"author":{"id":"MDQ6VXNlcjU3NDYyMjQz","is_bot":false,"login":"vprchlik","name":"Victor Prchlik"},"headRefName":"Articles-endtoend","number":132,"title":"vp - Added end to end for Articles","url":"https://github.com/ucsb-cs156-f24/team02-f24-06/pull/132"}]
+pull_requests: [{"author":{"id":"U_kgDOB2_WkA","is_bot":false,"login":"skanda-vasishta","name":""},"headRefName":"team03-e2e-sv","number":133,"title":"e2e tests for menu item review, resolves issue #127","url":"https://github.com/ucsb-cs156-f24/team02-f24-06/pull/133"},{"author":{"id":"MDQ6VXNlcjU3NDYyMjQz","is_bot":false,"login":"vprchlik","name":"Victor Prchlik"},"headRefName":"Articles-endtoend","number":132,"title":"vp - Added end to end for Articles","url":"https://github.com/ucsb-cs156-f24/team02-f24-06/pull/132"}]
