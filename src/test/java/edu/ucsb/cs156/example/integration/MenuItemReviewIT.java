@@ -63,12 +63,12 @@ public class MenuItemReviewIT {
         @Test
         public void test_that_logged_in_user_can_get_by_id_when_the_id_exists() throws Exception {
                 // arrange
-
+                LocalDateTime currTime = LocalDateTime.now();
                 MenuItemReview menuItemReview = MenuItemReview.builder()
                                 .itemId(10)
                                 .reviewerEmail("test@email.com")
                                 .stars(10)
-                                .dateReviewed(LocalDateTime.now())
+                                .dateReviewed(currTime)
                                 .comments("comments")
                                 .build();
                                 
