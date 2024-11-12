@@ -69,6 +69,7 @@ public class MenuItemReviewIT {
                                 .reviewerEmail("test@email.com")
                                 .stars(10)
                                 .dateReviewed(LocalDateTime.now())
+                                .comments("comments")
                                 .build();
                                 
                 menuItemReviewRepository.save(menuItemReview);
