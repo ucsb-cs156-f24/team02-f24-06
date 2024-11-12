@@ -23,4 +23,4 @@ repo_name: "TBD"
 repo: ucsb-cs156-f24/team02-f24-06
 owner: ucsb-cs156-f24
 repo_name: team02-f24-06
-pull_requests: [{"author":{"id":"MDQ6VXNlcjU1MTYzOTcx","is_bot":false,"login":"ELEXG","name":"Edward Garcia"},"headRefName":"eg-team03","number":129,"title":"eg - integration test for HelpRequest","url":"https://github.com/ucsb-cs156-f24/team02-f24-06/pull/129"},{"author":{"id":"U_kgDOB2_WkA","is_bot":false,"login":"skanda-vasishta","name":""},"headRefName":"team03-sv","number":128,"title":"Integration Tests for MenuItemReview - resolves issue #126","url":"https://github.com/ucsb-cs156-f24/team02-f24-06/pull/128"}]
+pull_requests: [{"author":{"id":"MDQ6VXNlcjU1MTYzOTcx","is_bot":false,"login":"ELEXG","name":"Edward Garcia"},"headRefName":"eg-team03","number":129,"title":"eg - integration test for HelpRequest","url":"https://github.com/ucsb-cs156-f24/team02-f24-06/pull/129"}]
